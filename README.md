@@ -2,6 +2,10 @@
 
 Material design action button for React Native
 
+<img src="https://user-images.githubusercontent.com/2914973/27511657-4d5a565e-592a-11e7-85eb-fdd8065083fc.png" width="350">
+
+<img src="https://user-images.githubusercontent.com/2914973/27511658-4d71ff16-592a-11e7-9f9a-627843f1a416.png" width="350">
+
 ## Installation
 
 ```
