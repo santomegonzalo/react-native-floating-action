@@ -1,0 +1,52 @@
+{
+  "name": "react-native-floating-action",
+  "version": "1.0.2",
+  "description": "floating action component for react-native",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "start": "./run 'yarn run example:build' 'yarn run example:run'",
+    "example:run": "cd example/FloatingAction && react-native run-ios",
+    "example:build": "cd example/FloatingAction && yarn start",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santomegonzalo/react-native-floating-action.git"
+  },
+  "keywords": [
+    "react-native",
+    "action-button",
+    "floating-action",
+    "material-design",
+    "float-action"
+  ],
+  "author": "Gonzalo Santome",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/santomegonzalo/react-native-floating-action/issues"
+  },
+  "homepage": "https://github.com/santomegonzalo/react-native-floating-action#readme",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.45",
+    "prop-types": ">=15.5.10"
+  },
+  "devDependencies": {
+    "babel-eslint": "7.2.3",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "babel-preset-react-native": "2.0.0",
+    "eslint": "3.19.0",
+    "eslint-config-airbnb": "15.0.1",
+    "eslint-config-airbnb-base": "11.2.0",
+    "eslint-loader": "1.8.0",
+    "eslint-plugin-babel": "4.1.1",
+    "eslint-plugin-import": "2.6.0",
+    "eslint-plugin-jsx-a11y": "5.0.3",
+    "eslint-plugin-react": "7.1.0"
+  }
+}
