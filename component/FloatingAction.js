@@ -177,6 +177,7 @@ FloatingAction.propTypes = {
 };
 
 FloatingAction.defaultProps = {
+  actions: [],
   buttonColor: '#1253bc',
   overlayColor: 'rgba(68, 68, 68, 0.6)',
   position: 'right'
