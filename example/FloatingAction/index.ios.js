@@ -13,7 +13,7 @@ import {
   View
 } from 'react-native';
 
-import { FloatingAction } from 'react-native-floating-action';
+import FloatingAction from './components/FloatingAction';
 
 const FloatingActionExample = () => {
   const actions = [{
@@ -22,17 +22,17 @@ const FloatingActionExample = () => {
     name: 'bt_accessibility',
     position: 2
   }, {
-    text: 'Select language',
+    text: 'Language',
     icon: require('./images/ic_language_white.png'),
     name: 'bt_language',
     position: 1
   }, {
-    text: '',
+    text: 'Location',
     icon: require('./images/ic_room_white.png'),
     name: 'bt_room',
     position: 3
   }, {
-    text: 'Start Video',
+    text: 'Video',
     icon: require('./images/ic_videocam_white.png'),
     name: 'bt_videocam',
     position: 4

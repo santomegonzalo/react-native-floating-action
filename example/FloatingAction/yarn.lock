@@ -2929,7 +2929,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.6, prop-types@^15.5.8:
+prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -2994,8 +2994,9 @@ react-devtools-core@^2.1.8:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-floating-action@../../:
-  version "1.0.2"
+react-native-floating-action@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-floating-action/-/react-native-floating-action-1.0.3.tgz#25b3c4ab4ef0b2a9fbd2fac2aa99e397f182b69d"
   dependencies:
     lodash "^4.17.4"
 
