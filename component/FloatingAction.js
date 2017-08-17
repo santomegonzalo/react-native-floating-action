@@ -22,10 +22,22 @@ class FloatingAction extends Component {
     super(props);
 
     this.state = {
-      active: false
+      active: false,
+      visible: props.visible
     };
 
     this.animation = new Animated.Value(0);
+    this.visibleAnimation = new Animated.Value(0);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.visible !== this.props.visible) {
+      if (nextProps.visible) {
+        Animated.spring(this.visibleAnimation, { toValue: 0 }).start();
+      } if (!nextProps.visible) {
+        Animated.spring(this.visibleAnimation, { toValue: 1 }).start();
+      }
+    }
   }
 
   animateButton = () => {
@@ -70,6 +82,20 @@ class FloatingAction extends Component {
   renderMainButton() {
     const { buttonColor, position } = this.props;
 
+    const animatedVisibleView = {
+      transform: [{
+        rotate: this.visibleAnimation.interpolate({
+          inputRange: [0, 1],
+          outputRange: ['0deg', '90deg']
+        })
+      }, {
+        scale: this.visibleAnimation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [1, 0]
+        })
+      }]
+    };
+
     const animatedViewStyle = {
       transform: [{
         rotate: this.animation.interpolate({
@@ -82,15 +108,19 @@ class FloatingAction extends Component {
     const Touchable = getTouchableComponent();
 
     return (
-      <Touchable
-        style={[styles.button, styles[`${position}Button`], { backgroundColor: buttonColor }]}
-        activeOpacity={0.85}
-        onPress={this.animateButton}
+      <Animated.View
+        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor }, animatedVisibleView]}
       >
-        <Animated.View style={[styles.buttonTextContainer, animatedViewStyle]}>
-          <Image style={styles.buttonIcon} source={require('../images/add.png')} />
-        </Animated.View>
-      </Touchable>
+        <Touchable
+          style={styles.button}
+          activeOpacity={0.85}
+          onPress={this.animateButton}
+        >
+          <Animated.View style={[styles.buttonTextContainer, animatedViewStyle]}>
+            <Image style={styles.buttonIcon} source={require('../images/add.png')} />
+          </Animated.View>
+        </Touchable>
+      </Animated.View>
     );
   }
 
@@ -143,7 +173,7 @@ class FloatingAction extends Component {
 
   render() {
     return (
-      <View
+      <Animated.View
         pointerEvents="box-none"
         style={[styles.overlay, { backgroundColor: 'transparent' }]}
       >
@@ -157,12 +187,13 @@ class FloatingAction extends Component {
         {
           this.renderMainButton()
         }
-      </View>
+      </Animated.View>
     );
   }
 }
 
 FloatingAction.propTypes = {
+  visible: PropTypes.bool,
   actions: PropTypes.arrayOf(PropTypes.shape({
     buttonColor: PropTypes.string,
     text: PropTypes.string,
@@ -177,7 +208,7 @@ FloatingAction.propTypes = {
 };
 
 FloatingAction.defaultProps = {
-  actions: [],
+  visible: true,
   buttonColor: '#1253bc',
   overlayColor: 'rgba(68, 68, 68, 0.6)',
   position: 'right'
@@ -191,11 +222,11 @@ const styles = StyleSheet.create({
   },
   rightActions: {
     alignItems: 'flex-end',
-    right: -1000   // this magic number will make always disspear the text from screen
+    right: -1000 // this magic number will make always disspear the text from screen
   },
   leftActions: {
     alignItems: 'flex-start',
-    left: -1000   // this magic number will make always disspear the text from screen
+    left: -1000 // this magic number will make always disspear the text from screen
   },
   centerActions: {
     left: -1000
@@ -218,7 +249,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     zIndex: 1
   },
-  button: {
+  buttonContainer: {
     zIndex: 2,
     width: 56,
     height: 56,
@@ -235,6 +266,14 @@ const styles = StyleSheet.create({
     elevation: 5,
     position: 'absolute',
     bottom: 30
+  },
+  button: {
+    zIndex: 3,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   rightButton: {
     right: 30
