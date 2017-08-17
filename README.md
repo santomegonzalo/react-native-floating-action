@@ -10,6 +10,8 @@ Material design action button for React Native
 
 <img src="https://user-images.githubusercontent.com/2914973/27517003-8444c42a-59c4-11e7-9a8c-5e007708675b.gif" width="350">
 
+<img src="https://user-images.githubusercontent.com/2914973/29421294-e74df51c-8374-11e7-96ca-62675075f8e8.gif" width="350">
+
 ## Installation
 
 ```
@@ -82,6 +84,7 @@ import { FloatingAction } from 'react-native-floating-action';
 |--------------|----------|-----------------------|------------------------------------------------------------------------------------------------------------|
 | actions      | array    | []                    | Actions to be show once user press the main button                                                         |
 | buttonColor  | string   | #1253bc               | Color of the main button                                                                                   |
+| visible      | boolean  | true                  | Hide or Show the component using an animation                                                                                   |
 | overlayColor | string   | rgba(68, 68, 68, 0.6) | Color of the background overlay                                                                            |
 | position     | string   | right                 | Position to render the main button and actions, options: (**left**, **right**, **center**)                 |
 | onPressItem  | function |                       | Function to be call as soon as the user select an option from actions. Will return the name of the action. |
@@ -101,5 +104,6 @@ import { FloatingAction } from 'react-native-floating-action';
 - [x] example
 - [x] add colors configurations
 - [x] add more positions like left, center and right
+- [x] support hide or show the component with an animation
 - [ ] add sizing configurations
 - [ ] change plus icon to be customizable
