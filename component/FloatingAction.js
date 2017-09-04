@@ -96,7 +96,7 @@ class FloatingAction extends Component {
       }]
     };
 
-    const animatedViewStyle = {
+    let animatedViewStyle = {
       transform: [{
         rotate: this.animation.interpolate({
           inputRange: [0, 1],
@@ -104,6 +104,10 @@ class FloatingAction extends Component {
         })
       }]
     };
+
+    if (this.props.inanimate) {
+      animatedViewStyle = {};
+    }
 
     const Touchable = getTouchableComponent();
 
@@ -117,7 +121,7 @@ class FloatingAction extends Component {
           onPress={this.animateButton}
         >
           <Animated.View style={[styles.buttonTextContainer, animatedViewStyle]}>
-            <Image style={styles.buttonIcon} source={require('../images/add.png')} />
+            { this.props.floatingIcon && React.isValidElement(this.props.floatingIcon) ? this.props.floatingIcon : <Image style={styles.buttonIcon} source={require('../images/add.png')} /> }
           </Animated.View>
         </Touchable>
       </Animated.View>
@@ -246,7 +250,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    elevation: 5,
+    elevation: 0,
     zIndex: 1
   },
   buttonContainer: {
