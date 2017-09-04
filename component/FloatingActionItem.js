@@ -62,8 +62,7 @@ class FloatingActionItem extends Component {
     return (
       <View key="button" style={[styles.button, { backgroundColor: color }]}>
         {
-          Boolean(icon) &&
-            <Image style={iconStyle} source={icon} />
+          React.isValidElement(icon) ? icon : <Image style={iconStyle} source={icon} />
         }
       </View>
     );
