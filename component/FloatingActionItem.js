@@ -33,11 +33,11 @@ class FloatingActionItem extends Component {
   };
 
   renderText() {
-    const { text, position } = this.props;
+    const { text, position, elevation, textElevation } = this.props;
 
     if (Boolean(text)) {  // eslint-disable-line no-extra-boolean-cast
       return (
-        <View key="text" style={[styles.textContainer, styles[`${position}TextContainer`]]}>
+        <View key="text" style={[styles.textContainer, styles[`${position}TextContainer`], { elevation: textElevation || elevation || 5 }]}>
           <Text style={styles.text}>
             {text}
           </Text>
@@ -49,7 +49,7 @@ class FloatingActionItem extends Component {
   }
 
   renderButton() {
-    const { icon, color } = this.props;
+    const { icon, color, elevation } = this.props;
 
     let iconStyle;
 
@@ -60,7 +60,7 @@ class FloatingActionItem extends Component {
     }
 
     return (
-      <View key="button" style={[styles.button, { backgroundColor: color }]}>
+      <View key="button" style={[styles.button, { backgroundColor: color || '#1253bc', elevation: elevation || 5 }]}>
         {
           React.isValidElement(icon) ? icon : <Image style={iconStyle} source={icon} />
         }
