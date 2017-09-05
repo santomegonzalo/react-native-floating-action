@@ -53,9 +53,12 @@ class FloatingAction extends Component {
         }
       });
 
-      this.setState({
-        active: true
-      });
+      const { compact, actions } = this.props;
+      if (actions.length > 0 && !(compact && actions.length === 1)) {
+        this.setState({
+          active: true
+        });
+      }
     } else {
       this.reset();
     }
@@ -78,6 +81,25 @@ class FloatingAction extends Component {
 
     this.reset();
   };
+
+  getIcon = () => {
+    const { actions, floatingIcon, compact } = this.props;
+
+    if (compact && actions.length === 1) {
+      const { icon } = actions[0];
+      if (React.isValidElement(icon)) {
+        return icon;
+      } else {
+        return (<Image style={iconStyle} source={icon} />);
+      }
+    }
+
+    if (floatingIcon && React.isValidElement(floatingIcon)) {
+      return floatingIcon;
+    }
+
+    return (<Image style={styles.buttonIcon} source={require('../images/add.png')} />);
+  }
 
   renderMainButton() {
     const { buttonColor, position } = this.props;
@@ -105,7 +127,7 @@ class FloatingAction extends Component {
       }]
     };
 
-    if (this.props.inanimate) {
+    if (this.props.inanimate || (this.props.compact && this.props.actions.length === 1 && this.props.inanimateCompact)) {
       animatedViewStyle = {};
     }
 
@@ -121,7 +143,7 @@ class FloatingAction extends Component {
           onPress={this.animateButton}
         >
           <Animated.View style={[styles.buttonTextContainer, animatedViewStyle]}>
-            { this.props.floatingIcon && React.isValidElement(this.props.floatingIcon) ? this.props.floatingIcon : <Image style={styles.buttonIcon} source={require('../images/add.png')} /> }
+            { this.getIcon() }
           </Animated.View>
         </Touchable>
       </Animated.View>
@@ -129,8 +151,12 @@ class FloatingAction extends Component {
   }
 
   renderActions() {
-    const { actions, position } = this.props;
+    const { actions, position, compact } = this.props;
     const { active } = this.state;
+
+    if (compact && actions.length === 1) {
+      return null;
+    }
 
     const animatedActionsStyle = {
       opacity: this.animation.interpolate({
