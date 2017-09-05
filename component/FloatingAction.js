@@ -135,9 +135,14 @@ class FloatingAction extends Component {
 
     const Touchable = getTouchableComponent();
 
+    let bgColor = { backgroundColor: '#1253bc' };
+    if (buttonColor) {
+      bgColor = { backgroundColor: buttonColor };
+    }
+
     return (
       <Animated.View
-        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor }, animatedVisibleView]}
+        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor || '#1253bc' }, animatedVisibleView]}
       >
         <Touchable
           style={styles.button}
