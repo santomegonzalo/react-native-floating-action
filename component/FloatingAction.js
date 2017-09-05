@@ -86,8 +86,10 @@ class FloatingAction extends Component {
     const { actions, floatingIcon, compact } = this.props;
 
     if (compact && actions.length === 1) {
-      const { icon } = actions[0];
-      if (React.isValidElement(icon)) {
+      const { icon, iconLarge } = actions[0];
+      if (React.isValidElement(iconLarge)) {
+        return iconLarge;
+      } else if (React.isValidElement(icon)) {
         return icon;
       } else {
         return (<Image style={iconStyle} source={icon} />);
