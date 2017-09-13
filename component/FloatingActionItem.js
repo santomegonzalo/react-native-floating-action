@@ -33,12 +33,12 @@ class FloatingActionItem extends Component {
   };
 
   renderText() {
-    const { text, position } = this.props;
+    const { text, position, elevation, textElevation, textBackgroundColor, textColor } = this.props;
 
     if (Boolean(text)) {  // eslint-disable-line no-extra-boolean-cast
       return (
-        <View key="text" style={[styles.textContainer, styles[`${position}TextContainer`]]}>
-          <Text style={styles.text}>
+        <View key="text" style={[styles.textContainer, styles[`${position}TextContainer`], { elevation: textElevation || elevation || 5, backgroundColor: textBackgroundColor || "white" }]}>
+          <Text style={[styles.text, { color: textColor || '#444444' }]}>
             {text}
           </Text>
         </View>
@@ -49,7 +49,7 @@ class FloatingActionItem extends Component {
   }
 
   renderButton() {
-    const { icon, color } = this.props;
+    const { icon, color, elevation } = this.props;
 
     let iconStyle;
 
@@ -60,10 +60,9 @@ class FloatingActionItem extends Component {
     }
 
     return (
-      <View key="button" style={[styles.button, { backgroundColor: color }]}>
+      <View key="button" style={[styles.button, { backgroundColor: color || '#1253bc', elevation: elevation || 5 }]}>
         {
-          Boolean(icon) &&
-            <Image style={iconStyle} source={icon} />
+          React.isValidElement(icon) ? icon : <Image style={iconStyle} source={icon} />
         }
       </View>
     );
@@ -130,6 +129,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingHorizontal: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#ffffff',
     shadowOpacity: 0.35,
     shadowOffset: {
@@ -140,8 +141,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 5,
     borderRadius: 4,
-    height: 22,
-    marginTop: 8
+    marginTop: 4,
+    height: 28
   },
   leftTextContainer: {
     marginLeft: 14

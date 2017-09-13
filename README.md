@@ -106,4 +106,5 @@ import { FloatingAction } from 'react-native-floating-action';
 - [x] add more positions like left, center and right
 - [x] support hide or show the component with an animation
 - [ ] add sizing configurations
-- [ ] change plus icon to be customizable
+- [x] change plus icon to be customizable
+- [x] use components as icon

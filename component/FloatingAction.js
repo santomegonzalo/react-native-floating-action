@@ -53,9 +53,12 @@ class FloatingAction extends Component {
         }
       });
 
-      this.setState({
-        active: true
-      });
+      const { compact, actions } = this.props;
+      if (actions.length > 0 && !(compact && actions.length === 1)) {
+        this.setState({
+          active: true
+        });
+      }
     } else {
       this.reset();
     }
@@ -79,6 +82,27 @@ class FloatingAction extends Component {
     this.reset();
   };
 
+  getIcon = () => {
+    const { actions, floatingIcon, compact } = this.props;
+
+    if (compact && actions.length === 1) {
+      const { icon, iconLarge } = actions[0];
+      if (React.isValidElement(iconLarge)) {
+        return iconLarge;
+      } else if (React.isValidElement(icon)) {
+        return icon;
+      } else {
+        return (<Image style={iconStyle} source={icon} />);
+      }
+    }
+
+    if (floatingIcon && React.isValidElement(floatingIcon)) {
+      return floatingIcon;
+    }
+
+    return (<Image style={styles.buttonIcon} source={require('../images/add.png')} />);
+  }
+
   renderMainButton() {
     const { buttonColor, position } = this.props;
 
@@ -96,7 +120,7 @@ class FloatingAction extends Component {
       }]
     };
 
-    const animatedViewStyle = {
+    let animatedViewStyle = {
       transform: [{
         rotate: this.animation.interpolate({
           inputRange: [0, 1],
@@ -105,11 +129,20 @@ class FloatingAction extends Component {
       }]
     };
 
+    if (this.props.inanimate || (this.props.compact && this.props.actions.length === 1 && this.props.inanimateCompact)) {
+      animatedViewStyle = {};
+    }
+
     const Touchable = getTouchableComponent();
+
+    let bgColor = { backgroundColor: '#1253bc' };
+    if (buttonColor) {
+      bgColor = { backgroundColor: buttonColor };
+    }
 
     return (
       <Animated.View
-        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor }, animatedVisibleView]}
+        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor || '#1253bc' }, animatedVisibleView]}
       >
         <Touchable
           style={styles.button}
@@ -117,7 +150,7 @@ class FloatingAction extends Component {
           onPress={this.animateButton}
         >
           <Animated.View style={[styles.buttonTextContainer, animatedViewStyle]}>
-            <Image style={styles.buttonIcon} source={require('../images/add.png')} />
+            { this.getIcon() }
           </Animated.View>
         </Touchable>
       </Animated.View>
@@ -125,8 +158,12 @@ class FloatingAction extends Component {
   }
 
   renderActions() {
-    const { actions, position } = this.props;
+    const { actions, position, compact } = this.props;
     const { active } = this.state;
+
+    if (compact && actions.length === 1) {
+      return null;
+    }
 
     const animatedActionsStyle = {
       opacity: this.animation.interpolate({
@@ -246,7 +283,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    elevation: 5,
+    elevation: 0,
     zIndex: 1
   },
   buttonContainer: {
