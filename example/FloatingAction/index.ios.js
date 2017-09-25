@@ -72,6 +72,7 @@ class FloatingActionExample extends Component {
         <FlatList
           style={styles.list}
           onScroll={this.handleScroll}
+          scrollEventThrottle={16}
           data={
             [
               { key: 'row 1' }, { key: 'row 2' }, { key: 'row 3' },
@@ -86,9 +87,9 @@ class FloatingActionExample extends Component {
           renderItem={({ item }) => <Text style={styles.listRow}>{item.key}</Text>}
         />
         <FloatingAction
-          scrollEventThrottle={16}
           actions={actions}
           visible={actionButtonVisible}
+          floatingIcon={require('./images/ic_videocam_white.png')}
           onPressItem={
             (name) => {
               Alert.alert('Icon pressed', `the icon ${name} was pressed`);

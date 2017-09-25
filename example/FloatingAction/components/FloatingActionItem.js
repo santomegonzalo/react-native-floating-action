@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { isNil } from 'lodash';
 import {
   StyleSheet,
   Text,
   Image,
-  Dimensions,
   View,
   Animated
 } from 'react-native';
 
 import { getTouchableComponent } from './utils/touchable';
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
 
 class FloatingActionItem extends Component {
   constructor(props) {
@@ -33,12 +31,36 @@ class FloatingActionItem extends Component {
   };
 
   renderText() {
-    const { text, position } = this.props;
+    const {
+      text,
+      position,
+      elevation,
+      textElevation,
+      textBackground,
+      textColor
+    } = this.props;
 
-    if (Boolean(text)) {  // eslint-disable-line no-extra-boolean-cast
+    if (!isNil(text)) {
       return (
-        <View key="text" style={[styles.textContainer, styles[`${position}TextContainer`]]}>
-          <Text style={styles.text}>
+        <View
+          key="text"
+          style={[
+            styles.textContainer,
+            styles[`${position}TextContainer`],
+            {
+              backgroundColor: textBackground,
+              elevation: textElevation || elevation
+            }]
+          }
+        >
+          <Text
+            style={[
+              styles.text,
+              {
+                color: textColor
+              }
+            ]}
+          >
             {text}
           </Text>
         </View>
@@ -62,8 +84,7 @@ class FloatingActionItem extends Component {
     return (
       <View key="button" style={[styles.button, { backgroundColor: color }]}>
         {
-          Boolean(icon) &&
-            <Image style={iconStyle} source={icon} />
+          React.isValidElement(icon) ? icon : <Image style={iconStyle} source={icon} />
         }
       </View>
     );
@@ -111,11 +132,18 @@ FloatingActionItem.propTypes = {
   name: PropTypes.string.isRequired,
   active: PropTypes.bool,
   text: PropTypes.string,
+  elevation: PropTypes.number,
+  textElevation: PropTypes.number,
+  textBackground: PropTypes.string,
+  textColor: PropTypes.string,
   onPress: PropTypes.func
 };
 
 FloatingActionItem.defaultProps = {
-  color: '#1253bc'
+  color: '#1253bc',
+  elevation: 5,
+  textColor: '#444444',
+  textBackground: '#ffffff'
 };
 
 const styles = StyleSheet.create({
@@ -130,7 +158,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingHorizontal: 8,
-    backgroundColor: '#ffffff',
     shadowOpacity: 0.35,
     shadowOffset: {
       width: 0,
@@ -151,8 +178,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    lineHeight: 20,
-    color: '#444444'
+    lineHeight: 20
   },
   button: {
     alignItems: 'center',

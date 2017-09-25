@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // eslint-disable-line
 import PropTypes from 'prop-types';
-import { sortBy } from 'lodash';
+import { sortBy, isNil } from 'lodash';
 import {
   StyleSheet,
   Image,
@@ -26,6 +26,7 @@ class FloatingAction extends Component {
     };
 
     this.animation = new Animated.Value(0);
+    this.actionsAnimation = new Animated.Value(0);
     this.visibleAnimation = new Animated.Value(0);
   }
 
@@ -39,9 +40,64 @@ class FloatingAction extends Component {
     }
   }
 
+  getIcon = () => {
+    const { actions, floatingIcon, overrideWithAction } = this.props;
+
+    if (overrideWithAction) {
+      const { icon } = actions[0];
+
+      if (React.isValidElement(icon)) {
+        return icon;
+      }
+
+      return <Image style={styles.buttonIcon} source={icon} />;
+    }
+
+    if (floatingIcon) {
+      if (React.isValidElement(floatingIcon)) {
+        return floatingIcon;
+      }
+
+      return <Image style={styles.buttonIcon} source={floatingIcon} />;
+    }
+
+    return <Image style={styles.buttonIcon} source={require('../images/add.png')} />;
+  };
+
+  handlePressItem = (itemName) => {
+    const { onPressItem } = this.props;
+
+    if (onPressItem) {
+      onPressItem(itemName);
+    }
+
+    this.reset();
+  };
+
+  reset = () => {
+    Animated.spring(this.animation, { toValue: 0 }).start();
+    Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
+
+    this.setState({
+      active: false
+    });
+  };
+
   animateButton = () => {
+    const { overrideWithAction, actions, floatingIcon } = this.props;
+
+    if (overrideWithAction) {
+      this.handlePressItem(actions[0].name);
+
+      return;
+    }
+
     if (!this.state.active) {
-      Animated.spring(this.animation, { toValue: 1 }).start();
+      if (isNil(floatingIcon)) {
+        Animated.spring(this.animation, { toValue: 1 }).start();
+      }
+
+      Animated.spring(this.actionsAnimation, { toValue: 1 }).start();
 
       // only execute it for the background to prevent extra calls
       LayoutAnimation.configureNext({
@@ -60,26 +116,12 @@ class FloatingAction extends Component {
     }
   };
 
-  reset = () => {
-    Animated.spring(this.animation, { toValue: 0 }).start();
-
-    this.setState({
-      active: false
-    });
-  };
-
-  handlePressItem = (itemName) => {
-    const { onPressItem } = this.props;
-
-    if (onPressItem) {
-      onPressItem(itemName);
-    }
-
-    this.reset();
-  };
-
   renderMainButton() {
-    const { buttonColor, position } = this.props;
+    const {
+      buttonColor,
+      position,
+      overrideWithAction
+    } = this.props;
 
     const animatedVisibleView = {
       transform: [{
@@ -95,7 +137,7 @@ class FloatingAction extends Component {
       }]
     };
 
-    const animatedViewStyle = {
+    let animatedViewStyle = {
       transform: [{
         rotate: this.animation.interpolate({
           inputRange: [0, 1],
@@ -104,11 +146,15 @@ class FloatingAction extends Component {
       }]
     };
 
+    if (overrideWithAction) {
+      animatedViewStyle = {};
+    }
+
     const Touchable = getTouchableComponent();
 
     return (
       <Animated.View
-        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor }, animatedVisibleView]}
+        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor || '#1253bc' }, animatedVisibleView]}
       >
         <Touchable
           style={styles.button}
@@ -116,7 +162,7 @@ class FloatingAction extends Component {
           onPress={this.animateButton}
         >
           <Animated.View style={[styles.buttonTextContainer, animatedViewStyle]}>
-            <Image style={styles.buttonIcon} source={require('../images/add.png')} />
+            { this.getIcon() }
           </Animated.View>
         </Touchable>
       </Animated.View>
@@ -124,11 +170,21 @@ class FloatingAction extends Component {
   }
 
   renderActions() {
-    const { actions, position } = this.props;
+    const {
+      actions,
+      position,
+      overrideWithAction,
+      actionsTextBackground,
+      actionsTextColor
+    } = this.props;
     const { active } = this.state;
 
+    if (overrideWithAction) {
+      return null;
+    }
+
     const animatedActionsStyle = {
-      opacity: this.animation.interpolate({
+      opacity: this.actionsAnimation.interpolate({
         inputRange: [0, 1],
         outputRange: [0, 1]
       })
@@ -146,6 +202,8 @@ class FloatingAction extends Component {
           sortBy(actions, ['position']).map(action => (
             <FloatingActionItem
               key={action.name}
+              textColor={actionsTextColor}
+              textBackground={actionsTextBackground}
               {...action}
               position={position}
               active={active}
@@ -200,13 +258,18 @@ FloatingAction.propTypes = {
     name: PropTypes.string.isRequired,
     position: PropTypes.number.isRequired
   })),
+  actionsTextBackground: PropTypes.string,
+  actionsTextColor: PropTypes.string,
   position: PropTypes.oneOf(['right', 'left', 'center']),
   buttonColor: PropTypes.string,
   overlayColor: PropTypes.string,
+  floatingIcon: PropTypes.any,
+  overrideWithAction: PropTypes.bool, // use the first action like main action
   onPressItem: PropTypes.func
 };
 
 FloatingAction.defaultProps = {
+  overrideWithAction: false,
   visible: true,
   buttonColor: '#1253bc',
   overlayColor: 'rgba(68, 68, 68, 0.6)',
