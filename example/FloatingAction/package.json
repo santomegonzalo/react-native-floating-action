@@ -4,13 +4,14 @@
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
+		"test": "jest",
+		"lint": "eslint ./"
 	},
 	"dependencies": {
 		"lodash": "^4.17.4",
 		"prop-types": "^15.5.10",
 		"react": "16.0.0-alpha.12",
-		"react-native": "0.47.1",
+		"react-native": "0.48.4",
 		"react-native-floating-action": "^1.1.0"
 	},
 	"devDependencies": {

@@ -17,7 +17,7 @@ Material design action button for React Native
 ```
 npm i react-native-floating-action --save
 ```
-or 
+or
 ```
 yarn add react-native-floating-action
 ```
@@ -80,14 +80,16 @@ import { FloatingAction } from 'react-native-floating-action';
 
 **FloatingAction**
 
-| Property     | Type     | Default               | Description                                                                                                |
-|--------------|----------|-----------------------|------------------------------------------------------------------------------------------------------------|
-| actions      | array    | []                    | Actions to be show once user press the main button                                                         |
-| buttonColor  | string   | #1253bc               | Color of the main button                                                                                   |
-| visible      | boolean  | true                  | Hide or Show the component using an animation                                                                                   |
-| overlayColor | string   | rgba(68, 68, 68, 0.6) | Color of the background overlay                                                                            |
-| position     | string   | right                 | Position to render the main button and actions, options: (**left**, **right**, **center**)                 |
-| onPressItem  | function |                       | Function to be call as soon as the user select an option from actions. Will return the name of the action. |
+| Property                | Type                  | Default               | Description                                                                                                |
+|-------------------------|-----------------------|-----------------------|------------------------------------------------------------------------------------------------------------|
+| actions                 | array                 | []                    | Actions to be show once user press the main button                                                         |
+| buttonColor             | string                | #1253bc               | Color of the main button                                                                                   |
+| visible                 | boolean               | true                  | Hide or Show the component using an animation                                                              |
+| overlayColor            | string                | rgba(68, 68, 68, 0.6) | Color of the background overlay                                                                            |
+| position                | string                | right                 | Position to render the main button and actions, options: (**left**, **right**, **center**)                 |
+| overrideWithAction      | string                | false                 | Override the main action with the first action inside list actions, will not show other action             |
+| floatingIcon            | node | ReactElement   |                       | Change the default plus icon using **require(pathToImage)** or **ReactElement**                            |
+| onPressItem             | function              |                       | Function to be call as soon as the user select an option from actions. Will return the name of the action. |
 
 **Actions**
 

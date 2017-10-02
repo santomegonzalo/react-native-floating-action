@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { isNil } from 'lodash';
 import {
   StyleSheet,
   Text,
   Image,
-  Dimensions,
   View,
   Animated
 } from 'react-native';
 
 import { getTouchableComponent } from './utils/touchable';
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
 
 class FloatingActionItem extends Component {
   constructor(props) {
@@ -33,12 +31,36 @@ class FloatingActionItem extends Component {
   };
 
   renderText() {
-    const { text, position, elevation, textElevation, textBackgroundColor, textColor } = this.props;
+    const {
+      text,
+      position,
+      elevation,
+      textElevation,
+      textBackground,
+      textColor
+    } = this.props;
 
-    if (Boolean(text)) {  // eslint-disable-line no-extra-boolean-cast
+    if (!isNil(text)) {
       return (
-        <View key="text" style={[styles.textContainer, styles[`${position}TextContainer`], { elevation: textElevation || elevation || 5, backgroundColor: textBackgroundColor || "white" }]}>
-          <Text style={[styles.text, { color: textColor || '#444444' }]}>
+        <View
+          key="text"
+          style={[
+            styles.textContainer,
+            styles[`${position}TextContainer`],
+            {
+              backgroundColor: textBackground,
+              elevation: textElevation || elevation
+            }]
+          }
+        >
+          <Text
+            style={[
+              styles.text,
+              {
+                color: textColor
+              }
+            ]}
+          >
             {text}
           </Text>
         </View>
@@ -49,7 +71,7 @@ class FloatingActionItem extends Component {
   }
 
   renderButton() {
-    const { icon, color, elevation } = this.props;
+    const { icon, color } = this.props;
 
     let iconStyle;
 
@@ -60,7 +82,7 @@ class FloatingActionItem extends Component {
     }
 
     return (
-      <View key="button" style={[styles.button, { backgroundColor: color || '#1253bc', elevation: elevation || 5 }]}>
+      <View key="button" style={[styles.button, { backgroundColor: color }]}>
         {
           React.isValidElement(icon) ? icon : <Image style={iconStyle} source={icon} />
         }
@@ -70,12 +92,12 @@ class FloatingActionItem extends Component {
 
   render() {
     const { position } = this.props;
-    const Touchable = getTouchableComponent();
+    const Touchable = getTouchableComponent(false);
 
     const animatedActionContainerStyle = {
       marginBottom: this.animation.interpolate({
         inputRange: [0, 1],
-        outputRange: [5, 20]
+        outputRange: [5, 10]
       })
     };
 
@@ -93,7 +115,7 @@ class FloatingActionItem extends Component {
 
     return (
       <Touchable activeOpacity={0.4} style={styles.container} onPress={this.handleOnPress}>
-        <Animated.View style={[styles.actionContainer, animatedActionContainerStyle]}>
+        <Animated.View style={[styles.actionContainer, animatedActionContainerStyle, styles[`${position}ActionContainer`]]}>
           {
             components
           }
@@ -110,28 +132,47 @@ FloatingActionItem.propTypes = {
   name: PropTypes.string.isRequired,
   active: PropTypes.bool,
   text: PropTypes.string,
+  elevation: PropTypes.number,
+  textElevation: PropTypes.number,
+  textBackground: PropTypes.string,
+  textColor: PropTypes.string,
   onPress: PropTypes.func
 };
 
 FloatingActionItem.defaultProps = {
-  color: '#1253bc'
+  color: '#1253bc',
+  elevation: 5,
+  textColor: '#444444',
+  textBackground: '#ffffff'
 };
 
 const styles = StyleSheet.create({
   container: {
+    elevation: 0,
     flex: 1,
     flexDirection: 'column'
   },
   actionContainer: {
+    elevation: 0,
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'transparent'
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 8,
+    paddingTop: 8
+  },
+  leftActionContainer: {
+    paddingLeft: 38
+  },
+  rightActionContainer: {
+    paddingRight: 38
+  },
+  centerActionContainer: {
+    paddingLeft: 10,
+    paddingRight: 10
   },
   textContainer: {
     paddingHorizontal: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
     shadowOpacity: 0.35,
     shadowOffset: {
       width: 0,
@@ -141,8 +182,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 5,
     borderRadius: 4,
-    marginTop: 4,
-    height: 28
+    height: 22,
+    marginTop: 8
   },
   leftTextContainer: {
     marginLeft: 14
@@ -152,8 +193,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    lineHeight: 20,
-    color: '#444444'
+    lineHeight: 20
   },
   button: {
     alignItems: 'center',

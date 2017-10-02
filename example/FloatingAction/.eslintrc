@@ -12,6 +12,8 @@
     "react"
   ],
   "rules": {
+    "react/no-unescaped-entities": "off",
+    "jsx-a11y/href-no-hash": "off",
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/react-in-jsx-scope": 2,

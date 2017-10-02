@@ -1,31 +1,100 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, { Component } from 'react';
+import React, { Component } from 'react'; // eslint-disable-line
 import {
   AppRegistry,
   StyleSheet,
+  FlatList,
+  Alert,
   Text,
   View
 } from 'react-native';
 
-export default class FloatingAction extends Component {
+import FloatingAction from './components/FloatingAction';
+
+class FloatingActionExample extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      actionButtonVisible: true
+    };
+  }
+
+  offset = 0;
+
+  handleScroll = (event) => {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+
+    if (currentOffset <= 0) {
+      this.setState({
+        actionButtonVisible: true
+      });
+
+      return;
+    }
+
+    const direction = currentOffset > this.offset ? 'down' : 'up';
+    this.offset = currentOffset;
+
+    if (this.state.actionButtonVisible !== direction) {
+      this.setState({
+        actionButtonVisible: direction === 'up'
+      });
+    }
+  };
+
   render() {
+    const { actionButtonVisible } = this.state;
+
+    const actions = [{
+      text: 'Accessibility',
+      icon: require('./images/ic_accessibility_white.png'),
+      name: 'bt_accessibility',
+      position: 2
+    }, {
+      text: 'Language',
+      icon: require('./images/ic_language_white.png'),
+      name: 'bt_language',
+      position: 1
+    }, {
+      text: 'Location',
+      icon: require('./images/ic_room_white.png'),
+      name: 'bt_room',
+      position: 3
+    }, {
+      text: 'Video',
+      icon: require('./images/ic_videocam_white.png'),
+      name: 'bt_videocam',
+      position: 4
+    }];
+
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <FlatList
+          style={styles.list}
+          onScroll={this.handleScroll}
+          scrollEventThrottle={16}
+          data={
+            [
+              { key: 'row 1' }, { key: 'row 2' }, { key: 'row 3' },
+              { key: 'row 4' }, { key: 'row 5' }, { key: 'row 6' },
+              { key: 'row 7' }, { key: 'row 8' }, { key: 'row 9' },
+              { key: 'row 10' }, { key: 'row 11' }, { key: 'row 12' },
+              { key: 'row 13' }, { key: 'row 14' }, { key: 'row 15' },
+              { key: 'row 16' }, { key: 'row 17' }, { key: 'row 18' },
+              { key: 'row 19' }, { key: 'row 20' }, { key: 'row 21' }
+            ]
+          }
+          renderItem={({ item }) => <Text style={styles.listRow}>{item.key}</Text>}
+        />
+        <FloatingAction
+          actions={actions}
+          visible={actionButtonVisible}
+          onPressItem={
+            (name) => {
+              Alert.alert('Icon pressed', `the icon ${name} was pressed`);
+            }
+          }
+        />
       </View>
     );
   }
@@ -34,20 +103,24 @@ export default class FloatingAction extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF'
   },
-  welcome: {
+  list: {
+    flex: 1
+  },
+  listRow: {
+    flex: 1,
+    padding: 10,
+    height: 80,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#0C0C0C'
+  },
+  example: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    margin: 10
+  }
 });
 
-AppRegistry.registerComponent('FloatingAction', () => FloatingAction);
+AppRegistry.registerComponent('FloatingAction', () => FloatingActionExample);

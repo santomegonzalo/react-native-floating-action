@@ -89,7 +89,6 @@ class FloatingActionExample extends Component {
         <FloatingAction
           actions={actions}
           visible={actionButtonVisible}
-          floatingIcon={require('./images/ic_videocam_white.png')}
           onPressItem={
             (name) => {
               Alert.alert('Icon pressed', `the icon ${name} was pressed`);

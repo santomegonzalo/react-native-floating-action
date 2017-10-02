@@ -92,12 +92,12 @@ class FloatingActionItem extends Component {
 
   render() {
     const { position } = this.props;
-    const Touchable = getTouchableComponent();
+    const Touchable = getTouchableComponent(false);
 
     const animatedActionContainerStyle = {
       marginBottom: this.animation.interpolate({
         inputRange: [0, 1],
-        outputRange: [5, 20]
+        outputRange: [5, 10]
       })
     };
 
@@ -115,7 +115,7 @@ class FloatingActionItem extends Component {
 
     return (
       <Touchable activeOpacity={0.4} style={styles.container} onPress={this.handleOnPress}>
-        <Animated.View style={[styles.actionContainer, animatedActionContainerStyle]}>
+        <Animated.View style={[styles.actionContainer, animatedActionContainerStyle, styles[`${position}ActionContainer`]]}>
           {
             components
           }
@@ -148,13 +148,28 @@ FloatingActionItem.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
+    elevation: 0,
     flex: 1,
     flexDirection: 'column'
   },
   actionContainer: {
+    elevation: 0,
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'transparent'
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 8,
+    paddingTop: 8
+  },
+  leftActionContainer: {
+    paddingLeft: 38
+  },
+  rightActionContainer: {
+    paddingRight: 38
+  },
+  centerActionContainer: {
+    paddingLeft: 10,
+    paddingRight: 10
   },
   textContainer: {
     paddingHorizontal: 8,

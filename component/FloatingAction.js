@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'; // eslint-disable-line
 import PropTypes from 'prop-types';
-import { sortBy } from 'lodash';
+import { sortBy, isNil } from 'lodash';
 import {
   StyleSheet,
-  View,
   Image,
   Animated,
   Dimensions,
@@ -13,7 +12,7 @@ import {
 
 import FloatingActionItem from './FloatingActionItem';
 
-import { getTouchableComponent } from './utils/touchable';
+import { getTouchableComponent, getRippleProps } from './utils/touchable';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -27,6 +26,7 @@ class FloatingAction extends Component {
     };
 
     this.animation = new Animated.Value(0);
+    this.actionsAnimation = new Animated.Value(0);
     this.visibleAnimation = new Animated.Value(0);
   }
 
@@ -40,36 +40,28 @@ class FloatingAction extends Component {
     }
   }
 
-  animateButton = () => {
-    if (!this.state.active) {
-      Animated.spring(this.animation, { toValue: 1 }).start();
+  getIcon = () => {
+    const { actions, floatingIcon, overrideWithAction } = this.props;
 
-      // only execute it for the background to prevent extra calls
-      LayoutAnimation.configureNext({
-        duration: 180,
-        create: {
-          type: LayoutAnimation.Types.easeInEaseOut,
-          property: LayoutAnimation.Properties.opacity
-        }
-      });
+    if (overrideWithAction) {
+      const { icon } = actions[0];
 
-      const { compact, actions } = this.props;
-      if (actions.length > 0 && !(compact && actions.length === 1)) {
-        this.setState({
-          active: true
-        });
+      if (React.isValidElement(icon)) {
+        return icon;
       }
-    } else {
-      this.reset();
+
+      return <Image style={styles.buttonIcon} source={icon} />;
     }
-  };
 
-  reset = () => {
-    Animated.spring(this.animation, { toValue: 0 }).start();
+    if (floatingIcon) {
+      if (React.isValidElement(floatingIcon)) {
+        return floatingIcon;
+      }
 
-    this.setState({
-      active: false
-    });
+      return <Image style={styles.buttonIcon} source={floatingIcon} />;
+    }
+
+    return <Image style={styles.buttonIcon} source={require('../images/add.png')} />;
   };
 
   handlePressItem = (itemName) => {
@@ -82,29 +74,54 @@ class FloatingAction extends Component {
     this.reset();
   };
 
-  getIcon = () => {
-    const { actions, floatingIcon, compact } = this.props;
+  reset = () => {
+    Animated.spring(this.animation, { toValue: 0 }).start();
+    Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
 
-    if (compact && actions.length === 1) {
-      const { icon, iconLarge } = actions[0];
-      if (React.isValidElement(iconLarge)) {
-        return iconLarge;
-      } else if (React.isValidElement(icon)) {
-        return icon;
-      } else {
-        return (<Image style={iconStyle} source={icon} />);
+    this.setState({
+      active: false
+    });
+  };
+
+  animateButton = () => {
+    const { overrideWithAction, actions, floatingIcon } = this.props;
+
+    if (overrideWithAction) {
+      this.handlePressItem(actions[0].name);
+
+      return;
+    }
+
+    if (!this.state.active) {
+      if (isNil(floatingIcon)) {
+        Animated.spring(this.animation, { toValue: 1 }).start();
       }
-    }
 
-    if (floatingIcon && React.isValidElement(floatingIcon)) {
-      return floatingIcon;
-    }
+      Animated.spring(this.actionsAnimation, { toValue: 1 }).start();
 
-    return (<Image style={styles.buttonIcon} source={require('../images/add.png')} />);
-  }
+      // only execute it for the background to prevent extra calls
+      LayoutAnimation.configureNext({
+        duration: 180,
+        create: {
+          type: LayoutAnimation.Types.easeInEaseOut,
+          property: LayoutAnimation.Properties.opacity
+        }
+      });
+
+      this.setState({
+        active: true
+      });
+    } else {
+      this.reset();
+    }
+  };
 
   renderMainButton() {
-    const { buttonColor, position } = this.props;
+    const {
+      buttonColor,
+      position,
+      overrideWithAction
+    } = this.props;
 
     const animatedVisibleView = {
       transform: [{
@@ -129,28 +146,24 @@ class FloatingAction extends Component {
       }]
     };
 
-    if (this.props.inanimate || (this.props.compact && this.props.actions.length === 1 && this.props.inanimateCompact)) {
+    if (overrideWithAction) {
       animatedViewStyle = {};
     }
 
     const Touchable = getTouchableComponent();
 
-    let bgColor = { backgroundColor: '#1253bc' };
-    if (buttonColor) {
-      bgColor = { backgroundColor: buttonColor };
-    }
-
     return (
       <Animated.View
-        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor || '#1253bc' }, animatedVisibleView]}
+        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor }, animatedVisibleView]}
       >
         <Touchable
+          {...getRippleProps(buttonColor) }
           style={styles.button}
           activeOpacity={0.85}
           onPress={this.animateButton}
         >
           <Animated.View style={[styles.buttonTextContainer, animatedViewStyle]}>
-            { this.getIcon() }
+            {this.getIcon()}
           </Animated.View>
         </Touchable>
       </Animated.View>
@@ -158,15 +171,21 @@ class FloatingAction extends Component {
   }
 
   renderActions() {
-    const { actions, position, compact } = this.props;
+    const {
+      actions,
+      position,
+      overrideWithAction,
+      actionsTextBackground,
+      actionsTextColor
+    } = this.props;
     const { active } = this.state;
 
-    if (compact && actions.length === 1) {
+    if (overrideWithAction) {
       return null;
     }
 
     const animatedActionsStyle = {
-      opacity: this.animation.interpolate({
+      opacity: this.actionsAnimation.interpolate({
         inputRange: [0, 1],
         outputRange: [0, 1]
       })
@@ -184,6 +203,8 @@ class FloatingAction extends Component {
           sortBy(actions, ['position']).map(action => (
             <FloatingActionItem
               key={action.name}
+              textColor={actionsTextColor}
+              textBackground={actionsTextBackground}
               {...action}
               position={position}
               active={active}
@@ -216,7 +237,7 @@ class FloatingAction extends Component {
       >
         {
           this.state.active &&
-            this.renderTappableBackground()
+          this.renderTappableBackground()
         }
         {
           this.renderActions()
@@ -238,13 +259,18 @@ FloatingAction.propTypes = {
     name: PropTypes.string.isRequired,
     position: PropTypes.number.isRequired
   })),
+  actionsTextBackground: PropTypes.string,
+  actionsTextColor: PropTypes.string,
   position: PropTypes.oneOf(['right', 'left', 'center']),
   buttonColor: PropTypes.string,
   overlayColor: PropTypes.string,
+  floatingIcon: PropTypes.any,
+  overrideWithAction: PropTypes.bool, // use the first action like main action
   onPressItem: PropTypes.func
 };
 
 FloatingAction.defaultProps = {
+  overrideWithAction: false,
   visible: true,
   buttonColor: '#1253bc',
   overlayColor: 'rgba(68, 68, 68, 0.6)',
@@ -255,7 +281,7 @@ const styles = StyleSheet.create({
   actions: {
     position: 'absolute',
     bottom: 85,
-    zIndex: 3
+    zIndex: 10
   },
   rightActions: {
     alignItems: 'flex-end',
@@ -269,13 +295,13 @@ const styles = StyleSheet.create({
     left: -1000
   },
   rightActionsVisible: {
-    right: 38
+    right: 0
   },
   leftActionsVisible: {
-    left: 38
+    left: 0
   },
   centerActionsVisible: {
-    left: (DEVICE_WIDTH / 2) - 20
+    left: (DEVICE_WIDTH / 2) - 30
   },
   overlay: {
     position: 'absolute',
@@ -284,9 +310,10 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     elevation: 0,
-    zIndex: 1
+    zIndex: 0
   },
   buttonContainer: {
+    overflow: 'hidden',
     zIndex: 2,
     width: 56,
     height: 56,
@@ -322,6 +349,9 @@ const styles = StyleSheet.create({
     left: (DEVICE_WIDTH / 2) - 28
   },
   buttonTextContainer: {
+    borderRadius: 28,
+    width: 56,
+    height: 56,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'

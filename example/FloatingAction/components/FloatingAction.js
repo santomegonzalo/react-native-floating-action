@@ -12,7 +12,7 @@ import {
 
 import FloatingActionItem from './FloatingActionItem';
 
-import { getTouchableComponent } from './utils/touchable';
+import { getTouchableComponent, getRippleProps } from './utils/touchable';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -154,9 +154,10 @@ class FloatingAction extends Component {
 
     return (
       <Animated.View
-        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor || '#1253bc' }, animatedVisibleView]}
+        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor }, animatedVisibleView]}
       >
         <Touchable
+          {...getRippleProps(buttonColor)}
           style={styles.button}
           activeOpacity={0.85}
           onPress={this.animateButton}
@@ -280,7 +281,7 @@ const styles = StyleSheet.create({
   actions: {
     position: 'absolute',
     bottom: 85,
-    zIndex: 3
+    zIndex: 10
   },
   rightActions: {
     alignItems: 'flex-end',
@@ -294,13 +295,13 @@ const styles = StyleSheet.create({
     left: -1000
   },
   rightActionsVisible: {
-    right: 38
+    right: 0
   },
   leftActionsVisible: {
-    left: 38
+    left: 0
   },
   centerActionsVisible: {
-    left: (DEVICE_WIDTH / 2) - 20
+    left: (DEVICE_WIDTH / 2) - 30
   },
   overlay: {
     position: 'absolute',
@@ -308,10 +309,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    elevation: 5,
-    zIndex: 1
+    elevation: 0,
+    zIndex: 0
   },
   buttonContainer: {
+    overflow: 'hidden',
     zIndex: 2,
     width: 56,
     height: 56,
@@ -347,6 +349,9 @@ const styles = StyleSheet.create({
     left: (DEVICE_WIDTH / 2) - 28
   },
   buttonTextContainer: {
+    borderRadius: 28,
+    width: 56,
+    height: 56,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
