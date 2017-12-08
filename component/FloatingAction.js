@@ -120,7 +120,8 @@ class FloatingAction extends Component {
     const {
       buttonColor,
       position,
-      overrideWithAction
+      overrideWithAction,
+      distanceToEdge
     } = this.props;
 
     const animatedVisibleView = {
@@ -151,10 +152,14 @@ class FloatingAction extends Component {
     }
 
     const Touchable = getTouchableComponent();
+    const propStyles = { backgroundColor: buttonColor, bottom: distanceToEdge };
+    if (['left', 'right'].indexOf(position) > -1) {
+      propStyles[position] = distanceToEdge;
+    }
 
     return (
       <Animated.View
-        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor }, animatedVisibleView]}
+        style={[styles.buttonContainer, styles[`${position}Button`], propStyles, animatedVisibleView]}
       >
         <Touchable
           {...getRippleProps(buttonColor) }
@@ -266,7 +271,8 @@ FloatingAction.propTypes = {
   overlayColor: PropTypes.string,
   floatingIcon: PropTypes.any,
   overrideWithAction: PropTypes.bool, // use the first action like main action
-  onPressItem: PropTypes.func
+  onPressItem: PropTypes.func,
+  distanceToEdge: PropTypes.number
 };
 
 FloatingAction.defaultProps = {
@@ -274,7 +280,8 @@ FloatingAction.defaultProps = {
   visible: true,
   buttonColor: '#1253bc',
   overlayColor: 'rgba(68, 68, 68, 0.6)',
-  position: 'right'
+  position: 'right',
+  distanceToEdge: 30
 };
 
 const styles = StyleSheet.create({
@@ -329,7 +336,6 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 5,
     position: 'absolute',
-    bottom: 30
   },
   button: {
     zIndex: 3,
@@ -339,12 +345,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  rightButton: {
-    right: 30
-  },
-  leftButton: {
-    left: 30
-  },
+  rightButton: {},
+  leftButton: {},
   centerButton: {
     left: (DEVICE_WIDTH / 2) - 28
   },
