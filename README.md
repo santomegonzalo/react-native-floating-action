@@ -84,6 +84,7 @@ import { FloatingAction } from 'react-native-floating-action';
 |-------------------------|-----------------------|-----------------------|------------------------------------------------------------------------------------------------------------|
 | actions                 | array                 | []                    | Actions to be show once user press the main button                                                         |
 | buttonColor             | string                | #1253bc               | Color of the main button                                                                                   |
+| distanceToEdge          | number                | 30                    | Distance from button to edge                                                                               |
 | visible                 | boolean               | true                  | Hide or Show the component using an animation                                                              |
 | overlayColor            | string                | rgba(68, 68, 68, 0.6) | Color of the background overlay                                                                            |
 | position                | string                | right                 | Position to render the main button and actions, options: (**left**, **right**, **center**)                 |
