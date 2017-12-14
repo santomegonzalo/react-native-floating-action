@@ -34,7 +34,8 @@ class FloatingAction extends Component {
     if (nextProps.visible !== this.props.visible) {
       if (nextProps.visible) {
         Animated.spring(this.visibleAnimation, { toValue: 0 }).start();
-      } if (!nextProps.visible) {
+      }
+      if (!nextProps.visible) {
         Animated.spring(this.visibleAnimation, { toValue: 1 }).start();
       }
     }
@@ -181,7 +182,8 @@ class FloatingAction extends Component {
       position,
       overrideWithAction,
       actionsTextBackground,
-      actionsTextColor
+      actionsTextColor,
+      distanceToEdge
     } = this.props;
     const { active } = this.state;
 
@@ -204,19 +206,18 @@ class FloatingAction extends Component {
 
     return (
       <Animated.View style={actionsStyles} pointerEvents="box-none">
-        {
-          sortBy(actions, ['position']).map(action => (
-            <FloatingActionItem
-              key={action.name}
-              textColor={actionsTextColor}
-              textBackground={actionsTextBackground}
-              {...action}
-              position={position}
-              active={active}
-              onPress={this.handlePressItem}
-            />
-          ))
-        }
+        {sortBy(actions, ['position']).map(action => (
+          <FloatingActionItem
+            key={action.name}
+            textColor={actionsTextColor}
+            textBackground={actionsTextBackground}
+            {...action}
+            position={position}
+            active={active}
+            onPress={this.handlePressItem}
+            distanceToEdge={distanceToEdge}
+          />
+        ))}
       </Animated.View>
     );
   }

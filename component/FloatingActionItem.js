@@ -11,6 +11,8 @@ import {
 
 import { getTouchableComponent } from './utils/touchable';
 
+const DEFAULT_MARGIN = 8;
+
 class FloatingActionItem extends Component {
   constructor(props) {
     super(props);
@@ -91,7 +93,7 @@ class FloatingActionItem extends Component {
   }
 
   render() {
-    const { position } = this.props;
+    const { position, distanceToEdge } = this.props;
     const Touchable = getTouchableComponent(false);
 
     const animatedActionContainerStyle = {
@@ -102,23 +104,31 @@ class FloatingActionItem extends Component {
     };
 
     const components = [];
+    const distanceToEdgeActionContainer = {};
 
     if (position === 'left') {
       components.push(this.renderButton());
       components.push(this.renderText());
+      distanceToEdgeActionContainer.paddingLeft = distanceToEdge + DEFAULT_MARGIN;
     } else if (position === 'right') {
       components.push(this.renderText());
       components.push(this.renderButton());
+      distanceToEdgeActionContainer.paddingRight = distanceToEdge + DEFAULT_MARGIN;
     } else {
       components.push(this.renderButton());
     }
 
     return (
       <Touchable activeOpacity={0.4} style={styles.container} onPress={this.handleOnPress}>
-        <Animated.View style={[styles.actionContainer, animatedActionContainerStyle, styles[`${position}ActionContainer`]]}>
-          {
-            components
-          }
+        <Animated.View
+          style={[
+            styles.actionContainer,
+            animatedActionContainerStyle,
+            styles[`${position}ActionContainer`],
+            distanceToEdgeActionContainer,
+          ]}
+        >
+          {components}
         </Animated.View>
       </Touchable>
     );
@@ -136,14 +146,16 @@ FloatingActionItem.propTypes = {
   textElevation: PropTypes.number,
   textBackground: PropTypes.string,
   textColor: PropTypes.string,
-  onPress: PropTypes.func
+  onPress: PropTypes.func,
+  distanceToEdge: PropTypes.number
 };
 
 FloatingActionItem.defaultProps = {
   color: '#1253bc',
   elevation: 5,
   textColor: '#444444',
-  textBackground: '#ffffff'
+  textBackground: '#ffffff',
+  distanceToEdge: 30,
 };
 
 const styles = StyleSheet.create({
@@ -162,10 +174,10 @@ const styles = StyleSheet.create({
     paddingTop: 8
   },
   leftActionContainer: {
-    paddingLeft: 38
+    // paddingLeft: 38
   },
   rightActionContainer: {
-    paddingRight: 38
+    // paddingRight: 38
   },
   centerActionContainer: {
     paddingLeft: 10,
