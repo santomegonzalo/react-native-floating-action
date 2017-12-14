@@ -7,7 +7,8 @@ import {
   Animated,
   Dimensions,
   TouchableOpacity,
-  LayoutAnimation
+  LayoutAnimation,
+  Platform
 } from 'react-native';
 
 import FloatingActionItem from './FloatingActionItem';
@@ -15,6 +16,7 @@ import FloatingActionItem from './FloatingActionItem';
 import { getTouchableComponent, getRippleProps } from './utils/touchable';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
+const ACTION_BUTTON_SIZE = 56;
 
 class FloatingAction extends Component {
   constructor(props) {
@@ -34,8 +36,7 @@ class FloatingAction extends Component {
     if (nextProps.visible !== this.props.visible) {
       if (nextProps.visible) {
         Animated.spring(this.visibleAnimation, { toValue: 0 }).start();
-      }
-      if (!nextProps.visible) {
+      } if (!nextProps.visible) {
         Animated.spring(this.visibleAnimation, { toValue: 1 }).start();
       }
     }
@@ -163,7 +164,7 @@ class FloatingAction extends Component {
         style={[styles.buttonContainer, styles[`${position}Button`], propStyles, animatedVisibleView]}
       >
         <Touchable
-          {...getRippleProps(buttonColor) }
+          {...getRippleProps(buttonColor)}
           style={styles.button}
           activeOpacity={0.85}
           onPress={this.animateButton}
@@ -198,7 +199,9 @@ class FloatingAction extends Component {
       })
     };
 
-    const actionsStyles = [styles.actions, styles[`${position}Actions`], animatedActionsStyle];
+    const actionsStyles = [styles.actions, styles[`${position}Actions`], animatedActionsStyle, {
+      bottom: ACTION_BUTTON_SIZE + distanceToEdge
+    }];
 
     if (this.state.active) {
       actionsStyles.push(styles[`${position}ActionsVisible`]);
@@ -206,18 +209,20 @@ class FloatingAction extends Component {
 
     return (
       <Animated.View style={actionsStyles} pointerEvents="box-none">
-        {sortBy(actions, ['position']).map(action => (
-          <FloatingActionItem
-            key={action.name}
-            textColor={actionsTextColor}
-            textBackground={actionsTextBackground}
-            {...action}
-            position={position}
-            active={active}
-            onPress={this.handlePressItem}
-            distanceToEdge={distanceToEdge}
-          />
-        ))}
+        {
+          sortBy(actions, ['position']).map(action => (
+            <FloatingActionItem
+              distanceToEdge={distanceToEdge}
+              key={action.name}
+              textColor={actionsTextColor}
+              textBackground={actionsTextBackground}
+              {...action}
+              position={position}
+              active={active}
+              onPress={this.handlePressItem}
+            />
+          ))
+        }
       </Animated.View>
     );
   }
@@ -321,10 +326,10 @@ const styles = StyleSheet.create({
     zIndex: 0
   },
   buttonContainer: {
-    overflow: 'hidden',
+    overflow: Platform.OS === 'ios' ? 'visible' : 'hidden',
     zIndex: 2,
-    width: 56,
-    height: 56,
+    width: ACTION_BUTTON_SIZE,
+    height: ACTION_BUTTON_SIZE,
     borderRadius: 28,
     alignItems: 'center',
     justifyContent: 'center',
@@ -336,12 +341,12 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowRadius: 3,
     elevation: 5,
-    position: 'absolute',
+    position: 'absolute'
   },
   button: {
     zIndex: 3,
-    width: 56,
-    height: 56,
+    width: ACTION_BUTTON_SIZE,
+    height: ACTION_BUTTON_SIZE,
     borderRadius: 28,
     alignItems: 'center',
     justifyContent: 'center'
@@ -353,8 +358,8 @@ const styles = StyleSheet.create({
   },
   buttonTextContainer: {
     borderRadius: 28,
-    width: 56,
-    height: 56,
+    width: ACTION_BUTTON_SIZE,
+    height: ACTION_BUTTON_SIZE,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'

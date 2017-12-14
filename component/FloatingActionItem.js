@@ -125,7 +125,7 @@ class FloatingActionItem extends Component {
             styles.actionContainer,
             animatedActionContainerStyle,
             styles[`${position}ActionContainer`],
-            distanceToEdgeActionContainer,
+            distanceToEdgeActionContainer
           ]}
         >
           {components}
@@ -155,7 +155,7 @@ FloatingActionItem.defaultProps = {
   elevation: 5,
   textColor: '#444444',
   textBackground: '#ffffff',
-  distanceToEdge: 30,
+  distanceToEdge: 30
 };
 
 const styles = StyleSheet.create({
@@ -172,12 +172,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 8,
     paddingTop: 8
-  },
-  leftActionContainer: {
-    // paddingLeft: 38
-  },
-  rightActionContainer: {
-    // paddingRight: 38
   },
   centerActionContainer: {
     paddingLeft: 10,

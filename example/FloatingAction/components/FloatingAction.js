@@ -7,7 +7,8 @@ import {
   Animated,
   Dimensions,
   TouchableOpacity,
-  LayoutAnimation
+  LayoutAnimation,
+  Platform
 } from 'react-native';
 
 import FloatingActionItem from './FloatingActionItem';
@@ -15,6 +16,7 @@ import FloatingActionItem from './FloatingActionItem';
 import { getTouchableComponent, getRippleProps } from './utils/touchable';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
+const ACTION_BUTTON_SIZE = 56;
 
 class FloatingAction extends Component {
   constructor(props) {
@@ -120,7 +122,8 @@ class FloatingAction extends Component {
     const {
       buttonColor,
       position,
-      overrideWithAction
+      overrideWithAction,
+      distanceToEdge
     } = this.props;
 
     const animatedVisibleView = {
@@ -151,10 +154,14 @@ class FloatingAction extends Component {
     }
 
     const Touchable = getTouchableComponent();
+    const propStyles = { backgroundColor: buttonColor, bottom: distanceToEdge };
+    if (['left', 'right'].indexOf(position) > -1) {
+      propStyles[position] = distanceToEdge;
+    }
 
     return (
       <Animated.View
-        style={[styles.buttonContainer, styles[`${position}Button`], { backgroundColor: buttonColor }, animatedVisibleView]}
+        style={[styles.buttonContainer, styles[`${position}Button`], propStyles, animatedVisibleView]}
       >
         <Touchable
           {...getRippleProps(buttonColor)}
@@ -163,7 +170,7 @@ class FloatingAction extends Component {
           onPress={this.animateButton}
         >
           <Animated.View style={[styles.buttonTextContainer, animatedViewStyle]}>
-            { this.getIcon() }
+            {this.getIcon()}
           </Animated.View>
         </Touchable>
       </Animated.View>
@@ -176,7 +183,8 @@ class FloatingAction extends Component {
       position,
       overrideWithAction,
       actionsTextBackground,
-      actionsTextColor
+      actionsTextColor,
+      distanceToEdge
     } = this.props;
     const { active } = this.state;
 
@@ -191,7 +199,9 @@ class FloatingAction extends Component {
       })
     };
 
-    const actionsStyles = [styles.actions, styles[`${position}Actions`], animatedActionsStyle];
+    const actionsStyles = [styles.actions, styles[`${position}Actions`], animatedActionsStyle, {
+      bottom: ACTION_BUTTON_SIZE + distanceToEdge
+    }];
 
     if (this.state.active) {
       actionsStyles.push(styles[`${position}ActionsVisible`]);
@@ -202,6 +212,7 @@ class FloatingAction extends Component {
         {
           sortBy(actions, ['position']).map(action => (
             <FloatingActionItem
+              distanceToEdge={distanceToEdge}
               key={action.name}
               textColor={actionsTextColor}
               textBackground={actionsTextBackground}
@@ -237,7 +248,7 @@ class FloatingAction extends Component {
       >
         {
           this.state.active &&
-            this.renderTappableBackground()
+          this.renderTappableBackground()
         }
         {
           this.renderActions()
@@ -266,7 +277,8 @@ FloatingAction.propTypes = {
   overlayColor: PropTypes.string,
   floatingIcon: PropTypes.any,
   overrideWithAction: PropTypes.bool, // use the first action like main action
-  onPressItem: PropTypes.func
+  onPressItem: PropTypes.func,
+  distanceToEdge: PropTypes.number
 };
 
 FloatingAction.defaultProps = {
@@ -274,7 +286,8 @@ FloatingAction.defaultProps = {
   visible: true,
   buttonColor: '#1253bc',
   overlayColor: 'rgba(68, 68, 68, 0.6)',
-  position: 'right'
+  position: 'right',
+  distanceToEdge: 30
 };
 
 const styles = StyleSheet.create({
@@ -313,10 +326,10 @@ const styles = StyleSheet.create({
     zIndex: 0
   },
   buttonContainer: {
-    overflow: 'hidden',
+    overflow: Platform.OS === 'ios' ? 'visible' : 'hidden',
     zIndex: 2,
-    width: 56,
-    height: 56,
+    width: ACTION_BUTTON_SIZE,
+    height: ACTION_BUTTON_SIZE,
     borderRadius: 28,
     alignItems: 'center',
     justifyContent: 'center',
@@ -328,30 +341,25 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowRadius: 3,
     elevation: 5,
-    position: 'absolute',
-    bottom: 30
+    position: 'absolute'
   },
   button: {
     zIndex: 3,
-    width: 56,
-    height: 56,
+    width: ACTION_BUTTON_SIZE,
+    height: ACTION_BUTTON_SIZE,
     borderRadius: 28,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  rightButton: {
-    right: 30
-  },
-  leftButton: {
-    left: 30
-  },
+  rightButton: {},
+  leftButton: {},
   centerButton: {
     left: (DEVICE_WIDTH / 2) - 28
   },
   buttonTextContainer: {
     borderRadius: 28,
-    width: 56,
-    height: 56,
+    width: ACTION_BUTTON_SIZE,
+    height: ACTION_BUTTON_SIZE,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
