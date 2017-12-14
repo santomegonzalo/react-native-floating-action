@@ -7,7 +7,8 @@ import {
   Animated,
   Dimensions,
   TouchableOpacity,
-  LayoutAnimation
+  LayoutAnimation,
+  Platform
 } from 'react-native';
 
 import FloatingActionItem from './FloatingActionItem';
@@ -325,7 +326,7 @@ const styles = StyleSheet.create({
     zIndex: 0
   },
   buttonContainer: {
-    overflow: 'hidden',
+    overflow: Platform.OS === 'ios' ? 'visible' : 'hidden',
     zIndex: 2,
     width: ACTION_BUTTON_SIZE,
     height: ACTION_BUTTON_SIZE,
