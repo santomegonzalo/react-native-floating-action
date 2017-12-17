@@ -1,6 +1,14 @@
 # react-native-floating-action
 
-Material design action button for React Native
+Floating action button for React Native
+
+## Expo example
+
+Open the following click on your phone: [Expo link](https://expo.io/@santomegonzalo/ReactNativeFloatingAction-Expo)
+
+<img width="350" alt="Use it on Expo" src="https://user-images.githubusercontent.com/2914973/34082582-667c5738-e361-11e7-9251-5af5549b525c.png">
+
+## Images
 
 <img src="https://user-images.githubusercontent.com/2914973/27517002-84316402-59c4-11e7-987c-fd3b44af84ae.gif" width="350">
 
