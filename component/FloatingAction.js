@@ -29,7 +29,7 @@ class FloatingAction extends Component {
 
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
-    this.visibleAnimation = new Animated.Value(0);
+    this.visibleAnimation = new Animated.Value(props.visible ? 0 : 1);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -127,6 +127,10 @@ class FloatingAction extends Component {
     } = this.props;
 
     const animatedVisibleView = {
+      opacity: this.visibleAnimation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [1, 0]
+      }),
       transform: [{
         rotate: this.visibleAnimation.interpolate({
           inputRange: [0, 1],
@@ -161,7 +165,12 @@ class FloatingAction extends Component {
 
     return (
       <Animated.View
-        style={[styles.buttonContainer, styles[`${position}Button`], propStyles, animatedVisibleView]}
+        style={[
+          styles.buttonContainer,
+          styles[`${position}Button`],
+          propStyles,
+          animatedVisibleView
+        ]}
       >
         <Touchable
           {...getRippleProps(buttonColor)}
@@ -248,7 +257,7 @@ class FloatingAction extends Component {
       >
         {
           this.state.active &&
-          this.renderTappableBackground()
+            this.renderTappableBackground()
         }
         {
           this.renderActions()

@@ -9,6 +9,7 @@ import FloatingActionOverrideWithActionScreen from './screens/FloatingActionOver
 import FloatingActionDistanceEdge from './screens/FloatingActionDistanceEdge';
 import FloatingActionOverlayScreen from './screens/FloatingActionOverlayScreen';
 import FloatingActionColorScreen from './screens/FloatingActionColorScreen';
+import FloatingActionVisibilityScreen from './screens/FloatingActionVisibilityScreen';
 
 class App extends React.Component {
   static navigationOptions = {
@@ -39,14 +40,15 @@ class App extends React.Component {
               { key: 'row_4', text: 'No list of actions', screen: 'FloatingActionOverrideWithActionScreen' },
               { key: 'row_5', text: 'Set distance from edges', screen: 'FloatingActionDistanceEdge' },
               { key: 'row_6', text: 'Set overlay color', screen: 'FloatingActionOverlayScreen' },
-              { key: 'row_7', text: 'Set button color', screen: 'FloatingActionColorScreen' }
+              { key: 'row_7', text: 'Set button color', screen: 'FloatingActionColorScreen' },
+              { key: 'row_8', text: 'Set visibility', screen: 'FloatingActionVisibilityScreen' }
             ]
           }
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.row}
               onPress={() => {
-                this.props.navigation.navigate(item.screen);
+                this.props.navigation.navigate(item.screen); // eslint-disable-line
               }}
             >
               <Text>{item.text}</Text>
@@ -82,6 +84,9 @@ export default StackNavigator({
   },
   FloatingActionColorScreen: {
     screen: FloatingActionColorScreen
+  },
+  FloatingActionVisibilityScreen: {
+    screen: FloatingActionVisibilityScreen
   }
 });
 
