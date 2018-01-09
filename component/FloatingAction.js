@@ -127,10 +127,6 @@ class FloatingAction extends Component {
     } = this.props;
 
     const animatedVisibleView = {
-      opacity: this.visibleAnimation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 0]
-      }),
       transform: [{
         rotate: this.visibleAnimation.interpolate({
           inputRange: [0, 1],
