@@ -2,24 +2,33 @@ import React from 'react';
 import {
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-const PropertyComponent = ({ propertyName, propertyValue, defaultValue }) => (
+const PropertyComponent = ({ propertyName, propertyValue, defaultValue, actionLabel, onActionPress }) => (
   <View style={styles.container}>
     <Text style={styles.propertyName}>Property: {propertyName}</Text>
     <Text style={styles.propertyType}>Default:</Text>
     <Text style={styles.propertyValue}>{`${propertyName}: ${defaultValue}`}</Text>
     <Text style={[styles.propertyType, { marginTop: 10 }]}>Used:</Text>
     <Text style={styles.propertyValue}>{`${propertyName}: ${propertyValue}`}</Text>
+    {
+      actionLabel &&
+        <TouchableOpacity onPress={onActionPress}>
+          <Text style={styles.action}>{actionLabel}</Text>
+        </TouchableOpacity>
+    }
   </View>
 );
 
 PropertyComponent.propTypes = {
   propertyName: PropTypes.string,
   propertyValue: PropTypes.string,
-  defaultValue: PropTypes.string
+  defaultValue: PropTypes.string,
+  actionLabel: PropTypes.string,
+  onActionPress: PropTypes.func
 };
 
 const styles = StyleSheet.create({
@@ -43,6 +52,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#585757',
     marginBottom: 5
+  },
+  action: {
+    marginTop: 10,
+    width: 170,
+    textAlign: 'center',
+    fontSize: 16,
+    paddingVertical: 5,
+    backgroundColor: '#00D09E',
+    color: '#FFF'
   }
 });
 
