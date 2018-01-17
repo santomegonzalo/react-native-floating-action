@@ -86,12 +86,16 @@ class FloatingAction extends Component {
   };
 
   animateButton = () => {
-    const { overrideWithAction, actions, floatingIcon } = this.props;
+    const { overrideWithAction, actions, floatingIcon, onPressMain } = this.props;
 
     if (overrideWithAction) {
       this.handlePressItem(actions[0].name);
 
       return;
+    }
+
+    if (onPressMain) {
+      onPressMain(!this.state.active);
     }
 
     if (!this.state.active) {
@@ -283,7 +287,8 @@ FloatingAction.propTypes = {
   floatingIcon: PropTypes.any,
   overrideWithAction: PropTypes.bool, // use the first action like main action
   onPressItem: PropTypes.func,
-  distanceToEdge: PropTypes.number
+  distanceToEdge: PropTypes.number,
+  onPressMain: PropTypes.func
 };
 
 FloatingAction.defaultProps = {
