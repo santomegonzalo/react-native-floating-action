@@ -23,13 +23,21 @@ class FloatingAction extends Component {
     super(props);
 
     this.state = {
-      active: true,
+      active: false,
       visible: props.visible
     };
 
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
     this.visibleAnimation = new Animated.Value(props.visible ? 0 : 1);
+  }
+
+  componentDidMount() {
+    const { openOnMount } = this.props;
+
+    if (openOnMount) {
+      this.animateButton();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -86,7 +94,12 @@ class FloatingAction extends Component {
   };
 
   animateButton = () => {
-    const { overrideWithAction, actions, floatingIcon, onPressMain } = this.props;
+    const {
+      overrideWithAction,
+      actions,
+      floatingIcon,
+      onPressMain
+    } = this.props;
 
     if (overrideWithAction) {
       this.handlePressItem(actions[0].name);
@@ -250,13 +263,16 @@ class FloatingAction extends Component {
   }
 
   render() {
+    const { active } = this.state;
+    const { showBackground } = this.props;
+
     return (
       <Animated.View
         pointerEvents="box-none"
         style={[styles.overlay, { backgroundColor: 'transparent' }]}
       >
         {
-          this.state.active &&
+          active && showBackground &&
             this.renderTappableBackground()
         }
         {
@@ -288,6 +304,8 @@ FloatingAction.propTypes = {
   overrideWithAction: PropTypes.bool, // use the first action like main action
   onPressItem: PropTypes.func,
   distanceToEdge: PropTypes.number,
+  openOnMount: PropTypes.bool,
+  showBackground: PropTypes.bool,
   onPressMain: PropTypes.func
 };
 
@@ -297,7 +315,9 @@ FloatingAction.defaultProps = {
   buttonColor: '#1253bc',
   overlayColor: 'rgba(68, 68, 68, 0.6)',
   position: 'right',
-  distanceToEdge: 30
+  distanceToEdge: 30,
+  openOnMount: false,
+  showBackground: true
 };
 
 const styles = StyleSheet.create({
