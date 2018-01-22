@@ -36,9 +36,9 @@ class FloatingActionOpenMountScreen extends PureComponent {
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
           <Property
-            propertyName="openOnMount"
-            propertyValue="true"
-            defaultValue="false"
+            propertyName="showBackground"
+            propertyValue="false"
+            defaultValue="true"
           />
           <FloatingAction
             showBackground={false}
