@@ -1,16 +1,13 @@
 {
   "name": "react-native-floating-action",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "floating action component for react-native",
   "main": "index.js",
   "directories": {
     "example": "example"
   },
   "scripts": {
-    "start": "./run 'yarn run example:build' 'yarn run example:run'",
-    "example:run": "cd example/FloatingAction && react-native run-ios",
-    "example:build": "cd example/FloatingAction && yarn start",
-    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+    "test": "cd example/ReactNativeFloatingAction-Expo && yarn install && exp start"
   },
   "repository": {
     "type": "git",

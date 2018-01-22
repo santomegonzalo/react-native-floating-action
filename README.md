@@ -32,7 +32,13 @@ yarn add react-native-floating-action
 
 ## Usage
 
-To see how works, take a look into **example/FloatingAction**
+To see how works, take a look into **example/ReactNativeFloatingAction-Expo**
+
+To execute an example using Expo run the following command:
+
+```bash
+yarn test
+```
 
 **First step:** import the component:
 
@@ -98,6 +104,8 @@ import { FloatingAction } from 'react-native-floating-action';
 | position                | string                | right                 | Position to render the main button and actions, options: (**left**, **right**, **center**)                          |
 | overrideWithAction      | string                | false                 | Override the main action with the first action inside list actions, will not show other action                      |
 | floatingIcon            | node | ReactElement   |                       | Change the default plus icon using **require(pathToImage)** or **ReactElement**                                     |
+| showBackground          | boolean               | true                  | **Show** or **Hide** background after open it                                                                       |
+| openOnMount             | boolean               | false                 | Open component after mounting it, useful on some weird cases like tutorials                                         |
 | onPressItem             | function              |                       | Function to be call as soon as the user select an option from actions. Will return the name of the action.          |
 | onPressMain             | function              |                       | Function to be call as soon as use click main button and will return **true** or **false** depeneding of the state. |
 
@@ -117,6 +125,9 @@ import { FloatingAction } from 'react-native-floating-action';
 - [x] add colors configurations
 - [x] add more positions like left, center and right
 - [x] support hide or show the component with an animation
-- [ ] add sizing configurations
 - [x] change plus icon to be customizable
 - [x] use components as icon
+- [x] hide background
+- [x] open on mounting
+- [ ] allow user defined animations
+- [ ] use crazy animations

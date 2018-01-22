@@ -1,3 +1,6 @@
 #exclude all examples
 
 ./example
+.DS_STORE
+README.md
+node_modules/
