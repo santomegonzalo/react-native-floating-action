@@ -23,7 +23,7 @@ class FloatingAction extends Component {
     super(props);
 
     this.state = {
-      active: false,
+      active: true,
       visible: props.visible
     };
 
