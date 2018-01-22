@@ -32,7 +32,13 @@ yarn add react-native-floating-action
 
 ## Usage
 
-To see how works, take a look into **example/FloatingAction**
+To see how works, take a look into **example/ReactNativeFloatingAction-Expo**
+
+To execute an example using Expo run the following command:
+
+```bash
+yarn test
+```
 
 **First step:** import the component:
 
