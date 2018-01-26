@@ -93,7 +93,7 @@ class FloatingActionItem extends Component {
   }
 
   render() {
-    const { position, distanceToEdge } = this.props;
+    const { position, distanceToEdge, paddingTopBottom } = this.props;
     const Touchable = getTouchableComponent(false);
 
     const animatedActionContainerStyle = {
@@ -125,7 +125,11 @@ class FloatingActionItem extends Component {
             styles.actionContainer,
             animatedActionContainerStyle,
             styles[`${position}ActionContainer`],
-            distanceToEdgeActionContainer
+            distanceToEdgeActionContainer,
+            {
+              paddingTop: paddingTopBottom,
+              paddingBottom: paddingTopBottom
+            }
           ]}
         >
           {components}
@@ -147,7 +151,8 @@ FloatingActionItem.propTypes = {
   textBackground: PropTypes.string,
   textColor: PropTypes.string,
   onPress: PropTypes.func,
-  distanceToEdge: PropTypes.number
+  distanceToEdge: PropTypes.number,
+  paddingTopBottom: PropTypes.number
 };
 
 FloatingActionItem.defaultProps = {
