@@ -12,6 +12,7 @@ import FloatingActionColorScreen from './screens/FloatingActionColorScreen';
 import FloatingActionVisibilityScreen from './screens/FloatingActionVisibilityScreen';
 import FloatingActionOpenMountScreen from './screens/FloatingActionOpenMountScreen';
 import FloatingActionHideBackgroundScreen from './screens/FloatingActionHideBackgroundScreen';
+import FloatingActionActionsDistance from './screens/FloatingActionActionsDistance';
 
 class App extends React.Component {
   static navigationOptions = {
@@ -45,7 +46,8 @@ class App extends React.Component {
               { key: 'row_7', text: 'Set button color', screen: 'FloatingActionColorScreen' },
               { key: 'row_8', text: 'Set visibility', screen: 'FloatingActionVisibilityScreen' },
               { key: 'row_9', text: 'Open on mount', screen: 'FloatingActionOpenMountScreen' },
-              { key: 'row_10', text: 'Hide background', screen: 'FloatingActionHideBackgroundScreen' }
+              { key: 'row_10', text: 'Hide background', screen: 'FloatingActionHideBackgroundScreen' },
+              { key: 'row_11', text: 'Change Actions Distance', screen: 'FloatingActionActionsDistance' }
             ]
           }
           renderItem={({ item }) => (
@@ -97,6 +99,9 @@ export default StackNavigator({
   },
   FloatingActionHideBackgroundScreen: {
     screen: FloatingActionHideBackgroundScreen
+  },
+  FloatingActionActionsDistance: {
+    screen: FloatingActionActionsDistance
   }
 });
 

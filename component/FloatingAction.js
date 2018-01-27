@@ -206,7 +206,8 @@ class FloatingAction extends Component {
       overrideWithAction,
       actionsTextBackground,
       actionsTextColor,
-      distanceToEdge
+      distanceToEdge,
+      actionsPaddingTopBottom
     } = this.props;
     const { active } = this.state;
 
@@ -222,7 +223,7 @@ class FloatingAction extends Component {
     };
 
     const actionsStyles = [styles.actions, styles[`${position}Actions`], animatedActionsStyle, {
-      bottom: ACTION_BUTTON_SIZE + distanceToEdge
+      bottom: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom
     }];
 
     if (this.state.active) {
@@ -234,6 +235,7 @@ class FloatingAction extends Component {
         {
           sortBy(actions, ['position']).map(action => (
             <FloatingActionItem
+              paddingTopBottom={actionsPaddingTopBottom}
               distanceToEdge={distanceToEdge}
               key={action.name}
               textColor={actionsTextColor}
@@ -287,6 +289,7 @@ class FloatingAction extends Component {
 }
 
 FloatingAction.propTypes = {
+  actionsPaddingTopBottom: PropTypes.number,
   visible: PropTypes.bool,
   actions: PropTypes.arrayOf(PropTypes.shape({
     buttonColor: PropTypes.string,
@@ -310,6 +313,7 @@ FloatingAction.propTypes = {
 };
 
 FloatingAction.defaultProps = {
+  actionsPaddingTopBottom: 8,
   overrideWithAction: false,
   visible: true,
   buttonColor: '#1253bc',
