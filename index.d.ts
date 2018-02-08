@@ -48,8 +48,8 @@ declare module "react-native-floating-action" {
     onPressMain?: (state: boolean) => any;
 
     // undocummented in the readme
-    actionsTextBackground: string;
-    actionsTextColor: string;
+    actionsTextBackground?: string;
+    actionsTextColor?: string;
   }
 
   export interface FloatingActionStatic extends NativeMethodsMixin, React.ClassicComponentClass<FloatingActionProperties> {
