@@ -204,8 +204,8 @@ class FloatingAction extends Component {
       actions,
       position,
       overrideWithAction,
-      actionsTextBackground,
-      actionsTextColor,
+      textBackground,
+      textColor,
       distanceToEdge,
       actionsPaddingTopBottom
     } = this.props;
@@ -238,8 +238,6 @@ class FloatingAction extends Component {
               paddingTopBottom={actionsPaddingTopBottom}
               distanceToEdge={distanceToEdge}
               key={action.name}
-              textColor={actionsTextColor}
-              textBackground={actionsTextBackground}
               {...action}
               position={position}
               active={active}
@@ -298,8 +296,8 @@ FloatingAction.propTypes = {
     name: PropTypes.string.isRequired,
     position: PropTypes.number.isRequired
   })),
-  actionsTextBackground: PropTypes.string,
-  actionsTextColor: PropTypes.string,
+  textBackground: PropTypes.string,
+  textColor: PropTypes.string,
   position: PropTypes.oneOf(['right', 'left', 'center']),
   buttonColor: PropTypes.string,
   overlayColor: PropTypes.string,
