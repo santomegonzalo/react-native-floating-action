@@ -205,7 +205,9 @@ class FloatingAction extends Component {
       position,
       overrideWithAction,
       distanceToEdge,
-      actionsPaddingTopBottom
+      actionsPaddingTopBottom,
+      actionsTextBackground,
+      actionsTextColor
     } = this.props;
     const { active } = this.state;
 
@@ -231,17 +233,24 @@ class FloatingAction extends Component {
     return (
       <Animated.View style={actionsStyles} pointerEvents="box-none">
         {
-          sortBy(actions, ['position']).map(action => (
-            <FloatingActionItem
-              paddingTopBottom={actionsPaddingTopBottom}
-              distanceToEdge={distanceToEdge}
-              key={action.name}
-              {...action}
-              position={position}
-              active={active}
-              onPress={this.handlePressItem}
-            />
-          ))
+          sortBy(actions, ['position']).map((action) => {
+            const textColor = action.textColor || action.actionsTextColor;
+            const textBackground = action.textBackground || action.actionsTextBackground;
+
+            return (
+              <FloatingActionItem
+                paddingTopBottom={actionsPaddingTopBottom}
+                distanceToEdge={distanceToEdge}
+                key={action.name}
+                textColor={textColor}
+                textBackground={textBackground}
+                {...action}
+                position={position}
+                active={active}
+                onPress={this.handlePressItem}
+              />
+            )
+          })
         }
       </Animated.View>
     );
@@ -294,6 +303,8 @@ FloatingAction.propTypes = {
     name: PropTypes.string.isRequired,
     position: PropTypes.number.isRequired
   })),
+  actionsTextBackground: PropTypes.string, // @deprecated in favor of textBackground
+  actionsTextColor: PropTypes.string, // @deprecated in favor of textColor
   textBackground: PropTypes.string,
   textColor: PropTypes.string,
   position: PropTypes.oneOf(['right', 'left', 'center']),
