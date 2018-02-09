@@ -204,8 +204,6 @@ class FloatingAction extends Component {
       actions,
       position,
       overrideWithAction,
-      textBackground,
-      textColor,
       distanceToEdge,
       actionsPaddingTopBottom
     } = this.props;

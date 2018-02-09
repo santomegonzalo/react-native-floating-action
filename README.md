@@ -90,6 +90,24 @@ import { FloatingAction } from 'react-native-floating-action';
     </View>
 ```
 
+### Open and hide it programatically
+
+There are some cases where we want to show or hide the component without doing pressing the main button. For that we could do the following:
+
+```javascript
+<FloatingAction
+  ref={(ref) => { this.floatingAction = ref; }}
+  actions={[...]}
+  ...
+/>
+```
+
+and then we could do the following
+
+```javascript
+this.floatingAction.animateButton();
+```
+
 ## Configuration
 
 **FloatingAction**

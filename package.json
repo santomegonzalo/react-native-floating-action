@@ -1,6 +1,6 @@
 {
   "name": "react-native-floating-action",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "floating action component for react-native",
   "main": "index.js",
   "directories": {
