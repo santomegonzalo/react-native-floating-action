@@ -108,6 +108,8 @@ and then we could do the following
 this.floatingAction.animateButton();
 ```
 
+and that is everything.
+
 ## Configuration
 
 **FloatingAction**

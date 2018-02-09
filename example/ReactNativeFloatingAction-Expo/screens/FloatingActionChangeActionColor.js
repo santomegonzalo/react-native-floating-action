@@ -44,9 +44,14 @@ class FloatingActionChangeActionColor extends PureComponent {
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
           <Property
-            propertyName="position"
-            propertyValue="right"
-            defaultValue="right"
+            propertyName="textColor"
+            propertyValue="#000"
+            defaultValue="#FFF"
+          />
+          <Property
+            propertyName="textBackground"
+            propertyValue="#FFF"
+            defaultValue="#000"
           />
           <FloatingAction
             actions={actions}
