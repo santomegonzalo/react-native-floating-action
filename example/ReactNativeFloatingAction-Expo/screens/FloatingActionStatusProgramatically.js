@@ -46,9 +46,6 @@ class FloatingActionStatusProgramatically extends PureComponent {
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
           <Property
-            propertyName="visible"
-            propertyValue="false"
-            defaultValue="true"
             actionLabel="Change visibility"
             onActionPress={this.handleChangeVisibility}
           />
