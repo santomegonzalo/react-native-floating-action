@@ -9,11 +9,26 @@ import PropTypes from 'prop-types';
 
 const PropertyComponent = ({ propertyName, propertyValue, defaultValue, actionLabel, onActionPress }) => (
   <View style={styles.container}>
-    <Text style={styles.propertyName}>Property: {propertyName}</Text>
-    <Text style={styles.propertyType}>Default:</Text>
-    <Text style={styles.propertyValue}>{`${propertyName}: ${defaultValue}`}</Text>
-    <Text style={[styles.propertyType, { marginTop: 10 }]}>Used:</Text>
-    <Text style={styles.propertyValue}>{`${propertyName}: ${propertyValue}`}</Text>
+    {
+      propertyName &&
+        <Text style={styles.propertyName}>Property: {propertyName}</Text>
+    }
+    {
+      defaultValue &&
+        <Text style={styles.propertyType}>Default:</Text>
+    }
+    {
+      defaultValue &&
+        <Text style={styles.propertyValue}>{`${propertyName}: ${defaultValue}`}</Text>
+    }
+    {
+      propertyValue &&
+        <Text style={[styles.propertyType, { marginTop: 10 }]}>Used:</Text>
+    }
+    {
+      propertyValue &&
+        <Text style={styles.propertyValue}>{`${propertyName}: ${propertyValue}`}</Text>
+    }
     {
       actionLabel &&
         <TouchableOpacity onPress={onActionPress}>

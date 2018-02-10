@@ -90,6 +90,26 @@ import { FloatingAction } from 'react-native-floating-action';
     </View>
 ```
 
+### Open and hide it programatically
+
+There are some cases where we want to show or hide the component without doing pressing the main button. For that we could do the following:
+
+```javascript
+<FloatingAction
+  ref={(ref) => { this.floatingAction = ref; }}
+  actions={[...]}
+  ...
+/>
+```
+
+and then we could do the following
+
+```javascript
+this.floatingAction.animateButton();
+```
+
+and that is everything.
+
 ## Configuration
 
 **FloatingAction**
@@ -112,12 +132,14 @@ import { FloatingAction } from 'react-native-floating-action';
 
 **Actions**
 
-| Property | Type   | Default | Description                                                                                                                                                                                                                                                                |
-|----------|--------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| color    | string | #1253bc | Color of the action button                                                                                                                                                                                                                                                 |
-| icon     | any    |         | Icon to be rendered inside the action, will accept an URL or React.Image. If we want to send an URL we need to send it in this way: icon: **{ uri: 'https://imageurl.com' }** if we want to send a React.Image we will use it in this way: **icon: require('path/image')** |
-| name     | string |         | Name of the icon, this name is used as parameter for **onPressItem** action                                                                                                                                                                                                |
-| text     | string |         | Text to show near to the button. This option only works for **position = ['left', 'right']**                                                                                                                                                                               |
+| Property              | Type   | Default | Description                                                                                                                                                                                                                                                                |
+|-----------------------|--------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| color                 | string | #1253bc | Color of the action button                                                                                                                                                                                                                                                 |
+| icon                  | any    |         | Icon to be rendered inside the action, will accept an URL or React.Image. If we want to send an URL we need to send it in this way: icon: **{ uri: 'https://imageurl.com' }** if we want to send a React.Image we will use it in this way: **icon: require('path/image')** |
+| name                  | string |         | Name of the icon, this name is used as parameter for **onPressItem** action                                                                                                                                                                                                |
+| text                  | string |         | Text to show near to the button. This option only works for **position = ['left', 'right']**                                                                                                                                                                               |
+| textBackground        | string | #ffffff | Background color for Text container                                                                                                                                                                                                                                        |
+| textColor             | string | #444444 | Text color for every action                                                                                                                                                                                                                                                |
 
 ## TODO
 
