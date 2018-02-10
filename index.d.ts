@@ -15,6 +15,10 @@ declare module "react-native-floating-action" {
     text?: string;
     /** Color of the action button (#1253bc) */
     color?: string;
+    /** Background color for Text container */
+    textBackground?: string;
+    /** Text color for every action */
+    textColor?: string;
     /** Position (order) of this action */
     position: number;
   }
