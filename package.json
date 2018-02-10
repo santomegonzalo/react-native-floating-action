@@ -30,10 +30,11 @@
     "lodash": "^4.17.4"
   },
   "peerDependencies": {
-    "react-native": ">=0.45",
-    "prop-types": ">=15.5.10"
+    "prop-types": ">=15.5.10",
+    "react-native": ">=0.45"
   },
   "devDependencies": {
+    "@types/react-native": "^0.52.8",
     "babel-eslint": "7.2.3",
     "babel-plugin-transform-react-jsx-source": "^6.22.0",
     "babel-preset-react-native": "3.0.0",
