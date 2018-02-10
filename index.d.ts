@@ -14,9 +14,9 @@ declare module "react-native-floating-action" {
     /** Text to show near to the button. This option only works for position 'left' or 'right' */
     text?: string;
     /** Color of the action button (#1253bc) */
-    buttonColor?: string;
-    /** Position to render the main button and actions, options: 'left', 'right', 'center' */
-    position: 'left' | 'right' | 'center';
+    color?: string;
+    /** Position (order) of this action */
+    position: number;
   }
 
   export interface FloatingActionProperties {
@@ -46,10 +46,10 @@ declare module "react-native-floating-action" {
     onPressItem?: (action: string) => any;
     /** Function to be call as soon as use click main button and will return true or false depeneding of the state. */
     onPressMain?: (state: boolean) => any;
-
-    // undocummented in the readme
-    actionsTextBackground?: string;
-    actionsTextColor?: string;
+    /** Background color for Text container */
+    textBackground?: string;
+    /** Text color for every action */
+    textColor?: string;
   }
 
   export interface FloatingActionStatic extends NativeMethodsMixin, React.ClassicComponentClass<FloatingActionProperties> {
