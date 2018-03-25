@@ -1,6 +1,5 @@
 import React, { Component } from 'react'; // eslint-disable-line
 import PropTypes from 'prop-types';
-import { sortBy, isNil } from 'lodash';
 import {
   StyleSheet,
   Image,
@@ -23,8 +22,7 @@ class FloatingAction extends Component {
     super(props);
 
     this.state = {
-      active: false,
-      visible: props.visible
+      active: false
     };
 
     this.animation = new Animated.Value(0);
@@ -100,6 +98,7 @@ class FloatingAction extends Component {
       floatingIcon,
       onPressMain
     } = this.props;
+    const { active } = this.state;
 
     if (overrideWithAction) {
       this.handlePressItem(actions[0].name);
@@ -108,11 +107,11 @@ class FloatingAction extends Component {
     }
 
     if (onPressMain) {
-      onPressMain(!this.state.active);
+      onPressMain(!active);
     }
 
-    if (!this.state.active) {
-      if (isNil(floatingIcon)) {
+    if (!active) {
+      if (!floatingIcon) {
         Animated.spring(this.animation, { toValue: 1 }).start();
       }
 
@@ -137,11 +136,19 @@ class FloatingAction extends Component {
 
   renderMainButton() {
     const {
-      buttonColor,
+      // @deprecated in favor of "color"
+      buttonColor, // eslint-disable-line
+      color,
       position,
       overrideWithAction,
       distanceToEdge
     } = this.props;
+
+    if (buttonColor) {
+      console.warn('FloatingAction: "buttonColor" property was deprecated. Please use "color"');
+    }
+
+    const mainButtonColor = buttonColor || color;
 
     const animatedVisibleView = {
       transform: [{
@@ -171,7 +178,7 @@ class FloatingAction extends Component {
     }
 
     const Touchable = getTouchableComponent();
-    const propStyles = { backgroundColor: buttonColor, bottom: distanceToEdge };
+    const propStyles = { backgroundColor: mainButtonColor, bottom: distanceToEdge };
     if (['left', 'right'].indexOf(position) > -1) {
       propStyles[position] = distanceToEdge;
     }
@@ -186,7 +193,7 @@ class FloatingAction extends Component {
         ]}
       >
         <Touchable
-          {...getRippleProps(buttonColor)}
+          {...getRippleProps(mainButtonColor)}
           style={styles.button}
           activeOpacity={0.85}
           onPress={this.animateButton}
@@ -205,9 +212,7 @@ class FloatingAction extends Component {
       position,
       overrideWithAction,
       distanceToEdge,
-      actionsPaddingTopBottom,
-      actionsTextBackground,
-      actionsTextColor
+      actionsPaddingTopBottom
     } = this.props;
     const { active } = this.state;
 
@@ -226,14 +231,16 @@ class FloatingAction extends Component {
       bottom: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom
     }];
 
-    if (this.state.active) {
+    if (active) {
       actionsStyles.push(styles[`${position}ActionsVisible`]);
     }
+
+    const sortedActions = actions.sort((a, b) => a.position - b.position);
 
     return (
       <Animated.View style={actionsStyles} pointerEvents="box-none">
         {
-          sortBy(actions, ['position']).map((action) => {
+          sortedActions.map((action) => {
             const textColor = action.textColor || action.actionsTextColor;
             const textBackground = action.textBackground || action.actionsTextBackground;
 
@@ -249,7 +256,7 @@ class FloatingAction extends Component {
                 active={active}
                 onPress={this.handlePressItem}
               />
-            )
+            );
           })
         }
       </Animated.View>
@@ -279,7 +286,7 @@ class FloatingAction extends Component {
         style={[styles.overlay, { backgroundColor: 'transparent' }]}
       >
         {
-          active && showBackground &&
+          (active && showBackground) &&
             this.renderTappableBackground()
         }
         {
@@ -294,28 +301,25 @@ class FloatingAction extends Component {
 }
 
 FloatingAction.propTypes = {
-  actionsPaddingTopBottom: PropTypes.number,
-  visible: PropTypes.bool,
   actions: PropTypes.arrayOf(PropTypes.shape({
-    buttonColor: PropTypes.string,
-    text: PropTypes.string,
+    color: PropTypes.string,
     icon: PropTypes.any.isRequired,
     name: PropTypes.string.isRequired,
-    position: PropTypes.number.isRequired
+    text: PropTypes.string,
+    textBackground: PropTypes.string,
+    textColor: PropTypes.string
   })),
-  actionsTextBackground: PropTypes.string, // @deprecated in favor of textBackground
-  actionsTextColor: PropTypes.string, // @deprecated in favor of textColor
-  textBackground: PropTypes.string,
-  textColor: PropTypes.string,
-  position: PropTypes.oneOf(['right', 'left', 'center']),
-  buttonColor: PropTypes.string,
-  overlayColor: PropTypes.string,
-  floatingIcon: PropTypes.any,
-  overrideWithAction: PropTypes.bool, // use the first action like main action
-  onPressItem: PropTypes.func,
+  color: PropTypes.string,
   distanceToEdge: PropTypes.number,
-  openOnMount: PropTypes.bool,
+  visible: PropTypes.bool,
+  overlayColor: PropTypes.string,
+  position: PropTypes.oneOf(['right', 'left', 'center']),
+  overrideWithAction: PropTypes.bool, // replace mainAction with first action from actions
+  floatingIcon: PropTypes.any,
   showBackground: PropTypes.bool,
+  openOnMount: PropTypes.bool,
+  actionsPaddingTopBottom: PropTypes.number,
+  onPressItem: PropTypes.func,
   onPressMain: PropTypes.func
 };
 
@@ -323,7 +327,7 @@ FloatingAction.defaultProps = {
   actionsPaddingTopBottom: 8,
   overrideWithAction: false,
   visible: true,
-  buttonColor: '#1253bc',
+  color: '#1253bc',
   overlayColor: 'rgba(68, 68, 68, 0.6)',
   position: 'right',
   distanceToEdge: 30,

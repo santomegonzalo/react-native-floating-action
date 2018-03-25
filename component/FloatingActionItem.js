@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isNil } from 'lodash';
 import {
   StyleSheet,
   Text,
@@ -34,15 +33,20 @@ class FloatingActionItem extends Component {
 
   renderText() {
     const {
+      // @deprecated in favor of textElevation
+      elevation, // eslint-disable-line
       text,
       position,
-      elevation,
       textElevation,
       textBackground,
       textColor
     } = this.props;
 
-    if (!isNil(text)) {
+    if (elevation !== undefined) {
+      console.warn('FloatingActionItem: "elevation" property was deprecated. Please use "textElevation"');
+    }
+
+    if (text) {
       return (
         <View
           key="text"
@@ -140,27 +144,28 @@ class FloatingActionItem extends Component {
 }
 
 FloatingActionItem.propTypes = {
-  position: PropTypes.oneOf(['left', 'right', 'center']),
   color: PropTypes.string,
   icon: PropTypes.any,
   name: PropTypes.string.isRequired,
-  active: PropTypes.bool,
   text: PropTypes.string,
-  elevation: PropTypes.number,
-  textElevation: PropTypes.number,
   textBackground: PropTypes.string,
   textColor: PropTypes.string,
-  onPress: PropTypes.func,
+  // not on doc
+  textElevation: PropTypes.number,
+  // not modified by user
+  position: PropTypes.oneOf(['left', 'right', 'center']),
+  active: PropTypes.bool,
   distanceToEdge: PropTypes.number,
-  paddingTopBottom: PropTypes.number
+  paddingTopBottom: PropTypes.number, // modified by parent property "actionsPaddingTopBottom"
+  onPress: PropTypes.func
 };
 
 FloatingActionItem.defaultProps = {
   color: '#1253bc',
-  elevation: 5,
+  distanceToEdge: 30,
+  textElevation: 5,
   textColor: '#444444',
-  textBackground: '#ffffff',
-  distanceToEdge: 30
+  textBackground: '#ffffff'
 };
 
 const styles = StyleSheet.create({

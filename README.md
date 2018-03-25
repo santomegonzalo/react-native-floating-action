@@ -6,19 +6,13 @@ Floating action button for React Native
 
 Open the following click on your phone: [Expo link](https://expo.io/@santomegonzalo/ReactNativeFloatingAction-Expo)
 
+or user your phone and scan the following QR:
+
 <img width="350" alt="Use it on Expo" src="https://user-images.githubusercontent.com/2914973/34082582-667c5738-e361-11e7-9251-5af5549b525c.png">
 
-## Images
+## Example of how Expo looks
 
-<img src="https://user-images.githubusercontent.com/2914973/27517002-84316402-59c4-11e7-987c-fd3b44af84ae.gif" width="350">
-
-<img src="https://user-images.githubusercontent.com/2914973/27517000-841d17e0-59c4-11e7-8804-1192dbc98af5.gif" width="350">
-
-<img src="https://user-images.githubusercontent.com/2914973/27517001-841df002-59c4-11e7-91e6-2a03bba66fe7.gif" width="350">
-
-<img src="https://user-images.githubusercontent.com/2914973/27517003-8444c42a-59c4-11e7-9a8c-5e007708675b.gif" width="350">
-
-<img src="https://user-images.githubusercontent.com/2914973/29421294-e74df51c-8374-11e7-96ca-62675075f8e8.gif" width="350">
+<img src="https://user-images.githubusercontent.com/2914973/37876447-c5f553d0-304c-11e8-8c4f-7d6ef97d752c.gif" width="350">
 
 ## Installation
 
@@ -30,15 +24,19 @@ or
 yarn add react-native-floating-action
 ```
 
-## Usage
+## Example
 
-To see how works, take a look into **example/ReactNativeFloatingAction-Expo**
+Take a look into **example/ReactNativeFloatingAction-Expo**
 
-To execute an example using Expo run the following command:
+To execute the example using **Expo** run the following command:
 
 ```bash
-yarn test
+yarn run run:example
 ```
+
+or open [Expo link](https://expo.io/@santomegonzalo/ReactNativeFloatingAction-Expo) from your mobile
+
+## How to use it
 
 **First step:** import the component:
 
@@ -92,7 +90,7 @@ import { FloatingAction } from 'react-native-floating-action';
 
 ### Open and hide it programatically
 
-There are some cases where we want to show or hide the component without doing pressing the main button. For that we could do the following:
+There are some cases where you want to show or hide the component without pressing the main button:
 
 ```javascript
 <FloatingAction
@@ -102,13 +100,11 @@ There are some cases where we want to show or hide the component without doing p
 />
 ```
 
-and then we could do the following
+and then:
 
 ```javascript
 this.floatingAction.animateButton();
 ```
-
-and that is everything.
 
 ## Configuration
 
@@ -117,7 +113,7 @@ and that is everything.
 | Property                | Type                  | Default               | Description                                                                                                         |
 |-------------------------|-----------------------|-----------------------|---------------------------------------------------------------------------------------------------------------------|
 | actions                 | array                 | []                    | Actions to be show once user press the main button                                                                  |
-| buttonColor             | string                | #1253bc               | Color of the main button                                                                                            |
+| color                   | string                | #1253bc               | Color of the main button                                                                                            |
 | distanceToEdge          | number                | 30                    | Distance from button to edge                                                                                        |
 | visible                 | boolean               | true                  | Hide or Show the component using an animation                                                                       |
 | overlayColor            | string                | rgba(68, 68, 68, 0.6) | Color of the background overlay                                                                                     |
@@ -137,9 +133,10 @@ and that is everything.
 | color                 | string | #1253bc | Color of the action button                                                                                                                                                                                                                                                 |
 | icon                  | any    |         | Icon to be rendered inside the action, will accept an URL or React.Image. If we want to send an URL we need to send it in this way: icon: **{ uri: 'https://imageurl.com' }** if we want to send a React.Image we will use it in this way: **icon: require('path/image')** |
 | name                  | string |         | Name of the icon, this name is used as parameter for **onPressItem** action                                                                                                                                                                                                |
-| text                  | string |         | Text to show near to the button. This option only works for **position = ['left', 'right']**                                                                                                                                                                               |
+| text                  | string |         | Text to show near to the button. (Only apply for **position = ['left', 'right']**)                                                                                                                                                                               |
 | textBackground        | string | #ffffff | Background color for Text container                                                                                                                                                                                                                                        |
 | textColor             | string | #444444 | Text color for every action                                                                                                                                                                                                                                                |
+| textElevation         | number | 5       | Elevation property (only android)                                                                                                                                                                                                                                          |
 
 ## TODO
 
