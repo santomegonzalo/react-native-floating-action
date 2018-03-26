@@ -22,12 +22,18 @@ class FloatingAction extends Component {
     super(props);
 
     this.state = {
-      active: false
+      active: false,
+      visible: props.visible
     };
 
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
     this.visibleAnimation = new Animated.Value(props.visible ? 0 : 1);
+    /*
+     * this animation will fix an error on ReactNative (Android) where
+     * interpolations with 0 and 1 don't work as expected.
+     */
+    this.fadeAnimation = new Animated.Value(props.visible ? 1 : 0);
   }
 
   componentDidMount() {
@@ -41,9 +47,15 @@ class FloatingAction extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.visible !== this.props.visible) {
       if (nextProps.visible) {
-        Animated.spring(this.visibleAnimation, { toValue: 0 }).start();
+        Animated.parallel([
+          Animated.spring(this.visibleAnimation, { toValue: 0 }),
+          Animated.spring(this.fadeAnimation, { toValue: 1 })
+        ]).start();
       } if (!nextProps.visible) {
-        Animated.spring(this.visibleAnimation, { toValue: 1 }).start();
+        Animated.parallel([
+          Animated.spring(this.visibleAnimation, { toValue: 1 }),
+          Animated.spring(this.fadeAnimation, { toValue: 0 })
+        ]).start();
       }
     }
   }
@@ -151,6 +163,7 @@ class FloatingAction extends Component {
     const mainButtonColor = buttonColor || color;
 
     const animatedVisibleView = {
+      opacity: this.fadeAnimation,
       transform: [{
         rotate: this.visibleAnimation.interpolate({
           inputRange: [0, 1],
