@@ -6,7 +6,7 @@
     "prop-types": "^15.6.0",
     "react": "16.0.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-24.0.0.tar.gz",
-    "react-native-floating-action": "1.10.0",
+    "react-native-floating-action": "1.10.1",
     "react-navigation": "^1.0.0-beta.21"
   }
 }
