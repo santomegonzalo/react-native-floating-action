@@ -137,6 +137,8 @@ this.floatingAction.animateButton();
 | textBackground        | string | #ffffff | Background color for Text container                                                                                                                                                                                                                                        |
 | textColor             | string | #444444 | Text color for every action                                                                                                                                                                                                                                                |
 | textElevation         | number | 5       | Elevation property (only android)                                                                                                                                                                                                                                          |
+| size                  | number | 40      | size of of the icon rendered inside the action
+|
 
 ## TODO
 
