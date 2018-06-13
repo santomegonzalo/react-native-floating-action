@@ -97,7 +97,12 @@ class FloatingActionItem extends Component {
   }
 
   render() {
-    const { position, distanceToEdge, paddingTopBottom } = this.props;
+    const {
+      position,
+      distanceToEdge,
+      horizontalDistanceToEdge,
+      paddingTopBottom
+    } = this.props;
     const Touchable = getTouchableComponent(false);
 
     const animatedActionContainerStyle = {
@@ -110,14 +115,16 @@ class FloatingActionItem extends Component {
     const components = [];
     const distanceToEdgeActionContainer = {};
 
+    const horizontalMargin = horizontalDistanceToEdge !== undefined ? horizontalDistanceToEdge : distanceToEdge
+
     if (position === 'left') {
       components.push(this.renderButton());
       components.push(this.renderText());
-      distanceToEdgeActionContainer.paddingLeft = distanceToEdge + DEFAULT_MARGIN;
+      distanceToEdgeActionContainer.paddingLeft = horizontalMargin + DEFAULT_MARGIN;
     } else if (position === 'right') {
       components.push(this.renderText());
       components.push(this.renderButton());
-      distanceToEdgeActionContainer.paddingRight = distanceToEdge + DEFAULT_MARGIN;
+      distanceToEdgeActionContainer.paddingRight = horizontalMargin + DEFAULT_MARGIN;
     } else {
       components.push(this.renderButton());
     }
@@ -157,6 +164,7 @@ FloatingActionItem.propTypes = {
   position: PropTypes.oneOf(['left', 'right', 'center']),
   active: PropTypes.bool,
   distanceToEdge: PropTypes.number,
+  horizontalDistanceToEdge: PropTypes.number,
   paddingTopBottom: PropTypes.number, // modified by parent property "actionsPaddingTopBottom"
   onPress: PropTypes.func
 };
