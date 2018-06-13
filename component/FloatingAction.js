@@ -153,7 +153,9 @@ class FloatingAction extends Component {
       color,
       position,
       overrideWithAction,
-      distanceToEdge
+      distanceToEdge,
+      verticalDistanceToEdge,
+      horizontalDistanceToEdge
     } = this.props;
 
     if (buttonColor) {
@@ -191,9 +193,18 @@ class FloatingAction extends Component {
     }
 
     const Touchable = getTouchableComponent();
-    const propStyles = { backgroundColor: mainButtonColor, bottom: distanceToEdge };
-    if (['left', 'right'].indexOf(position) > -1) {
-      propStyles[position] = distanceToEdge;
+    const propStyles = {
+      backgroundColor: mainButtonColor,
+      bottom:
+        verticalDistanceToEdge !== undefined
+          ? verticalDistanceToEdge
+          : distanceToEdge
+    };
+    if (["left", "right"].indexOf(position) > -1) {
+      propStyles[position] =
+        horizontalDistanceToEdge !== undefined
+          ? horizontalDistanceToEdge
+          : distanceToEdge;
     }
 
     return (
@@ -225,6 +236,8 @@ class FloatingAction extends Component {
       position,
       overrideWithAction,
       distanceToEdge,
+      horizontalDistanceToEdge,
+      verticalDistanceToEdge,
       actionsPaddingTopBottom
     } = this.props;
     const { active } = this.state;
@@ -240,9 +253,19 @@ class FloatingAction extends Component {
       })
     };
 
-    const actionsStyles = [styles.actions, styles[`${position}Actions`], animatedActionsStyle, {
-      bottom: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom
-    }];
+    const actionsStyles = [
+      styles.actions,
+      styles[`${position}Actions`],
+      animatedActionsStyle,
+      {
+        bottom:
+          ACTION_BUTTON_SIZE +
+          (verticalDistanceToEdge !== undefined
+            ? verticalDistanceToEdge
+            : distanceToEdge) +
+          actionsPaddingTopBottom
+      }
+    ];
 
     if (active) {
       actionsStyles.push(styles[`${position}ActionsVisible`]);
@@ -252,26 +275,27 @@ class FloatingAction extends Component {
 
     return (
       <Animated.View style={actionsStyles} pointerEvents="box-none">
-        {
-          sortedActions.map((action) => {
-            const textColor = action.textColor || action.actionsTextColor;
-            const textBackground = action.textBackground || action.actionsTextBackground;
+        {sortedActions.map(action => {
+          const textColor = action.textColor || action.actionsTextColor;
+          const textBackground =
+            action.textBackground || action.actionsTextBackground;
 
-            return (
-              <FloatingActionItem
-                paddingTopBottom={actionsPaddingTopBottom}
-                distanceToEdge={distanceToEdge}
-                key={action.name}
-                textColor={textColor}
-                textBackground={textBackground}
-                {...action}
-                position={position}
-                active={active}
-                onPress={this.handlePressItem}
-              />
-            );
-          })
-        }
+          return (
+            <FloatingActionItem
+              paddingTopBottom={actionsPaddingTopBottom}
+              distanceToEdge={distanceToEdge}
+              horizontalDistanceToEdge={horizontalDistanceToEdge}
+              verticalDistanceToEdge={verticalDistanceToEdge}
+              key={action.name}
+              textColor={textColor}
+              textBackground={textBackground}
+              {...action}
+              position={position}
+              active={active}
+              onPress={this.handlePressItem}
+            />
+          );
+        })}
       </Animated.View>
     );
   }
@@ -324,6 +348,8 @@ FloatingAction.propTypes = {
   })),
   color: PropTypes.string,
   distanceToEdge: PropTypes.number,
+  horizontalDistanceToEdge: PropTypes.number,
+  verticalDistanceToEdge: PropTypes.number,
   visible: PropTypes.bool,
   overlayColor: PropTypes.string,
   position: PropTypes.oneOf(['right', 'left', 'center']),
