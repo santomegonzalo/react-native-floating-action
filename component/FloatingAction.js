@@ -22,8 +22,7 @@ class FloatingAction extends Component {
     super(props);
 
     this.state = {
-      active: false,
-      visible: props.visible
+      active: false
     };
 
     this.animation = new Animated.Value(0);
@@ -316,11 +315,12 @@ class FloatingAction extends Component {
 FloatingAction.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.shape({
     color: PropTypes.string,
-    icon: PropTypes.any.isRequired,
+    icon: PropTypes.any,
     name: PropTypes.string.isRequired,
     text: PropTypes.string,
     textBackground: PropTypes.string,
-    textColor: PropTypes.string
+    textColor: PropTypes.string,
+    component: PropTypes.func
   })),
   color: PropTypes.string,
   distanceToEdge: PropTypes.number,

@@ -15,6 +15,7 @@
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/react-in-jsx-scope": 2,
+    "react/prefer-stateless-function": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"]}],
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off",
