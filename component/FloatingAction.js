@@ -60,7 +60,7 @@ class FloatingAction extends Component {
   }
 
   getIcon = () => {
-    const { actions, floatingIcon, overrideWithAction } = this.props;
+    const { actions, floatingIcon, overrideWithAction , iconWidth , iconHeight } = this.props;
 
     if (overrideWithAction) {
       const { icon } = actions[0];
@@ -68,8 +68,7 @@ class FloatingAction extends Component {
       if (React.isValidElement(icon)) {
         return icon;
       }
-
-      return <Image style={styles.buttonIcon} source={icon} />;
+      return <Image style={{width:iconWidth,height:iconHeight}} source={icon} />;
     }
 
     if (floatingIcon) {
@@ -77,10 +76,10 @@ class FloatingAction extends Component {
         return floatingIcon;
       }
 
-      return <Image style={styles.buttonIcon} source={floatingIcon} />;
+      return <Image style={{width:iconWidth,height:iconHeight}} source={floatingIcon} />;
     }
 
-    return <Image style={styles.buttonIcon} source={require('../images/add.png')} />;
+    return <Image style={{width:iconWidth,height:iconHeight}} source={require('../images/add.png')} />;
   };
 
   handlePressItem = (itemName) => {
@@ -333,7 +332,9 @@ FloatingAction.propTypes = {
   openOnMount: PropTypes.bool,
   actionsPaddingTopBottom: PropTypes.number,
   onPressItem: PropTypes.func,
-  onPressMain: PropTypes.func
+  onPressMain: PropTypes.func,
+  iconHeight : PropTypes.number,
+  iconWidth : PropTypes.number
 };
 
 FloatingAction.defaultProps = {
@@ -345,7 +346,9 @@ FloatingAction.defaultProps = {
   position: 'right',
   distanceToEdge: 30,
   openOnMount: false,
-  showBackground: true
+  showBackground: true,
+  iconHeight : 15,
+  iconWidth : 15
 };
 
 const styles = StyleSheet.create({
@@ -421,9 +424,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  buttonIcon: {
-    resizeMode: 'contain'
   }
 });
 
