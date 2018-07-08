@@ -10,8 +10,6 @@ import {
 
 import { getTouchableComponent } from './utils/touchable';
 
-const DEFAULT_MARGIN = 8;
-
 class FloatingActionItem extends Component {
   constructor(props) {
     super(props);
@@ -97,7 +95,14 @@ class FloatingActionItem extends Component {
   }
 
   render() {
-    const { position, distanceToEdge, paddingTopBottom } = this.props;
+    const {
+      position,
+      distanceToEdge,
+      paddingTopBottom,
+      render,
+      margin,
+      name
+    } = this.props;
     const Touchable = getTouchableComponent(false);
 
     const animatedActionContainerStyle = {
@@ -111,13 +116,23 @@ class FloatingActionItem extends Component {
     const distanceToEdgeActionContainer = {};
 
     if (position === 'left') {
-      components.push(this.renderButton());
-      components.push(this.renderText());
-      distanceToEdgeActionContainer.paddingLeft = distanceToEdge + DEFAULT_MARGIN;
+      if (render) {
+        components.push(render({ key: name }));
+      } else {
+        components.push(this.renderButton());
+        components.push(this.renderText());
+      }
+      distanceToEdgeActionContainer.paddingLeft = distanceToEdge + margin;
     } else if (position === 'right') {
-      components.push(this.renderText());
-      components.push(this.renderButton());
-      distanceToEdgeActionContainer.paddingRight = distanceToEdge + DEFAULT_MARGIN;
+      if (render) {
+        components.push(render({ key: name }));
+      } else {
+        components.push(this.renderText());
+        components.push(this.renderButton());
+      }
+      distanceToEdgeActionContainer.paddingRight = distanceToEdge + margin;
+    } else if (render) {
+      components.push(render({ key: name }));
     } else {
       components.push(this.renderButton());
     }
@@ -157,7 +172,9 @@ FloatingActionItem.propTypes = {
   active: PropTypes.bool,
   distanceToEdge: PropTypes.number,
   paddingTopBottom: PropTypes.number, // modified by parent property "actionsPaddingTopBottom"
-  onPress: PropTypes.func
+  onPress: PropTypes.func,
+  render: PropTypes.func,
+  margin: PropTypes.number
 };
 
 FloatingActionItem.defaultProps = {
@@ -165,7 +182,8 @@ FloatingActionItem.defaultProps = {
   distanceToEdge: 30,
   textElevation: 5,
   textColor: '#444444',
-  textBackground: '#ffffff'
+  textBackground: '#ffffff',
+  margin: 8
 };
 
 const styles = StyleSheet.create({
@@ -178,8 +196,8 @@ const styles = StyleSheet.create({
     elevation: 0,
     flex: 1,
     flexDirection: 'row',
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 0,
+    paddingRight: 0,
     paddingBottom: 8,
     paddingTop: 8
   },
@@ -222,7 +240,9 @@ const styles = StyleSheet.create({
     },
     shadowColor: '#000000',
     shadowRadius: 3,
-    elevation: 5
+    elevation: 5,
+    width: 40,
+    height: 40
   },
   iconLogo: {
     resizeMode: 'cover',
