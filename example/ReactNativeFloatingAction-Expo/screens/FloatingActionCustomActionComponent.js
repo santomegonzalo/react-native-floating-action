@@ -3,6 +3,7 @@ import { View, SafeAreaView, StyleSheet, Alert } from 'react-native';
 import { FloatingAction } from '../../../component';
 
 import CustomActionComponent from '../components/CustomActionComponent';
+import Property from '../components/Property';
 
 class FloatingActionCustomActionComponent extends PureComponent {
   static navigationOptions = {
@@ -30,6 +31,11 @@ class FloatingActionCustomActionComponent extends PureComponent {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
+          <Property
+            propertyName="render"
+            propertyValue="Default library component"
+            defaultValue="Custom component"
+          />
           <FloatingAction
             actions={actions}
             position="right"

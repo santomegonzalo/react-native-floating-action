@@ -96,7 +96,12 @@ class FloatingActionItem extends Component {
 
   render() {
     const {
-      position, distanceToEdge, paddingTopBottom, render, margin, name
+      position,
+      distanceToEdge,
+      paddingTopBottom,
+      render,
+      margin,
+      name
     } = this.props;
     const Touchable = getTouchableComponent(false);
 
@@ -235,7 +240,9 @@ const styles = StyleSheet.create({
     },
     shadowColor: '#000000',
     shadowRadius: 3,
-    elevation: 5
+    elevation: 5,
+    width: 40,
+    height: 40
   },
   iconLogo: {
     resizeMode: 'cover',
