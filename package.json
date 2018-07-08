@@ -1,7 +1,7 @@
 {
   "name": "react-native-floating-action",
-  "version": "1.10.1",
-  "description": "floating action component for react-native",
+  "version": "1.11.0",
+  "description": "Simple (FAB) floating action component for react-native",
   "main": "index.js",
   "directories": {
     "example": "example"
