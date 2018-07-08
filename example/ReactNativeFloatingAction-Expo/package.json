@@ -1,12 +1,16 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
+  "scripts": {
+    "start": "react-native-scripts start"
+  },
   "dependencies": {
     "expo": "^24.0.0",
     "prop-types": "^15.6.0",
     "react": "16.0.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-24.0.0.tar.gz",
     "react-native-floating-action": "1.10.1",
+    "react-native-scripts": "^1.14.0",
     "react-navigation": "^1.0.0-beta.21"
   }
 }
