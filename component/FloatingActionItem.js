@@ -77,7 +77,7 @@ class FloatingActionItem extends Component {
   }
 
   renderButton() {
-    const { icon, color, size } = this.props;
+    const { icon, color } = this.props;
 
     let iconStyle;
 
@@ -88,7 +88,7 @@ class FloatingActionItem extends Component {
     }
 
     return (
-      <View key="button" style={[styles.button, { backgroundColor: color, width : size, height : size }]}>
+      <View key="button" style={[styles.button, { backgroundColor: color }]}>
         {
           React.isValidElement(icon) ? icon : <Image style={iconStyle} source={icon} />
         }
@@ -150,7 +150,6 @@ FloatingActionItem.propTypes = {
   text: PropTypes.string,
   textBackground: PropTypes.string,
   textColor: PropTypes.string,
-  size : PropTypes.number,
   // not on doc
   textElevation: PropTypes.number,
   // not modified by user
@@ -166,8 +165,7 @@ FloatingActionItem.defaultProps = {
   distanceToEdge: 30,
   textElevation: 5,
   textColor: '#444444',
-  textBackground: '#ffffff',
-  size : 40
+  textBackground: '#ffffff'
 };
 
 const styles = StyleSheet.create({

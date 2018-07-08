@@ -69,7 +69,7 @@ class FloatingAction extends Component {
       if (React.isValidElement(icon)) {
         return icon;
       }
-      return <Image style={{width:iconWidth,height:iconHeight}} source={icon} />;
+      return <Image style={{ width: iconWidth, height: iconHeight }} source={icon} />;
     }
 
     if (floatingIcon) {
@@ -77,10 +77,10 @@ class FloatingAction extends Component {
         return floatingIcon;
       }
 
-      return <Image style={{width:iconWidth,height:iconHeight}} source={floatingIcon} />;
+      return <Image style={{ width: iconWidth, height: iconHeight }} source={floatingIcon} />;
     }
 
-    return <Image style={{width:iconWidth,height:iconHeight}} source={require('../images/add.png')} />;
+    return <Image style={{ width: iconWidth, height: iconHeight }} source={require('../images/add.png')} />;
   };
 
   handlePressItem = (itemName) => {
@@ -333,8 +333,8 @@ FloatingAction.propTypes = {
   actionsPaddingTopBottom: PropTypes.number,
   onPressItem: PropTypes.func,
   onPressMain: PropTypes.func,
-  iconHeight : PropTypes.number,
-  iconWidth : PropTypes.number
+  iconHeight: PropTypes.number,
+  iconWidth: PropTypes.number
 };
 
 FloatingAction.defaultProps = {
@@ -347,8 +347,8 @@ FloatingAction.defaultProps = {
   distanceToEdge: 30,
   openOnMount: false,
   showBackground: true,
-  iconHeight : 15,
-  iconWidth : 15
+  iconHeight: 15,
+  iconWidth: 15
 };
 
 const styles = StyleSheet.create({
