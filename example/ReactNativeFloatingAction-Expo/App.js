@@ -16,6 +16,7 @@ import FloatingActionActionsDistance from './screens/FloatingActionActionsDistan
 import FloatingActionStatusProgramatically from './screens/FloatingActionStatusProgramatically';
 import FloatingActionChangeActionColor from './screens/FloatingActionChangeActionColor';
 import FloatingActionCustomActionComponent from './screens/FloatingActionCustomActionComponent';
+import FloatingActionListenKeyboard from './screens/FloatingActionListenKeyboard';
 
 class App extends React.Component {
   static navigationOptions = {
@@ -40,6 +41,7 @@ class App extends React.Component {
           scrollEventThrottle={16}
           data={
             [
+              { key: 'row_15', text: 'Listen Keyboard', screen: 'FloatingActionListenKeyboard' },
               { key: 'row_1', text: 'Right position', screen: 'FloatingActionRightScreen' },
               { key: 'row_2', text: 'Left position', screen: 'FloatingActionLeftScreen' },
               { key: 'row_3', text: 'Center position', screen: 'FloatingActionCenterScreen' },
@@ -117,6 +119,9 @@ export default StackNavigator({
   },
   FloatingActionCustomActionComponent: {
     screen: FloatingActionCustomActionComponent
+  },
+  FloatingActionListenKeyboard: {
+    screen: FloatingActionListenKeyboard
   }
 });
 

@@ -7,8 +7,15 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-const PropertyComponent = ({ propertyName, propertyValue, defaultValue, actionLabel, onActionPress }) => (
-  <View style={styles.container}>
+const PropertyComponent = ({
+  propertyName,
+  propertyValue,
+  defaultValue,
+  actionLabel,
+  verticalMargin,
+  onActionPress
+}) => (
+  <View style={[styles.container, { marginVertical: verticalMargin }]}>
     {
       propertyName &&
         <Text style={styles.propertyName}>Property: {propertyName}</Text>
@@ -43,7 +50,12 @@ PropertyComponent.propTypes = {
   propertyValue: PropTypes.string,
   defaultValue: PropTypes.string,
   actionLabel: PropTypes.string,
+  verticalMargin: PropTypes.number,
   onActionPress: PropTypes.func
+};
+
+PropertyComponent.defaultValue = {
+  verticalMargin: 40
 };
 
 const styles = StyleSheet.create({

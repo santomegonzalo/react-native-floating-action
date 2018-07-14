@@ -123,10 +123,12 @@ this.floatingAction.animateButton();
 | showBackground          | boolean               | true                  | **Show** or **Hide** background after open it                                                                       |
 | openOnMount             | boolean               | false                 | Open component after mounting it, useful on some weird cases like tutorials                                         |
 | actionsPaddingTopBottom | number                | 8                     | Change distance between actions                                                                                     |
+| iconWidth               | number                | 15                    | Icon width of the main button |
+| iconHeight              | number                | 15                    | Icon height of the main button |
+| listenKeyboard          | boolean               | false                 | Change position when the keyboard will appear |
+| dismissKeyboardOnPress  | boolean               | false                 | Dismiss keyboard when user press on the main button |
 | onPressItem             | function              |                       | Function to be call as soon as the user select an option from actions. Will return the name of the action.          |
 | onPressMain             | function              |                       | Function to be call as soon as use click main button and will return **true** or **false** depeneding of the state. |
-| iconWidth                 | number               | 15                  | Icon width of the main button |
-| iconHeight                 | number               | 15                  | Icon height of the main button |
 
 **Actions**
 

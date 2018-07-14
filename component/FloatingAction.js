@@ -7,11 +7,13 @@ import {
   Dimensions,
   TouchableOpacity,
   LayoutAnimation,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native';
 
 import FloatingActionItem from './FloatingActionItem';
 
+import { isIphoneX } from './utils/platform';
 import { getTouchableComponent, getRippleProps } from './utils/touchable';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -22,9 +24,12 @@ class FloatingAction extends Component {
     super(props);
 
     this.state = {
-      active: false
+      active: false,
+      keyboardHeight: 0
     };
 
+    this.mainBottomAnimation = new Animated.Value(props.distanceToEdge);
+    this.actionsBottomAnimation = new Animated.Value(ACTION_BUTTON_SIZE + props.distanceToEdge + props.actionsPaddingTopBottom);
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
     this.visibleAnimation = new Animated.Value(props.visible ? 0 : 1);
@@ -36,10 +41,15 @@ class FloatingAction extends Component {
   }
 
   componentDidMount() {
-    const { openOnMount } = this.props;
+    const { openOnMount, listenKeyboard } = this.props;
 
     if (openOnMount) {
       this.animateButton();
+    }
+
+    if (listenKeyboard) {
+      this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.onKeyboardWillShow);
+      this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.onKeyboardWillHide);
     }
   }
 
@@ -59,8 +69,68 @@ class FloatingAction extends Component {
     }
   }
 
+  componentWillUnmount() {
+    const { listenKeyboard } = this.props;
+
+    if (listenKeyboard) {
+      this.keyboardWillShowListener.remove();
+      this.keyboardWillHideListener.remove();
+    }
+  }
+
+  onKeyboardWillShow = (e) => {
+    const { distanceToEdge, actionsPaddingTopBottom } = this.props;
+    const { height } = e.endCoordinates;
+
+    Animated.spring(
+      this.actionsBottomAnimation,
+      {
+        bounciness: 0,
+        toValue: (ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom + height) - (isIphoneX() ? 40 : 0),
+        duration: 250
+      }
+    ).start();
+
+    Animated.spring(
+      this.mainBottomAnimation,
+      {
+        bounciness: 0,
+        toValue: (distanceToEdge + height) - (isIphoneX() ? 40 : 0),
+        duration: 250
+      }
+    ).start();
+  };
+
+  onKeyboardWillHide = () => {
+    const { distanceToEdge, actionsPaddingTopBottom } = this.props;
+
+    Animated.spring(
+      this.actionsBottomAnimation,
+      {
+        bounciness: 0,
+        toValue: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom,
+        duration: 250
+      }
+    ).start();
+
+    Animated.spring(
+      this.mainBottomAnimation,
+      {
+        bounciness: 0,
+        toValue: distanceToEdge,
+        duration: 250
+      }
+    ).start();
+  };
+
   getIcon = () => {
-    const { actions, floatingIcon, overrideWithAction , iconWidth , iconHeight } = this.props;
+    const {
+      actions,
+      floatingIcon,
+      overrideWithAction,
+      iconWidth,
+      iconHeight
+    } = this.props;
 
     if (overrideWithAction) {
       const { icon } = actions[0];
@@ -106,9 +176,14 @@ class FloatingAction extends Component {
       overrideWithAction,
       actions,
       floatingIcon,
+      dismissKeyboardOnPress,
       onPressMain
     } = this.props;
     const { active } = this.state;
+
+    if (dismissKeyboardOnPress) {
+      Keyboard.dismiss();
+    }
 
     if (overrideWithAction) {
       this.handlePressItem(actions[0].name);
@@ -189,7 +264,11 @@ class FloatingAction extends Component {
     }
 
     const Touchable = getTouchableComponent();
-    const propStyles = { backgroundColor: mainButtonColor, bottom: distanceToEdge };
+    const propStyles = {
+      backgroundColor: mainButtonColor,
+      bottom: this.mainBottomAnimation // I need to imporove this to run on native thread and not on JS thread
+    };
+
     if (['left', 'right'].indexOf(position) > -1) {
       propStyles[position] = distanceToEdge;
     }
@@ -225,7 +304,7 @@ class FloatingAction extends Component {
       distanceToEdge,
       actionsPaddingTopBottom
     } = this.props;
-    const { active } = this.state;
+    const { active, keyboardHeight } = this.state;
 
     if (overrideWithAction) {
       return null;
@@ -238,9 +317,14 @@ class FloatingAction extends Component {
       })
     };
 
-    const actionsStyles = [styles.actions, styles[`${position}Actions`], animatedActionsStyle, {
-      bottom: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom
-    }];
+    const actionsStyles = [
+      styles.actions,
+      styles[`${position}Actions`],
+      animatedActionsStyle,
+      {
+        bottom: this.actionsBottomAnimation
+      }
+    ];
 
     if (active) {
       actionsStyles.push(styles[`${position}ActionsVisible`]);
@@ -331,13 +415,17 @@ FloatingAction.propTypes = {
   showBackground: PropTypes.bool,
   openOnMount: PropTypes.bool,
   actionsPaddingTopBottom: PropTypes.number,
-  onPressItem: PropTypes.func,
-  onPressMain: PropTypes.func,
   iconHeight: PropTypes.number,
-  iconWidth: PropTypes.number
+  iconWidth: PropTypes.number,
+  listenKeyboard: PropTypes.bool,
+  dismissKeyboardOnPress: PropTypes.bool,
+  onPressItem: PropTypes.func,
+  onPressMain: PropTypes.func
 };
 
 FloatingAction.defaultProps = {
+  dismissKeyboardOnPress: false,
+  listenKeyboard: false,
   actionsPaddingTopBottom: 8,
   overrideWithAction: false,
   visible: true,
