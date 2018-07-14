@@ -41,7 +41,6 @@ class App extends React.Component {
           scrollEventThrottle={16}
           data={
             [
-              { key: 'row_15', text: 'Listen Keyboard', screen: 'FloatingActionListenKeyboard' },
               { key: 'row_1', text: 'Right position', screen: 'FloatingActionRightScreen' },
               { key: 'row_2', text: 'Left position', screen: 'FloatingActionLeftScreen' },
               { key: 'row_3', text: 'Center position', screen: 'FloatingActionCenterScreen' },
@@ -55,7 +54,8 @@ class App extends React.Component {
               { key: 'row_11', text: 'Change Actions Distance', screen: 'FloatingActionActionsDistance' },
               { key: 'row_12', text: 'Change visibility programatically', screen: 'FloatingActionStatusProgramatically' },
               { key: 'row_13', text: 'Change Action Text Container colors', screen: 'FloatingActionChangeActionColor' },
-              { key: 'row_14', text: 'Custom Action Component', screen: 'FloatingActionCustomActionComponent' }
+              { key: 'row_14', text: 'Custom Action Component', screen: 'FloatingActionCustomActionComponent' },
+              { key: 'row_15', text: 'Listen Keyboard', screen: 'FloatingActionListenKeyboard' },
             ]
           }
           renderItem={({ item }) => (
