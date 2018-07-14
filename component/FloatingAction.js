@@ -48,8 +48,10 @@ class FloatingAction extends Component {
     }
 
     if (listenKeyboard) {
-      this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.onKeyboardWillShow);
-      this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.onKeyboardWillHide);
+      const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+      const hideEvent = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+      this.keyboardWillShowListener = Keyboard.addListener(showEvent, this.onKeyboardShow);
+      this.keyboardWillHideListener = Keyboard.addListener(hideEvent, this.onKeyboardHideHide);
     }
   }
 
@@ -78,49 +80,51 @@ class FloatingAction extends Component {
     }
   }
 
-  onKeyboardWillShow = (e) => {
+  onKeyboardShow = (e) => {
     const { distanceToEdge, actionsPaddingTopBottom } = this.props;
     const { height } = e.endCoordinates;
 
-    Animated.spring(
-      this.actionsBottomAnimation,
-      {
-        bounciness: 0,
-        toValue: (ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom + height) - (isIphoneX() ? 40 : 0),
-        duration: 250
-      }
-    ).start();
-
-    Animated.spring(
-      this.mainBottomAnimation,
-      {
-        bounciness: 0,
-        toValue: (distanceToEdge + height) - (isIphoneX() ? 40 : 0),
-        duration: 250
-      }
-    ).start();
+    Animated.parallel([
+      Animated.spring(
+        this.actionsBottomAnimation,
+        {
+          bounciness: 0,
+          toValue: (ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom + height) - (isIphoneX() ? 40 : 0),
+          duration: 250
+        }
+      ),
+      Animated.spring(
+        this.mainBottomAnimation,
+        {
+          bounciness: 0,
+          toValue: (distanceToEdge + height) - (isIphoneX() ? 40 : 0),
+          duration: 250
+        }
+      )
+    ]).start();
   };
 
-  onKeyboardWillHide = () => {
+  onKeyboardHideHide = () => {
     const { distanceToEdge, actionsPaddingTopBottom } = this.props;
 
-    Animated.spring(
-      this.actionsBottomAnimation,
-      {
-        bounciness: 0,
-        toValue: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom,
-        duration: 250
-      }
-    ).start();
-
-    Animated.spring(
-      this.mainBottomAnimation,
-      {
-        bounciness: 0,
-        toValue: distanceToEdge,
-        duration: 250
-      }
-    ).start();
+    Animated.parallel([
+      Animated.spring(
+        this.actionsBottomAnimation,
+        {
+          bounciness: 0,
+          toValue: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom,
+          duration: 250
+        }
+      ),
+      Animated.spring(
+        this.mainBottomAnimation,
+        {
+          bounciness: 0,
+          toValue: distanceToEdge,
+          duration: 250
+        }
+      )
+    ]).start();
   };
 
   getIcon = () => {
