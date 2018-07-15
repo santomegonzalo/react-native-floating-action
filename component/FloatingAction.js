@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import FloatingActionItem from './FloatingActionItem';
+import AddIcon from './AddIcon';
 
 import { isIphoneX } from './utils/platform';
 import { getTouchableComponent, getRippleProps } from './utils/touchable';
@@ -153,7 +154,7 @@ class FloatingAction extends Component {
       return <Image style={{ width: iconWidth, height: iconHeight }} source={floatingIcon} />;
     }
 
-    return <Image style={{ width: iconWidth, height: iconHeight }} source={require('../images/add.png')} />;
+    return <AddIcon width={iconWidth} height={iconHeight} />;
   };
 
   handlePressItem = (itemName) => {
