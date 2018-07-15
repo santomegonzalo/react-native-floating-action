@@ -54,7 +54,7 @@ PropertyComponent.propTypes = {
   onActionPress: PropTypes.func
 };
 
-PropertyComponent.defaultValue = {
+PropertyComponent.defaultProps = {
   verticalMargin: 40
 };
 
