@@ -1,5 +1,4 @@
-// Type definitions for react-native-action
-// Project: items-view-mobile
+// Type definitions for react-native-floating-action
 
 declare module 'react-native-floating-action' {
     import { Component } from 'react';
