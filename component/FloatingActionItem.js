@@ -37,7 +37,10 @@ class FloatingActionItem extends Component {
       position,
       textElevation,
       textBackground,
-      textColor
+      textColor,
+      textStyle,
+      textProps,
+      textContainerStyle
     } = this.props;
 
     if (elevation !== undefined) {
@@ -54,16 +57,19 @@ class FloatingActionItem extends Component {
             {
               backgroundColor: textBackground,
               elevation: textElevation || elevation
-            }]
-          }
+            },
+            textContainerStyle
+          ]}
         >
           <Text
             style={[
               styles.text,
               {
                 color: textColor
-              }
+              },
+              textStyle
             ]}
+            {...textProps}
           >
             {text}
           </Text>
@@ -162,7 +168,10 @@ FloatingActionItem.propTypes = {
   color: PropTypes.string,
   icon: PropTypes.any,
   name: PropTypes.string.isRequired,
+  textContainerStyle: PropTypes.object,
   text: PropTypes.string,
+  textStyle: PropTypes.object,
+  textProps: PropTypes.object,
   textBackground: PropTypes.string,
   textColor: PropTypes.string,
   // not on doc
