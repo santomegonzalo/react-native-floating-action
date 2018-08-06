@@ -311,6 +311,10 @@ class FloatingAction extends Component {
     } = this.props;
     const { active, keyboardHeight } = this.state;
 
+    if (!actions || actions.length === 0) {
+      return undefined;
+    }
+
     if (overrideWithAction) {
       return null;
     }
