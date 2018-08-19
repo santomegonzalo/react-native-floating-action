@@ -286,6 +286,8 @@ class FloatingAction extends Component {
           propStyles,
           animatedVisibleView
         ]}
+        accessible={true}
+        accessibilityLabel={'Floating Action Button'}
       >
         <Touchable
           {...getRippleProps(mainButtonColor)}
