@@ -129,6 +129,8 @@ this.floatingAction.animateButton();
 | dismissKeyboardOnPress  | boolean               | false                 | Dismiss keyboard when user press on the main button |
 | onPressItem             | function              |                       | Function to be call as soon as the user select an option from actions. Will return the name of the action.          |
 | onPressMain             | function              |                       | Function to be call as soon as use click main button and will return **true** or **false** depeneding of the state. |
+| onPressMain             | function              |                       | Function to be call as soon as use click main button and will return **true** or **false** depeneding of the state. |
+| onBackdropPress         | function              |                       | Function to be call as soon as the backdrop is clicked.                                                             |
 
 **Actions**
 
