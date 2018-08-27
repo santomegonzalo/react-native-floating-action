@@ -377,15 +377,17 @@ class FloatingAction extends Component {
       <TouchableOpacity
         activeOpacity={1}
         style={[styles.overlay, { backgroundColor: overlayColor }]}
-        onPress={() => {
-          const { onBackdropPress } = this.props;
-          if (onBackdropPress) {
-            onBackdropPress();
-          }
-          this.reset();
-        }}
+        onPress={this.handlePressBackdrop}
       />
     );
+  }
+
+  handlePressBackdrop = () => {
+    const { onPressBackdrop } = this.props;
+    if (onPressBackdrop) {
+      onPressBackdrop();
+    }
+    this.reset();
   }
 
   render() {
