@@ -170,9 +170,12 @@ class FloatingAction extends Component {
   reset = () => {
     Animated.spring(this.animation, { toValue: 0 }).start();
     Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
-
     this.setState({
       active: false
+    }, () => {
+      if (this.props.onClose) {
+        this.props.onClose();
+      }
     });
   };
 
@@ -218,6 +221,10 @@ class FloatingAction extends Component {
 
       this.setState({
         active: true
+      }, () => {
+        if (this.props.onOpen) {
+          this.props.onOpen();
+        }
       });
     } else {
       this.reset();
@@ -431,7 +438,9 @@ FloatingAction.propTypes = {
   listenKeyboard: PropTypes.bool,
   dismissKeyboardOnPress: PropTypes.bool,
   onPressItem: PropTypes.func,
-  onPressMain: PropTypes.func
+  onPressMain: PropTypes.func,
+  onClose: PropTypes.func,
+  onOpen: PropTypes.func
 };
 
 FloatingAction.defaultProps = {
