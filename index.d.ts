@@ -34,7 +34,7 @@ declare module 'react-native-floating-action' {
         iconWidth?: number;
         listenKeyboard?: boolean;
         dismissKeyboardOnPress?: boolean;
-        onPressItem?: () => void;
+        onPressItem?: (name?: string) => void;
         onPressMain?: () => void;
     }
 
