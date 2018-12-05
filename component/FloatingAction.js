@@ -29,8 +29,8 @@ class FloatingAction extends Component {
       keyboardHeight: 0
     };
 
-    this.mainBottomAnimation = new Animated.Value(props.distanceToEdge);
-    this.actionsBottomAnimation = new Animated.Value(ACTION_BUTTON_SIZE + props.distanceToEdge + props.actionsPaddingTopBottom);
+    this.mainBottomAnimation = new Animated.Value(props.distanceToEdge + props.mainVerticalDistance);
+    this.actionsBottomAnimation = new Animated.Value(ACTION_BUTTON_SIZE + props.distanceToEdge + props.actionsPaddingTopBottom + props.mainVerticalDistance);
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
     this.visibleAnimation = new Animated.Value(props.visible ? 0 : 1);
@@ -170,9 +170,12 @@ class FloatingAction extends Component {
   reset = () => {
     Animated.spring(this.animation, { toValue: 0 }).start();
     Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
-
     this.setState({
       active: false
+    }, () => {
+      if (this.props.onClose) {
+        this.props.onClose();
+      }
     });
   };
 
@@ -218,6 +221,10 @@ class FloatingAction extends Component {
 
       this.setState({
         active: true
+      }, () => {
+        if (this.props.onOpen) {
+          this.props.onOpen();
+        }
       });
     } else {
       this.reset();
@@ -426,6 +433,7 @@ FloatingAction.propTypes = {
   })),
   color: PropTypes.string,
   distanceToEdge: PropTypes.number,
+  mainVerticalDistance: PropTypes.number,
   visible: PropTypes.bool,
   overlayColor: PropTypes.string,
   position: PropTypes.oneOf(['right', 'left', 'center']),
@@ -439,7 +447,9 @@ FloatingAction.propTypes = {
   listenKeyboard: PropTypes.bool,
   dismissKeyboardOnPress: PropTypes.bool,
   onPressItem: PropTypes.func,
-  onPressMain: PropTypes.func
+  onPressMain: PropTypes.func,
+  onClose: PropTypes.func,
+  onOpen: PropTypes.func
 };
 
 FloatingAction.defaultProps = {
@@ -455,7 +465,8 @@ FloatingAction.defaultProps = {
   openOnMount: false,
   showBackground: true,
   iconHeight: 15,
-  iconWidth: 15
+  iconWidth: 15,
+  mainVerticalDistance: 0
 };
 
 const styles = StyleSheet.create({
