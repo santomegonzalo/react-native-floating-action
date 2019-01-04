@@ -170,7 +170,7 @@ class FloatingAction extends Component {
   reset = () => {
     Animated.spring(this.animation, { toValue: 0 }).start();
     Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
-    this._updateState({
+    this.updateState({
       active: false
     }, () => {
       if (this.props.onClose) {
@@ -219,7 +219,7 @@ class FloatingAction extends Component {
         }
       });
 
-      this._updateState({
+      this.updateState({
         active: true
       }, () => {
         if (this.props.onOpen) {
@@ -397,14 +397,16 @@ class FloatingAction extends Component {
     this.reset();
   }
   
-  _updateState = (nextState, callback) => {
+  updateState = (nextState, callback) => {
     const { onStateChange } = this.props;
     this.setState(nextState, () => {
-      if (typeof callback == 'function') {
+      if (callback) {
         callback();
       }
-      if (typeof onStateChange == 'function') {
-        onStateChange(this.state);
+      if (onStateChange) {
+        onStateChange({
+          isActive: this.state.active
+        });
       }
     });
   }
