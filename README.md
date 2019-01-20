@@ -123,20 +123,22 @@ this.floatingAction.animateButton();
 | showBackground          | boolean               | true                  | **Show** or **Hide** background after open it                                                                       |
 | openOnMount             | boolean               | false                 | Open component after mounting it, useful on some weird cases like tutorials                                         |
 | actionsPaddingTopBottom | number                | 8                     | Change distance between actions                                                                                     |
-| iconWidth               | number                | 15                    | Icon width of the main button |
-| iconHeight              | number                | 15                    | Icon height of the main button |
-| listenKeyboard          | boolean               | false                 | Change position when the keyboard will appear |
-| dismissKeyboardOnPress  | boolean               | false                 | Dismiss keyboard when user press on the main button |
+| iconWidth               | number                | 15                    | Icon width of the main button                                                                                       |
+| iconHeight              | number                | 15                    | Icon height of the main button                                                                                      |
+| listenKeyboard          | boolean               | false                 | Change position when the keyboard will appear                                                                       |
+| dismissKeyboardOnPress  | boolean               | false                 | Dismiss keyboard when user press on the main button                                                                 |
 | onPressItem             | function              |                       | Function to be call as soon as the user select an option from actions. Will return the name of the action.          |
 | onPressMain             | function              |                       | Function to be call as soon as use click main button and will return **true** or **false** depeneding of the state. |
-| onPressMain             | function              |                       | Function to be call as soon as use click main button and will return **true** or **false** depeneding of the state. |
 | onPressBackdrop         | function              |                       | Function to be call as soon as the backdrop is clicked.                                                             |
+| onClose                 | function              |                       | Function to be call after set state to **false**                                                                    |
+| onOpen                  | function              |                       | Function to be call after set state to **true**                                                                     |
+| onStateChange           | function              |                       | Function to be call after every state change. Will return state object                                              |
 
 **Actions**
 
-| Property              | Type   | Default | Description                                                                                                                                                                                                                                                                |
-|-----------------------|--------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| color                 | string | #1253bc | Color of the action button                                                                                                                                                                                                                                                 |
+| Property              | Type     | Default | Description                                                                                                                                                                                                                                                                |
+|-----------------------|----------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| color                 | string   | #1253bc | Color of the action button                                                                                                                                                                                                                                                 |
 | icon                  | any      |         | Icon to be rendered inside the action, will accept an URL or React.Image. If we want to send an URL we need to send it in this way: icon: **{ uri: 'https://imageurl.com' }** if we want to send a React.Image we will use it in this way: **icon: require('path/image')** |
 | name                  | string   |         | Name of the icon, this name is used as parameter for **onPressItem** action                                                                                                                                                                                                |
 | text                  | string   |         | Text to show near to the button. (Only apply for **position = ['left', 'right']**)                                                                                                                                                                               |

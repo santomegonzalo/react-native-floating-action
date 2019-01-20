@@ -170,7 +170,7 @@ class FloatingAction extends Component {
   reset = () => {
     Animated.spring(this.animation, { toValue: 0 }).start();
     Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
-    this.setState({
+    this.updateState({
       active: false
     }, () => {
       if (this.props.onClose) {
@@ -219,7 +219,7 @@ class FloatingAction extends Component {
         }
       });
 
-      this.setState({
+      this.updateState({
         active: true
       }, () => {
         if (this.props.onOpen) {
@@ -396,6 +396,20 @@ class FloatingAction extends Component {
     }
     this.reset();
   }
+  
+  updateState = (nextState, callback) => {
+    const { onStateChange } = this.props;
+    this.setState(nextState, () => {
+      if (callback) {
+        callback();
+      }
+      if (onStateChange) {
+        onStateChange({
+          isActive: this.state.active
+        });
+      }
+    });
+  }
 
   render() {
     const { active } = this.state;
@@ -449,7 +463,9 @@ FloatingAction.propTypes = {
   onPressItem: PropTypes.func,
   onPressMain: PropTypes.func,
   onClose: PropTypes.func,
-  onOpen: PropTypes.func
+  onOpen: PropTypes.func,
+  onPressBackdrop: PropTypes.func,
+  onStateChange: PropTypes.func
 };
 
 FloatingAction.defaultProps = {
