@@ -1,6 +1,6 @@
 #exclude all examples
 
-./example
+example/
 .DS_STORE
 README.md
 node_modules/
