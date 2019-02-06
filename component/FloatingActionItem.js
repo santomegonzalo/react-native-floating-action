@@ -56,7 +56,10 @@ class FloatingActionItem extends Component {
             styles[`${position}TextContainer`],
             {
               backgroundColor: textBackground,
-              elevation: textElevation || elevation
+              elevation: textElevation || elevation,
+              shadowOffset: {
+                height: textElevation || elevation,
+              }
             },
             textContainerStyle
           ]}
