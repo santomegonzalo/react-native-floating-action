@@ -16,6 +16,7 @@ declare module 'react-native-floating-action' {
         textBackground?: string;
         textColor?: string;
         component?: () => void;
+        animated?: boolean;
     }
 
     export interface IFloatingActionProps {

@@ -168,8 +168,10 @@ class FloatingAction extends Component {
   };
 
   reset = () => {
-    Animated.spring(this.animation, { toValue: 0 }).start();
-    Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
+    if (this.props.animated) {
+      Animated.spring(this.animation, { toValue: 0 }).start();
+      Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
+    }
     this.updateState({
       active: false
     }, () => {
@@ -205,19 +207,23 @@ class FloatingAction extends Component {
 
     if (!active) {
       if (!floatingIcon) {
-        Animated.spring(this.animation, { toValue: 1 }).start();
+        if (this.props.animated) {
+          Animated.spring(this.animation, { toValue: 1 }).start();
+        }
       }
 
-      Animated.spring(this.actionsAnimation, { toValue: 1 }).start();
+      if (this.props.animated) {
+        Animated.spring(this.actionsAnimation, { toValue: 1 }).start();
 
-      // only execute it for the background to prevent extra calls
-      LayoutAnimation.configureNext({
-        duration: 180,
-        create: {
-          type: LayoutAnimation.Types.easeInEaseOut,
-          property: LayoutAnimation.Properties.opacity
-        }
-      });
+        // only execute it for the background to prevent extra calls
+        LayoutAnimation.configureNext({
+          duration: 180,
+          create: {
+            type: LayoutAnimation.Types.easeInEaseOut,
+            property: LayoutAnimation.Properties.opacity
+          }
+        });
+      }
 
       this.updateState({
         active: true
@@ -247,32 +253,54 @@ class FloatingAction extends Component {
 
     const mainButtonColor = buttonColor || color;
 
-    const animatedVisibleView = {
-      opacity: this.fadeAnimation,
-      transform: [{
-        rotate: this.visibleAnimation.interpolate({
-          inputRange: [0, 1],
-          outputRange: ['0deg', '90deg']
-        })
-      }, {
-        scale: this.visibleAnimation.interpolate({
-          inputRange: [0, 1],
-          outputRange: [1, 0]
-        })
-      }]
-    };
+    let animatedVisibleView, animatedViewStyle;
 
-    let animatedViewStyle = {
-      transform: [{
-        rotate: this.animation.interpolate({
-          inputRange: [0, 1],
-          outputRange: ['0deg', '45deg']
-        })
-      }]
-    };
+    if (this.props.animated) {
+      animatedVisibleView = {
+        opacity: this.fadeAnimation,
+        transform: [{
+          rotate: this.visibleAnimation.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0deg', '90deg']
+          })
+        }, {
+          scale: this.visibleAnimation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [1, 0]
+          })
+        }]
+      };
 
-    if (overrideWithAction) {
-      animatedViewStyle = {};
+      animatedViewStyle = {
+        transform: [{
+          rotate: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0deg', '45deg']
+          })
+        }]
+      };
+
+      if (overrideWithAction) {
+        animatedViewStyle = {};
+      }
+    } else {
+      if (this.state.active) {
+        animatedVisibleView = { };
+
+        animatedViewStyle = {
+          transform: [{
+            rotate: '45deg'
+          }]
+        };
+      } else {
+        animatedVisibleView = { };
+
+        animatedViewStyle = {
+          transform: [{
+            rotate: '0deg'
+          }]
+        };
+      }
     }
 
     const Touchable = getTouchableComponent();
@@ -316,7 +344,8 @@ class FloatingAction extends Component {
       position,
       overrideWithAction,
       distanceToEdge,
-      actionsPaddingTopBottom
+      actionsPaddingTopBottom,
+      animated
     } = this.props;
     const { active, keyboardHeight } = this.state;
 
@@ -328,12 +357,17 @@ class FloatingAction extends Component {
       return null;
     }
 
-    const animatedActionsStyle = {
-      opacity: this.actionsAnimation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 1]
-      })
-    };
+    let animatedActionStyle;
+    if (this.props.animated) {
+      animatedActionsStyle = {
+        opacity: this.actionsAnimation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1]
+        })
+      };
+    } else {
+      animatedActionsStyle = { opacity: this.state.active ? 1 : 0 };
+    }
 
     const actionsStyles = [
       styles.actions,
@@ -349,7 +383,6 @@ class FloatingAction extends Component {
     }
 
     const sortedActions = actions.sort((a, b) => a.position - b.position);
-
     return (
       <Animated.View style={actionsStyles} pointerEvents="box-none">
         {
@@ -368,6 +401,7 @@ class FloatingAction extends Component {
                 position={position}
                 active={active}
                 onPress={this.handlePressItem}
+                animated={animated}
               />
             );
           })
@@ -396,7 +430,7 @@ class FloatingAction extends Component {
     }
     this.reset();
   }
-  
+
   updateState = (nextState, callback) => {
     const { onStateChange } = this.props;
     this.setState(nextState, () => {
@@ -443,7 +477,8 @@ FloatingAction.propTypes = {
     text: PropTypes.string,
     textBackground: PropTypes.string,
     textColor: PropTypes.string,
-    component: PropTypes.func
+    component: PropTypes.func,
+    animated: PropTypes.bool,
   })),
   color: PropTypes.string,
   distanceToEdge: PropTypes.number,
@@ -482,7 +517,8 @@ FloatingAction.defaultProps = {
   showBackground: true,
   iconHeight: 15,
   iconWidth: 15,
-  mainVerticalDistance: 0
+  mainVerticalDistance: 0,
+  animated: false
 };
 
 const styles = StyleSheet.create({

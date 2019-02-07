@@ -13,12 +13,12 @@ import { getTouchableComponent } from './utils/touchable';
 class FloatingActionItem extends Component {
   constructor(props) {
     super(props);
-
+    console.log('props', props);
     this.animation = new Animated.Value(0);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.active !== this.props.active) {
+    if (nextProps.active !== this.props.active && this.props.animated) {
       Animated.spring(this.animation, { toValue: nextProps.active ? 1 : 0 }).start();
     }
   }
@@ -114,12 +114,17 @@ class FloatingActionItem extends Component {
     } = this.props;
     const Touchable = getTouchableComponent(false);
 
-    const animatedActionContainerStyle = {
-      marginBottom: this.animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [5, 10]
-      })
-    };
+    let animatedActionContainerStyle;
+    if (this.props.animated) {
+      animatedActionContainerStyle = {
+        marginBottom: this.animation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [5, 10]
+        })
+      };
+    } else {
+      animatedActionContainerStyle = { marginBottom: 10 };
+    }
 
     const components = [];
     const distanceToEdgeActionContainer = {};
@@ -186,7 +191,8 @@ FloatingActionItem.propTypes = {
   paddingTopBottom: PropTypes.number, // modified by parent property "actionsPaddingTopBottom"
   onPress: PropTypes.func,
   render: PropTypes.func,
-  margin: PropTypes.number
+  margin: PropTypes.number,
+  animated: PropTypes.bool
 };
 
 FloatingActionItem.defaultProps = {
