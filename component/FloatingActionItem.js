@@ -13,7 +13,6 @@ import { getTouchableComponent } from './utils/touchable';
 class FloatingActionItem extends Component {
   constructor(props) {
     super(props);
-    console.log('props', props);
     this.animation = new Animated.Value(0);
   }
 
