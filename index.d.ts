@@ -18,6 +18,7 @@ declare module 'react-native-floating-action' {
     margin?: number;
     component?: () => void;
     render?: () => void;
+    animated?: boolean;
   }
 
   export interface IFloatingActionProps {
