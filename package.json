@@ -26,22 +26,25 @@
     "url": "https://github.com/santomegonzalo/react-native-floating-action/issues"
   },
   "homepage": "https://github.com/santomegonzalo/react-native-floating-action#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@babel/runtime": "^7.4.5"
+  },
   "peerDependencies": {
-    "prop-types": ">=15.5.10",
-    "react-native": ">=0.45"
+    "prop-types": ">=15.7.2",
+    "react-native": ">=0.59"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.2",
+    "babel-eslint": "10.0.1",
     "babel-plugin-transform-react-jsx-source": "^6.22.0",
-    "babel-preset-react-native": "4.0.0",
-    "eslint": "4.19.1",
-    "eslint-config-airbnb": "16.1.0",
-    "eslint-config-airbnb-base": "12.1.0",
-    "eslint-loader": "2.0.0",
-    "eslint-plugin-babel": "4.1.2",
-    "eslint-plugin-import": "2.9.0",
-    "eslint-plugin-jsx-a11y": "6.0.3",
-    "eslint-plugin-react": "7.7.0"
+    "babel-preset-react-native": "4.0.1",
+    "eslint": "5.16.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-loader": "2.1.2",
+    "eslint-plugin-babel": "5.3.0",
+    "eslint-plugin-import": "2.17.3",
+    "eslint-plugin-jsx-a11y": "6.2.1",
+    "eslint-plugin-react": "7.13.0",
+    "expo": "^32.0.6"
   }
 }
