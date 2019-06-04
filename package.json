@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "run:example": "cd example/ReactNativeFloatingAction-Expo && yarn install && exp start"
+    "run:example": "cd example/ && yarn install && exp start"
   },
   "repository": {
     "type": "git",
