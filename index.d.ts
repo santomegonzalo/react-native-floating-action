@@ -3,7 +3,17 @@
 declare module "react-native-floating-action" {
   import { Component } from "react";
 
-  type position = "right" | "left" | "center";
+  type positionType = "right" | "left" | "center";
+
+  type shadowType = {
+    shadowOpacity: number;
+    shadowOffset: {
+      width: number;
+      height: number;
+    };
+    shadowColor: string;
+    shadowRadius: number;
+  };
 
   export class FloatingAction extends Component<IFloatingActionProps> {}
 
@@ -19,6 +29,7 @@ declare module "react-native-floating-action" {
     component?: () => void;
     render?: () => void;
     animated?: boolean;
+    shadow?: shadowType;
   }
 
   export interface IFloatingActionProps {
@@ -27,7 +38,7 @@ declare module "react-native-floating-action" {
     distanceToEdge?: number;
     visible?: boolean;
     overlayColor?: string;
-    position?: position;
+    position?: positionType;
     overrideWithAction?: boolean;
     floatingIcon?: JSX.Element;
     showBackground?: boolean;
@@ -37,6 +48,7 @@ declare module "react-native-floating-action" {
     iconWidth?: number;
     listenKeyboard?: boolean;
     dismissKeyboardOnPress?: boolean;
+    shadow?: shadowType;
     onPressItem?: (name?: string) => void;
     onPressMain?: () => void;
     onClose?: () => void;
