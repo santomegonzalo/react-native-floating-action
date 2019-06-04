@@ -1,10 +1,7 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+/* eslint-disable react/prop-types, react/jsx-one-expression-per-line, react/jsx-closing-tag-location */
+
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const PropertyComponent = ({
   propertyName,
@@ -15,32 +12,28 @@ const PropertyComponent = ({
   onActionPress
 }) => (
   <View style={[styles.container, { marginVertical: verticalMargin }]}>
-    {
-      propertyName &&
-        <Text style={styles.propertyName}>Property: {propertyName}</Text>
-    }
-    {
-      defaultValue &&
-        <Text style={styles.propertyType}>Default:</Text>
-    }
-    {
-      defaultValue &&
-        <Text style={styles.propertyValue}>{`${propertyName}: ${defaultValue}`}</Text>
-    }
-    {
-      propertyValue &&
-        <Text style={[styles.propertyType, { marginTop: 10 }]}>Used:</Text>
-    }
-    {
-      propertyValue &&
-        <Text style={styles.propertyValue}>{`${propertyName}: ${propertyValue}`}</Text>
-    }
-    {
-      actionLabel &&
-        <TouchableOpacity onPress={onActionPress}>
-          <Text style={styles.action}>{actionLabel}</Text>
-        </TouchableOpacity>
-    }
+    {propertyName && (
+      <Text style={styles.propertyName}>Property: {propertyName}</Text>
+    )}
+    {defaultValue && <Text style={styles.propertyType}>Default:</Text>}
+    {defaultValue && (
+      <Text
+        style={styles.propertyValue}
+      >{`${propertyName}: ${defaultValue}`}</Text>
+    )}
+    {propertyValue && (
+      <Text style={[styles.propertyType, { marginTop: 10 }]}>Used:</Text>
+    )}
+    {propertyValue && (
+      <Text
+        style={styles.propertyValue}
+      >{`${propertyName}: ${propertyValue}`}</Text>
+    )}
+    {actionLabel && (
+      <TouchableOpacity onPress={onActionPress}>
+        <Text style={styles.action}>{actionLabel}</Text>
+      </TouchableOpacity>
+    )}
   </View>
 );
 
@@ -55,29 +48,29 @@ const styles = StyleSheet.create({
   },
   propertyName: {
     fontSize: 18,
-    color: '#000',
-    fontWeight: 'bold',
+    color: "#000",
+    fontWeight: "bold",
     marginBottom: 10
   },
   propertyType: {
     fontSize: 14,
-    color: '#000',
-    fontWeight: 'bold',
+    color: "#000",
+    fontWeight: "bold",
     marginBottom: 5
   },
   propertyValue: {
     fontSize: 14,
-    color: '#585757',
+    color: "#585757",
     marginBottom: 5
   },
   action: {
     marginTop: 10,
     width: 170,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
     paddingVertical: 5,
-    backgroundColor: '#00D09E',
-    color: '#FFF'
+    backgroundColor: "#00D09E",
+    color: "#FFF"
   }
 });
 
