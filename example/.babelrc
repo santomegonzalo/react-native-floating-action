@@ -1,11 +1,13 @@
 {
-  "presets": ["babel-preset-expo"],
+  "presets": [
+    "expo"
+  ],
   "plugins": [
     [
       "module-resolver",
       {
         "alias": {
-          "react-floating-action": "../../../"
+          "react-native-tab-view": "../src/index"
         }
       }
     ]

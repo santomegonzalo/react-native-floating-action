@@ -1,1 +1,1 @@
-export { default as FloatingAction } from './component/FloatingAction';
+export { default as FloatingAction } from './src/FloatingAction';

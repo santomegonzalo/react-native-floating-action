@@ -26,12 +26,11 @@
     "url": "https://github.com/santomegonzalo/react-native-floating-action/issues"
   },
   "homepage": "https://github.com/santomegonzalo/react-native-floating-action#readme",
-  "dependencies": {
-    "@babel/runtime": "^7.4.5"
-  },
+  "dependencies": {},
   "peerDependencies": {
-    "prop-types": ">=15.7.2",
-    "react-native": ">=0.59"
+    "prop-types": "*",
+    "react": "*",
+    "react-native": "*"
   },
   "devDependencies": {
     "babel-eslint": "10.0.1",
@@ -45,6 +44,7 @@
     "eslint-plugin-import": "2.17.3",
     "eslint-plugin-jsx-a11y": "6.2.1",
     "eslint-plugin-react": "7.13.0",
-    "expo": "^32.0.6"
+    "react": "^16.8.6",
+    "react-native": "^0.59.8"
   }
 }

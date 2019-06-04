@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, FlatList, Text, SafeAreaView, TouchableOpacity, Platform, View } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import FloatingActionRightScreen from './screens/FloatingActionRightScreen';
 import FloatingActionLeftScreen from './screens/FloatingActionLeftScreen';
@@ -74,7 +74,7 @@ class App extends React.Component {
   }
 }
 
-export default StackNavigator({
+const AppNavigator = createStackNavigator({
   App: {
     screen: App
   },
@@ -135,3 +135,5 @@ const styles = StyleSheet.create({
     paddingVertical: 20
   }
 });
+
+export default createAppContainer(AppNavigator);
