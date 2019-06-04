@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import PropTypes from 'prop-types';
 
 const PropertyComponent = ({
   propertyName,
@@ -44,15 +43,6 @@ const PropertyComponent = ({
     }
   </View>
 );
-
-PropertyComponent.propTypes = {
-  propertyName: PropTypes.string,
-  propertyValue: PropTypes.string,
-  defaultValue: PropTypes.string,
-  actionLabel: PropTypes.string,
-  verticalMargin: PropTypes.number,
-  onActionPress: PropTypes.func
-};
 
 PropertyComponent.defaultProps = {
   verticalMargin: 40

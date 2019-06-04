@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { View, SafeAreaView, StyleSheet, Alert } from 'react-native';
-import { FloatingAction } from '../../../component';
+import { FloatingAction } from 'react-native-floating-action';
 
 import Property from '../components/Property';
 
