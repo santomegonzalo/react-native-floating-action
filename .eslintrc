@@ -8,17 +8,19 @@
   "env": {
     "es6": true
   },
-  "plugins": [
-    "react"
-  ],
+  "plugins": ["react"],
   "rules": {
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/react-in-jsx-scope": 2,
     "react/prefer-stateless-function": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"]}],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off",
+    "quotes": "off",
+    "arrow-parens": "off",
+    "operator-linebreak": "off",
+    "object-curly-newline": "off",
     "jsx-a11y/img-has-alt": "off",
     "import/prefer-default-export": "off",
     "max-len": "off",
