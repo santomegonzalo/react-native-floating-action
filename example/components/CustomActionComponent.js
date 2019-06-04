@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -22,9 +21,6 @@ const styles = StyleSheet.create({
 });
 
 class CustomActionComponent extends React.Component {
-  static propTypes = {
-    text: PropTypes.string.isRequired
-  };
   render() {
     const { text } = this.props;
     return (
