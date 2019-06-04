@@ -133,6 +133,7 @@ this.floatingAction.animateButton();
 | onClose                 | function              |                       | Function to be call after set state to **false**                                                                    |
 | onOpen                  | function              |                       | Function to be call after set state to **true**                                                                     |
 | onStateChange           | function              |                       | Function to be call after every state change. Will return state object                                              |
+| animated                | boolean               | true                  | Enable the animation
 
 **Actions**
 
@@ -144,7 +145,7 @@ this.floatingAction.animateButton();
 | text                  | string   |         | Text to show near to the button. (Only apply for **position = ['left', 'right']**)                                                                                                                                                                               |
 | textBackground        | string   | #ffffff | Background color for Text container                                                                                                                                                                                                                                        |
 | textColor             | string   | #444444 | Text color for every action                                                                                                                                                                                                                                                |
-| textElevation         | number   | 5       | Elevation property (only android)                                                                                                                                                                                                                                          |
+| textElevation         | number   | 5       | Elevation property (also modifies "shadowOffset" in iOS)                                                                                                                                                                                                                                          |
 | render                | function |         | Custom render function for Action. If provided, other properties are not applicable. The provided function should return a React Node                                                                                                                                                                              |
 | margin                | number   | 8       | Additional margin for action. This property is useful when we want to override the current margin for example using custom render
 | size                  | number   | 40      | size of of the icon rendered inside the action

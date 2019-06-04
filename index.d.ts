@@ -5,7 +5,7 @@ declare module 'react-native-floating-action' {
 
     type position = "right" | "left" | "center";
 
-    declare class FloatingAction extends Component<IFloatingActionProps> {
+    export class FloatingAction extends Component<IFloatingActionProps> {
     }
 
     export interface IActionProps {
@@ -16,6 +16,7 @@ declare module 'react-native-floating-action' {
         textBackground?: string;
         textColor?: string;
         component?: () => void;
+        animated?: boolean;
     }
 
     export interface IFloatingActionProps {
