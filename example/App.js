@@ -1,31 +1,47 @@
-import React from 'react';
-import { StyleSheet, FlatList, Text, SafeAreaView, TouchableOpacity, Platform, View } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import React from "react";
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  Platform,
+  View
+} from "react-native";
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
-import FloatingActionRightScreen from './screens/FloatingActionRightScreen';
-import FloatingActionLeftScreen from './screens/FloatingActionLeftScreen';
-import FloatingActionCenterScreen from './screens/FloatingActionCenterScreen';
-import FloatingActionOverrideWithActionScreen from './screens/FloatingActionOverrideWithActionScreen';
-import FloatingActionDistanceEdge from './screens/FloatingActionDistanceEdge';
-import FloatingActionOverlayScreen from './screens/FloatingActionOverlayScreen';
-import FloatingActionColorScreen from './screens/FloatingActionColorScreen';
-import FloatingActionVisibilityScreen from './screens/FloatingActionVisibilityScreen';
-import FloatingActionOpenMountScreen from './screens/FloatingActionOpenMountScreen';
-import FloatingActionHideBackgroundScreen from './screens/FloatingActionHideBackgroundScreen';
-import FloatingActionActionsDistance from './screens/FloatingActionActionsDistance';
-import FloatingActionStatusProgramatically from './screens/FloatingActionStatusProgramatically';
-import FloatingActionChangeActionColor from './screens/FloatingActionChangeActionColor';
-import FloatingActionCustomActionComponent from './screens/FloatingActionCustomActionComponent';
-import FloatingActionListenKeyboard from './screens/FloatingActionListenKeyboard';
+import FloatingActionRightScreen from "./screens/FloatingActionRightScreen";
+import FloatingActionLeftScreen from "./screens/FloatingActionLeftScreen";
+import FloatingActionCenterScreen from "./screens/FloatingActionCenterScreen";
+import FloatingActionOverrideWithActionScreen from "./screens/FloatingActionOverrideWithActionScreen";
+import FloatingActionDistanceEdge from "./screens/FloatingActionDistanceEdge";
+import FloatingActionOverlayScreen from "./screens/FloatingActionOverlayScreen";
+import FloatingActionColorScreen from "./screens/FloatingActionColorScreen";
+import FloatingActionVisibilityScreen from "./screens/FloatingActionVisibilityScreen";
+import FloatingActionOpenMountScreen from "./screens/FloatingActionOpenMountScreen";
+import FloatingActionHideBackgroundScreen from "./screens/FloatingActionHideBackgroundScreen";
+import FloatingActionActionsDistance from "./screens/FloatingActionActionsDistance";
+import FloatingActionStatusProgramatically from "./screens/FloatingActionStatusProgramatically";
+import FloatingActionChangeActionColor from "./screens/FloatingActionChangeActionColor";
+import FloatingActionCustomActionComponent from "./screens/FloatingActionCustomActionComponent";
+import FloatingActionListenKeyboard from "./screens/FloatingActionListenKeyboard";
+import FloatingActionShadow from "./screens/FloatingActionShadow";
 
 class App extends React.Component {
   static navigationOptions = {
-    title: 'Floating Action'
+    title: "Floating Action"
   };
 
-  renderRow = (highlighted) => {
-    if (Platform.OS !== 'android') {
-      return <View style={[{ backgroundColor: '#f0f0f0', height: 1 }, highlighted && { marginLeft: 0 }]} />;
+  renderRow = highlighted => {
+    if (Platform.OS !== "android") {
+      return (
+        <View
+          style={[
+            { backgroundColor: "#f0f0f0", height: 1 },
+            highlighted && { marginLeft: 0 }
+          ]}
+        />
+      );
     }
 
     return null;
@@ -39,25 +55,88 @@ class App extends React.Component {
           style={styles.container}
           onScroll={this.handleScroll}
           scrollEventThrottle={16}
-          data={
-            [
-              { key: 'row_1', text: 'Right position', screen: 'FloatingActionRightScreen' },
-              { key: 'row_2', text: 'Left position', screen: 'FloatingActionLeftScreen' },
-              { key: 'row_3', text: 'Center position', screen: 'FloatingActionCenterScreen' },
-              { key: 'row_4', text: 'No list of actions', screen: 'FloatingActionOverrideWithActionScreen' },
-              { key: 'row_5', text: 'Set distance from edges', screen: 'FloatingActionDistanceEdge' },
-              { key: 'row_6', text: 'Set overlay color', screen: 'FloatingActionOverlayScreen' },
-              { key: 'row_7', text: 'Set button color', screen: 'FloatingActionColorScreen' },
-              { key: 'row_8', text: 'Set visibility', screen: 'FloatingActionVisibilityScreen' },
-              { key: 'row_9', text: 'Open on mount', screen: 'FloatingActionOpenMountScreen' },
-              { key: 'row_10', text: 'Hide background', screen: 'FloatingActionHideBackgroundScreen' },
-              { key: 'row_11', text: 'Change Actions Distance', screen: 'FloatingActionActionsDistance' },
-              { key: 'row_12', text: 'Change visibility programatically', screen: 'FloatingActionStatusProgramatically' },
-              { key: 'row_13', text: 'Change Action Text Container colors', screen: 'FloatingActionChangeActionColor' },
-              { key: 'row_14', text: 'Custom Action Component', screen: 'FloatingActionCustomActionComponent' },
-              { key: 'row_15', text: 'Listen Keyboard', screen: 'FloatingActionListenKeyboard' },
-            ]
-          }
+          data={[
+            {
+              key: "row_1",
+              text: "Right position",
+              screen: "FloatingActionRightScreen"
+            },
+            {
+              key: "row_2",
+              text: "Left position",
+              screen: "FloatingActionLeftScreen"
+            },
+            {
+              key: "row_3",
+              text: "Center position",
+              screen: "FloatingActionCenterScreen"
+            },
+            {
+              key: "row_4",
+              text: "No list of actions",
+              screen: "FloatingActionOverrideWithActionScreen"
+            },
+            {
+              key: "row_5",
+              text: "Set distance from edges",
+              screen: "FloatingActionDistanceEdge"
+            },
+            {
+              key: "row_6",
+              text: "Set overlay color",
+              screen: "FloatingActionOverlayScreen"
+            },
+            {
+              key: "row_7",
+              text: "Set button color",
+              screen: "FloatingActionColorScreen"
+            },
+            {
+              key: "row_8",
+              text: "Set visibility",
+              screen: "FloatingActionVisibilityScreen"
+            },
+            {
+              key: "row_9",
+              text: "Open on mount",
+              screen: "FloatingActionOpenMountScreen"
+            },
+            {
+              key: "row_10",
+              text: "Hide background",
+              screen: "FloatingActionHideBackgroundScreen"
+            },
+            {
+              key: "row_11",
+              text: "Change Actions Distance",
+              screen: "FloatingActionActionsDistance"
+            },
+            {
+              key: "row_12",
+              text: "Change visibility programatically",
+              screen: "FloatingActionStatusProgramatically"
+            },
+            {
+              key: "row_13",
+              text: "Change Action Text Container colors",
+              screen: "FloatingActionChangeActionColor"
+            },
+            {
+              key: "row_14",
+              text: "Custom Action Component",
+              screen: "FloatingActionCustomActionComponent"
+            },
+            {
+              key: "row_15",
+              text: "Listen Keyboard",
+              screen: "FloatingActionListenKeyboard"
+            },
+            {
+              key: "row_16",
+              text: "Change Shadow",
+              screen: "FloatingActionShadow"
+            }
+          ]}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.row}
@@ -122,13 +201,16 @@ const AppNavigator = createStackNavigator({
   },
   FloatingActionListenKeyboard: {
     screen: FloatingActionListenKeyboard
+  },
+  FloatingActionShadow: {
+    screen: FloatingActionShadow
   }
 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: "#fff"
   },
   row: {
     paddingHorizontal: 10,

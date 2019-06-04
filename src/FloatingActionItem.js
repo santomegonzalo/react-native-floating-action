@@ -37,7 +37,8 @@ class FloatingActionItem extends Component {
       textColor,
       textStyle,
       textProps,
-      textContainerStyle
+      textContainerStyle,
+      shadow
     } = this.props;
 
     if (elevation !== undefined) {
@@ -60,6 +61,7 @@ class FloatingActionItem extends Component {
                 height: textElevation || elevation
               }
             },
+            shadow,
             textContainerStyle
           ]}
         >
@@ -83,7 +85,7 @@ class FloatingActionItem extends Component {
   }
 
   renderButton() {
-    const { icon, color } = this.props;
+    const { icon, color, shadow } = this.props;
 
     let iconStyle;
 
@@ -94,7 +96,10 @@ class FloatingActionItem extends Component {
     }
 
     return (
-      <View key="button" style={[styles.button, { backgroundColor: color }]}>
+      <View
+        key="button"
+        style={[styles.button, { backgroundColor: color }, shadow]}
+      >
         {React.isValidElement(icon) ? (
           icon
         ) : (
@@ -190,6 +195,15 @@ FloatingActionItem.propTypes = {
   textProps: PropTypes.object,
   textBackground: PropTypes.string,
   textColor: PropTypes.string,
+  shadow: PropTypes.shape({
+    shadowOpacity: PropTypes.number,
+    shadowOffset: PropTypes.shape({
+      width: PropTypes.number,
+      height: PropTypes.number
+    }),
+    shadowColor: PropTypes.string,
+    shadowRadius: PropTypes.number
+  }),
   // not on doc
   textElevation: PropTypes.number,
   // not modified by user
@@ -209,7 +223,16 @@ FloatingActionItem.defaultProps = {
   textElevation: 5,
   textColor: "#444444",
   textBackground: "#ffffff",
-  margin: 8
+  margin: 8,
+  shadow: {
+    shadowOpacity: 0.35,
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowColor: "#000000",
+    shadowRadius: 3
+  }
 };
 
 const styles = StyleSheet.create({
@@ -233,13 +256,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingHorizontal: 8,
-    shadowOpacity: 0.35,
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    shadowColor: "#000000",
-    shadowRadius: 3,
     elevation: 5,
     borderRadius: 4,
     height: 22,
@@ -259,13 +275,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,
-    shadowOpacity: 0.35,
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    shadowColor: "#000000",
-    shadowRadius: 3,
     elevation: 5,
     width: 40,
     height: 40

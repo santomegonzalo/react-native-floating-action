@@ -20,6 +20,16 @@ import { getTouchableComponent, getRippleProps } from "./utils/touchable";
 const DEVICE_WIDTH = Dimensions.get("window").width;
 const ACTION_BUTTON_SIZE = 56;
 
+const DEFAULT_SHADOW_PROPS = {
+  shadowOpacity: 0.35,
+  shadowOffset: {
+    width: 0,
+    height: 5
+  },
+  shadowColor: "#000000",
+  shadowRadius: 3
+};
+
 class FloatingAction extends Component {
   constructor(props) {
     super(props);
@@ -136,6 +146,15 @@ class FloatingAction extends Component {
         duration: 250
       })
     ]).start();
+  };
+
+  getShadow = () => {
+    const { shadow } = this.props;
+
+    return {
+      ...DEFAULT_SHADOW_PROPS,
+      ...shadow
+    };
   };
 
   getIcon = () => {
@@ -382,7 +401,8 @@ class FloatingAction extends Component {
           styles.buttonContainer,
           styles[`${position}Button`],
           propStyles,
-          animatedVisibleView
+          animatedVisibleView,
+          this.getShadow()
         ]}
         accessible
         accessibilityLabel="Floating Action Button"
@@ -463,6 +483,7 @@ class FloatingAction extends Component {
               key={action.name}
               textColor={textColor}
               textBackground={textBackground}
+              shadow={this.getShadow()}
               {...action}
               position={position}
               active={active}
@@ -534,6 +555,15 @@ FloatingAction.propTypes = {
   iconWidth: PropTypes.number,
   listenKeyboard: PropTypes.bool,
   dismissKeyboardOnPress: PropTypes.bool,
+  shadow: PropTypes.shape({
+    shadowOpacity: PropTypes.number,
+    shadowOffset: PropTypes.shape({
+      width: PropTypes.number,
+      height: PropTypes.number
+    }),
+    shadowColor: PropTypes.string,
+    shadowRadius: PropTypes.number
+  }),
   onPressItem: PropTypes.func,
   onPressMain: PropTypes.func,
   onClose: PropTypes.func,
@@ -557,7 +587,8 @@ FloatingAction.defaultProps = {
   iconHeight: 15,
   iconWidth: 15,
   mainVerticalDistance: 0,
-  animated: true
+  animated: true,
+  shadow: {}
 };
 
 const styles = StyleSheet.create({
@@ -603,13 +634,6 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",
-    shadowOpacity: 0.35,
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    shadowColor: "#000000",
-    shadowRadius: 3,
     elevation: 5,
     position: "absolute"
   },
