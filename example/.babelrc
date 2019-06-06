@@ -7,7 +7,7 @@
       "module-resolver",
       {
         "alias": {
-          "react-native-tab-view": "../src/index"
+          "react-native-floating-action": "../src/index"
         }
       }
     ]
