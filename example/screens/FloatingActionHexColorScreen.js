@@ -4,9 +4,9 @@ import { FloatingAction } from "react-native-floating-action"; // eslint-disable
 
 import Property from "../components/Property";
 
-class FloatingActionColorScreen extends PureComponent {
+class FloatingActionHexColorScreen extends PureComponent {
   static navigationOptions = {
-    title: "Right position"
+    title: "Change HEX Color"
   };
 
   render() {
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FloatingActionColorScreen;
+export default FloatingActionHexColorScreen;

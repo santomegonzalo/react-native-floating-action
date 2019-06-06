@@ -6,7 +6,7 @@ import Property from "../components/Property";
 
 class FloatingActionOverlayScreen extends PureComponent {
   static navigationOptions = {
-    title: "Right position"
+    title: "Change overlay screen"
   };
 
   render() {

@@ -6,7 +6,7 @@ import Property from "../components/Property";
 
 class FloatingActionLeftScreen extends PureComponent {
   static navigationOptions = {
-    title: "Right position"
+    title: "Left position"
   };
 
   render() {

@@ -6,7 +6,7 @@ import Property from "../components/Property";
 
 class FloatingActionChangeActionColor extends PureComponent {
   static navigationOptions = {
-    title: "Right position"
+    title: "Action color"
   };
 
   render() {
