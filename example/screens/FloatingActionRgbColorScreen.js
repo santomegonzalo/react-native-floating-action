@@ -4,32 +4,36 @@ import { FloatingAction } from "react-native-floating-action"; // eslint-disable
 
 import Property from "../components/Property";
 
-class FloatingActionRightScreen extends PureComponent {
+class FloatingActionRgbColorScreen extends PureComponent {
   static navigationOptions = {
-    title: "Action disabled"
+    title: "Change RGB(a) Color"
   };
 
   render() {
     const actions = [
       {
+        color: "rgb(45, 214, 89)",
         text: "Accessibility",
         icon: require("../images/ic_accessibility_white.png"),
         name: "bt_accessibility",
         position: 2
       },
       {
+        color: "rgb(45, 214, 89)",
         text: "Language",
         icon: require("../images/ic_language_white.png"),
         name: "bt_language",
         position: 1
       },
       {
+        color: "rgb(45, 214, 89)",
         text: "Location",
         icon: require("../images/ic_room_white.png"),
         name: "bt_room",
         position: 3
       },
       {
+        color: "rgb(45, 214, 89)",
         text: "Video",
         icon: require("../images/ic_videocam_white.png"),
         name: "bt_videocam",
@@ -41,13 +45,19 @@ class FloatingActionRightScreen extends PureComponent {
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
           <Property
-            propertyName="actionsPaddingTopBottom"
-            propertyValue="18"
-            defaultValue="8"
+            propertyName="color (main action)"
+            propertyValue="rgb(45, 214, 89)"
+            defaultValue="#1253bc"
+          />
+          <Property
+            propertyName="color (sub actions)"
+            propertyValue="rgb(45, 214, 89)"
+            defaultValue="#1253bc"
           />
           <FloatingAction
+            color="rgb(45, 214, 89)"
             actions={actions}
-            actionsPaddingTopBottom={18}
+            position="right"
             onPressItem={name => {
               Alert.alert("Icon pressed", `the icon ${name} was pressed`);
             }}
@@ -65,4 +75,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FloatingActionRightScreen;
+export default FloatingActionRgbColorScreen;

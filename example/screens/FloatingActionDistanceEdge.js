@@ -6,7 +6,7 @@ import Property from "../components/Property";
 
 class FloatingActionDistanceEdge extends PureComponent {
   static navigationOptions = {
-    title: "Right position"
+    title: "Change distance from edge"
   };
 
   render() {

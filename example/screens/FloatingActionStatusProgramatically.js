@@ -6,7 +6,7 @@ import Property from "../components/Property";
 
 class FloatingActionStatusProgramatically extends PureComponent {
   static navigationOptions = {
-    title: "Visibility Options"
+    title: "Programatically visibility"
   };
 
   state = {

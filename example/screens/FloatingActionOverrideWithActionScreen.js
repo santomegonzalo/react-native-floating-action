@@ -6,7 +6,7 @@ import Property from "../components/Property";
 
 class FloatingActionOverrideWithActionScreen extends PureComponent {
   static navigationOptions = {
-    title: "Right position"
+    title: "Override with Action"
   };
 
   render() {

@@ -16,7 +16,8 @@ import FloatingActionCenterScreen from "./screens/FloatingActionCenterScreen";
 import FloatingActionOverrideWithActionScreen from "./screens/FloatingActionOverrideWithActionScreen";
 import FloatingActionDistanceEdge from "./screens/FloatingActionDistanceEdge";
 import FloatingActionOverlayScreen from "./screens/FloatingActionOverlayScreen";
-import FloatingActionColorScreen from "./screens/FloatingActionColorScreen";
+import FloatingActionHexColorScreen from "./screens/FloatingActionHexColorScreen";
+import FloatingActionRgbColorScreen from "./screens/FloatingActionRgbColorScreen";
 import FloatingActionVisibilityScreen from "./screens/FloatingActionVisibilityScreen";
 import FloatingActionOpenMountScreen from "./screens/FloatingActionOpenMountScreen";
 import FloatingActionHideBackgroundScreen from "./screens/FloatingActionHideBackgroundScreen";
@@ -88,51 +89,56 @@ class App extends React.Component {
             },
             {
               key: "row_7",
-              text: "Set button color",
-              screen: "FloatingActionColorScreen"
+              text: "Set button HEX color",
+              screen: "FloatingActionHexColorScreen"
             },
             {
               key: "row_8",
+              text: "Set button RGB color",
+              screen: "FloatingActionRgbColorScreen"
+            },
+            {
+              key: "row_9",
               text: "Set visibility",
               screen: "FloatingActionVisibilityScreen"
             },
             {
-              key: "row_9",
+              key: "row_10",
               text: "Open on mount",
               screen: "FloatingActionOpenMountScreen"
             },
             {
-              key: "row_10",
+              key: "row_11",
               text: "Hide background",
               screen: "FloatingActionHideBackgroundScreen"
             },
             {
-              key: "row_11",
+              key: "row_12",
               text: "Change Actions Distance",
               screen: "FloatingActionActionsDistance"
             },
             {
-              key: "row_12",
+              key: "row_13",
               text: "Change visibility programatically",
               screen: "FloatingActionStatusProgramatically"
             },
             {
-              key: "row_13",
+              key: "row_14",
               text: "Change Action Text Container colors",
               screen: "FloatingActionChangeActionColor"
             },
             {
-              key: "row_14",
+              key: "row_15",
               text: "Custom Action Component",
               screen: "FloatingActionCustomActionComponent"
             },
             {
-              key: "row_15",
+              key: "row_16",
               text: "Listen Keyboard",
               screen: "FloatingActionListenKeyboard"
             },
             {
-              key: "row_16",
+              key: "row_17",
               text: "Change Shadow",
               screen: "FloatingActionShadow"
             }
@@ -175,8 +181,11 @@ const AppNavigator = createStackNavigator({
   FloatingActionOverlayScreen: {
     screen: FloatingActionOverlayScreen
   },
-  FloatingActionColorScreen: {
-    screen: FloatingActionColorScreen
+  FloatingActionHexColorScreen: {
+    screen: FloatingActionHexColorScreen
+  },
+  FloatingActionRgbColorScreen: {
+    screen: FloatingActionRgbColorScreen
   },
   FloatingActionVisibilityScreen: {
     screen: FloatingActionVisibilityScreen
