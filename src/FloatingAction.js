@@ -1,21 +1,19 @@
-import React, { Component } from "react"; // eslint-disable-line
 import PropTypes from "prop-types";
+import React, { Component } from "react"; // eslint-disable-line
 import {
-  StyleSheet,
-  Image,
   Animated,
   Dimensions,
-  TouchableOpacity,
+  Image,
+  Keyboard,
   LayoutAnimation,
   Platform,
-  Keyboard
+  StyleSheet,
+  TouchableOpacity
 } from "react-native";
-
-import FloatingActionItem from "./FloatingActionItem";
 import AddIcon from "./AddIcon";
-
+import FloatingActionItem from "./FloatingActionItem";
 import { isIphoneX } from "./utils/platform";
-import { getTouchableComponent, getRippleProps } from "./utils/touchable";
+import { getRippleProps, getTouchableComponent } from "./utils/touchable";
 
 const DEVICE_WIDTH = Dimensions.get("window").width;
 const ACTION_BUTTON_SIZE = 56;
@@ -42,10 +40,12 @@ class FloatingAction extends Component {
       props.distanceToEdge + props.mainVerticalDistance
     );
     this.actionsBottomAnimation = new Animated.Value(
-      ACTION_BUTTON_SIZE +
-        props.distanceToEdge +
-        props.actionsPaddingTopBottom +
-        props.mainVerticalDistance
+      props.actionButtonSize
+        ? props.actionButtonSize
+        : ACTION_BUTTON_SIZE +
+          props.distanceToEdge +
+          props.actionsPaddingTopBottom +
+          props.mainVerticalDistance
     );
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
@@ -109,18 +109,23 @@ class FloatingAction extends Component {
   }
 
   onKeyboardShow = e => {
-    const { distanceToEdge, actionsPaddingTopBottom } = this.props;
+    const {
+      distanceToEdge,
+      actionsPaddingTopBottom,
+      actionButtonSize
+    } = this.props;
     const { height } = e.endCoordinates;
 
     Animated.parallel([
       Animated.spring(this.actionsBottomAnimation, {
         bounciness: 0,
-        toValue:
-          ACTION_BUTTON_SIZE +
-          distanceToEdge +
-          actionsPaddingTopBottom +
-          height -
-          (isIphoneX() ? 40 : 0),
+        toValue: actionButtonSize
+          ? actionButtonSize
+          : ACTION_BUTTON_SIZE +
+            distanceToEdge +
+            actionsPaddingTopBottom +
+            height -
+            (isIphoneX() ? 40 : 0),
         duration: 250
       }),
       Animated.spring(this.mainBottomAnimation, {
@@ -132,12 +137,18 @@ class FloatingAction extends Component {
   };
 
   onKeyboardHideHide = () => {
-    const { distanceToEdge, actionsPaddingTopBottom } = this.props;
+    const {
+      distanceToEdge,
+      actionsPaddingTopBottom,
+      actionButtonSize
+    } = this.props;
 
     Animated.parallel([
       Animated.spring(this.actionsBottomAnimation, {
         bounciness: 0,
-        toValue: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom,
+        toValue: actionButtonSize
+          ? actionButtonSize
+          : ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom,
         duration: 250
       }),
       Animated.spring(this.mainBottomAnimation, {
@@ -402,19 +413,48 @@ class FloatingAction extends Component {
           styles[`${position}Button`],
           propStyles,
           animatedVisibleView,
-          this.getShadow()
+          this.getShadow(),
+          {
+            width: this.props.actionButtonSize
+              ? this.props.actionButtonSize
+              : 56,
+            height: this.props.actionButtonSize
+              ? this.props.actionButtonSize
+              : 56
+          }
         ]}
         accessible
         accessibilityLabel="Floating Action Button"
       >
         <Touchable
           {...getRippleProps(mainButtonColor)}
-          style={styles.button}
+          style={[
+            styles.button,
+            {
+              width: this.props.actionButtonSize
+                ? this.props.actionButtonSize
+                : 56,
+              height: this.props.actionButtonSize
+                ? this.props.actionButtonSize
+                : 56
+            }
+          ]}
           activeOpacity={0.85}
           onPress={this.animateButton}
         >
           <Animated.View
-            style={[styles.buttonTextContainer, animatedViewStyle]}
+            style={[
+              styles.buttonTextContainer,
+              animatedViewStyle,
+              {
+                width: this.props.actionButtonSize
+                  ? this.props.actionButtonSize
+                  : 56,
+                height: this.props.actionButtonSize
+                  ? this.props.actionButtonSize
+                  : 56
+              }
+            ]}
           >
             {this.getIcon()}
           </Animated.View>
@@ -629,8 +669,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     overflow: Platform.OS === "ios" ? "visible" : "hidden",
     zIndex: 2,
-    width: ACTION_BUTTON_SIZE,
-    height: ACTION_BUTTON_SIZE,
     borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",
@@ -639,8 +677,6 @@ const styles = StyleSheet.create({
   },
   button: {
     zIndex: 3,
-    width: ACTION_BUTTON_SIZE,
-    height: ACTION_BUTTON_SIZE,
     borderRadius: 28,
     alignItems: "center",
     justifyContent: "center"
@@ -652,8 +688,6 @@ const styles = StyleSheet.create({
   },
   buttonTextContainer: {
     borderRadius: 28,
-    width: ACTION_BUTTON_SIZE,
-    height: ACTION_BUTTON_SIZE,
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
