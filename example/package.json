@@ -8,17 +8,17 @@
     "postinstall": "rndebugger-open --expo"
   },
   "dependencies": {
-    "expo": "^32.0.5",
+    "expo": "^33.0.7",
     "react": "16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.2.tar.gz",
     "react-native-debugger-open": "^0.3.19",
-    "react-navigation": "3.11.0"
+    "react-navigation": "3.11.1"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-preset-expo": "^5.1.1",
-    "expo-cli": "2.19.1",
-    "schedule": "0.4.0"
+    "expo-cli": "2.21.2",
+    "schedule": "0.5.0"
   },
   "resolutions": {
     "@babel/runtime": "7.3.4"

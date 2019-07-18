@@ -2,6 +2,7 @@ import React, { Component } from "react"; // eslint-disable-line
 import PropTypes from "prop-types";
 import {
   StyleSheet,
+  View,
   Image,
   Animated,
   Dimensions,
@@ -157,42 +158,6 @@ class FloatingAction extends Component {
     };
   };
 
-  getIcon = () => {
-    const {
-      actions,
-      floatingIcon,
-      overrideWithAction,
-      iconWidth,
-      iconHeight
-    } = this.props;
-
-    if (overrideWithAction) {
-      const { icon } = actions[0];
-
-      if (React.isValidElement(icon)) {
-        return icon;
-      }
-      return (
-        <Image style={{ width: iconWidth, height: iconHeight }} source={icon} />
-      );
-    }
-
-    if (floatingIcon) {
-      if (React.isValidElement(floatingIcon)) {
-        return floatingIcon;
-      }
-
-      return (
-        <Image
-          style={{ width: iconWidth, height: iconHeight }}
-          source={floatingIcon}
-        />
-      );
-    }
-
-    return <AddIcon width={iconWidth} height={iconHeight} />;
-  };
-
   reset = () => {
     const { animated, onClose } = this.props;
 
@@ -313,6 +278,7 @@ class FloatingAction extends Component {
       buttonColor, // eslint-disable-line
       color,
       position,
+      floatingIcon,
       overrideWithAction,
       distanceToEdge,
       animated
@@ -413,11 +379,15 @@ class FloatingAction extends Component {
           activeOpacity={0.85}
           onPress={this.animateButton}
         >
-          <Animated.View
-            style={[styles.buttonTextContainer, animatedViewStyle]}
-          >
-            {this.getIcon()}
-          </Animated.View>
+          {floatingIcon ? (
+            this.renderCustomIcon()
+          ) : (
+            <Animated.View
+              style={[styles.buttonTextContainer, animatedViewStyle]}
+            >
+              {this.renderIcon()}
+            </Animated.View>
+          )}
         </Touchable>
       </Animated.View>
     );
@@ -509,6 +479,96 @@ class FloatingAction extends Component {
     );
   }
 
+  renderCustomIcon() {
+    const {
+      floatingIcon,
+      floatingCloseIcon,
+      iconWidth,
+      iconHeight
+    } = this.props;
+    let IconOpenComponent;
+    let IconCloseComponnet;
+
+    const animatedIconOpen = {
+      opacity: this.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 1]
+      })
+    };
+
+    const animatedIconClose = {
+      opacity: this.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [1, 0]
+      })
+    };
+
+    if (React.isValidElement(floatingIcon)) {
+      IconOpenComponent = floatingIcon;
+    } else {
+      IconOpenComponent = (
+        <Image
+          style={{ width: iconWidth, height: iconHeight }}
+          source={floatingIcon}
+        />
+      );
+    }
+
+    if (React.isValidElement(floatingCloseIcon)) {
+      IconCloseComponnet = floatingCloseIcon;
+    } else {
+      IconCloseComponnet = (
+        <Image
+          style={{ width: iconWidth, height: iconHeight }}
+          source={floatingCloseIcon}
+        />
+      );
+    }
+
+    return (
+      <View style={[styles.buttonTextContainer]}>
+        <Animated.View
+          style={[
+            {
+              position: "absolute"
+            },
+            animatedIconOpen
+          ]}
+        >
+          {IconCloseComponnet}
+        </Animated.View>
+        <Animated.View
+          style={[
+            {
+              position: "absolute"
+            },
+            animatedIconOpen
+          ]}
+        >
+          {IconOpenComponent}
+        </Animated.View>
+      </View>
+    );
+  }
+
+  renderIcon() {
+    const { actions, overrideWithAction, iconWidth, iconHeight } = this.props;
+
+    if (overrideWithAction) {
+      const { icon } = actions[0];
+
+      if (React.isValidElement(icon)) {
+        return icon;
+      }
+
+      return (
+        <Image style={{ width: iconWidth, height: iconHeight }} source={icon} />
+      );
+    }
+
+    return <AddIcon width={iconWidth} height={iconHeight} />;
+  }
+
   render() {
     const { active } = this.state;
     const { showBackground } = this.props;
@@ -548,6 +608,7 @@ FloatingAction.propTypes = {
   position: PropTypes.oneOf(["right", "left", "center"]),
   overrideWithAction: PropTypes.bool, // replace mainAction with first action from actions
   floatingIcon: PropTypes.any,
+  floatingCloseIcon: PropTypes.any,
   showBackground: PropTypes.bool,
   openOnMount: PropTypes.bool,
   actionsPaddingTopBottom: PropTypes.number,
