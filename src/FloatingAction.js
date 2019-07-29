@@ -80,17 +80,17 @@ class FloatingAction extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { visible } = this.props;
 
-    if (nextProps.visible !== visible) {
-      if (nextProps.visible) {
+    if (prevProps.visible !== visible) {
+      if (visible) {
         Animated.parallel([
           Animated.spring(this.visibleAnimation, { toValue: 0 }),
           Animated.spring(this.fadeAnimation, { toValue: 1 })
         ]).start();
       }
-      if (!nextProps.visible) {
+      if (!visible) {
         Animated.parallel([
           Animated.spring(this.visibleAnimation, { toValue: 1 }),
           Animated.spring(this.fadeAnimation, { toValue: 0 })

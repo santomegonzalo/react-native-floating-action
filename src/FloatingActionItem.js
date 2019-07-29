@@ -10,12 +10,12 @@ class FloatingActionItem extends Component {
     this.animation = new Animated.Value(0);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { active, animated } = this.props;
 
-    if (nextProps.active !== active && animated) {
+    if (prevProps.active !== active && animated) {
       Animated.spring(this.animation, {
-        toValue: nextProps.active ? 1 : 0
+        toValue: active ? 1 : 0
       }).start();
     }
   }
