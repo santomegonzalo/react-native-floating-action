@@ -163,7 +163,8 @@ class FloatingAction extends Component {
       floatingIcon,
       overrideWithAction,
       iconWidth,
-      iconHeight
+      iconHeight,
+      iconColor
     } = this.props;
 
     if (overrideWithAction) {
@@ -190,7 +191,7 @@ class FloatingAction extends Component {
       );
     }
 
-    return <AddIcon width={iconWidth} height={iconHeight} />;
+    return <AddIcon width={iconWidth} height={iconHeight} backgroundColor={iconColor}  />;
   };
 
   reset = () => {
@@ -586,6 +587,7 @@ FloatingAction.defaultProps = {
   showBackground: true,
   iconHeight: 15,
   iconWidth: 15,
+  iconColor: '#fff',
   mainVerticalDistance: 0,
   animated: true,
   shadow: {}
