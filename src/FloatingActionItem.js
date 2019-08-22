@@ -248,27 +248,21 @@ const styles = StyleSheet.create({
   container: {
     elevation: 0,
     flex: 1,
-    flexDirection: "column",
+    flexDirection: "column"
   },
   actionContainer: {
     elevation: 0,
     flex: 1,
     flexDirection: "row",
+    alignItems: 'center',
     paddingLeft: 0,
-    paddingRight: 0,
-    paddingBottom: 8,
-    paddingTop: 8
-  },
-  centerActionContainer: {
-    paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 0
   },
   textContainer: {
     paddingHorizontal: 8,
     elevation: 5,
     borderRadius: 4,
-    height: 22,
-    marginTop: 8
+    height: 22
   },
   leftTextContainer: {
     marginLeft: 14
