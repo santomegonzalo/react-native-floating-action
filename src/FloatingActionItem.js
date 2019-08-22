@@ -20,6 +20,20 @@ class FloatingActionItem extends Component {
     }
   }
 
+  get distanceToHorizontalEdge() {
+    const { distanceToEdge } = this.props;
+    return typeof distanceToEdge === 'number'
+      ? distanceToEdge
+      : distanceToEdge.horizontal;
+  }
+
+  get distanceToVerticalEdge() {
+    const { distanceToEdge } = this.props;
+    return typeof distanceToEdge === 'number'
+      ? distanceToEdge
+      : distanceToEdge.vertical;
+  }
+
   handleOnPress = () => {
     const { name, onPress } = this.props;
 
@@ -112,7 +126,6 @@ class FloatingActionItem extends Component {
   render() {
     const {
       position,
-      distanceToEdge,
       paddingTopBottom,
       render,
       margin,
@@ -145,7 +158,7 @@ class FloatingActionItem extends Component {
         components.push(this.renderButton());
         components.push(this.renderText());
       }
-      distanceToEdgeActionContainer.paddingLeft = distanceToEdge + margin;
+      distanceToEdgeActionContainer.paddingLeft = this.distanceToHorizontalEdge + margin;
     } else if (position === "right") {
       if (render) {
         components.push(render({ key: name }));
@@ -153,7 +166,7 @@ class FloatingActionItem extends Component {
         components.push(this.renderText());
         components.push(this.renderButton());
       }
-      distanceToEdgeActionContainer.paddingRight = distanceToEdge + margin;
+      distanceToEdgeActionContainer.paddingRight = this.distanceToHorizontalEdge + margin;
     } else if (render) {
       components.push(render({ key: name }));
     } else {
@@ -209,7 +222,13 @@ FloatingActionItem.propTypes = {
   // not modified by user
   position: PropTypes.oneOf(["left", "right", "center"]),
   active: PropTypes.bool,
-  distanceToEdge: PropTypes.number,
+  distanceToEdge: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      vertical: PropTypes.number,
+      horizontal: PropTypes.number
+    })
+  ]),
   paddingTopBottom: PropTypes.number, // modified by parent property "actionsPaddingTopBottom"
   onPress: PropTypes.func,
   render: PropTypes.func,
