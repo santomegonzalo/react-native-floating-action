@@ -38,11 +38,11 @@ class FloatingAction extends Component {
     };
 
     this.mainBottomAnimation = new Animated.Value(
-      props.distanceToEdge + props.mainVerticalDistance
+      this.distanceToVerticalEdge + props.mainVerticalDistance
     );
     this.actionsBottomAnimation = new Animated.Value(
-        props.buttonSize +
-        props.distanceToEdge +
+      props.buttonSize +
+        this.distanceToVerticalEdge +
         props.actionsPaddingTopBottom +
         props.mainVerticalDistance
     );
@@ -107,8 +107,22 @@ class FloatingAction extends Component {
     }
   }
 
+  get distanceToHorizontalEdge() {
+    const { distanceToEdge } = this.props;
+    return typeof distanceToEdge === 'number'
+      ? distanceToEdge
+      : distanceToEdge.horizontal;
+  }
+
+  get distanceToVerticalEdge() {
+    const { distanceToEdge } = this.props;
+    return typeof distanceToEdge === 'number'
+      ? distanceToEdge
+      : distanceToEdge.vertical;
+  }
+
   onKeyboardShow = e => {
-    const { buttonSize, distanceToEdge, actionsPaddingTopBottom } = this.props;
+    const { buttonSize, actionsPaddingTopBottom } = this.props;
     const { height } = e.endCoordinates;
 
     Animated.parallel([
@@ -116,7 +130,7 @@ class FloatingAction extends Component {
         bounciness: 0,
         toValue:
           buttonSize +
-          distanceToEdge +
+          this.distanceToVerticalEdge
           actionsPaddingTopBottom +
           height -
           (isIphoneX() ? 40 : 0),
@@ -124,24 +138,24 @@ class FloatingAction extends Component {
       }),
       Animated.spring(this.mainBottomAnimation, {
         bounciness: 0,
-        toValue: distanceToEdge + height - (isIphoneX() ? 40 : 0),
+        toValue: this.distanceToVerticalEdge + height - (isIphoneX() ? 40 : 0),
         duration: 250
       })
     ]).start();
   };
 
   onKeyboardHideHide = () => {
-    const { buttonSize, distanceToEdge, actionsPaddingTopBottom } = this.props;
+    const { buttonSize, actionsPaddingTopBottom } = this.props;
 
     Animated.parallel([
       Animated.spring(this.actionsBottomAnimation, {
         bounciness: 0,
-        toValue: buttonSize + distanceToEdge + actionsPaddingTopBottom,
+        toValue: buttonSize + this.distanceToVerticalEdge + actionsPaddingTopBottom,
         duration: 250
       }),
       Animated.spring(this.mainBottomAnimation, {
         bounciness: 0,
-        toValue: distanceToEdge,
+        toValue: this.distanceToVerticalEdge,
         duration: 250
       })
     ]).start();
@@ -315,7 +329,6 @@ class FloatingAction extends Component {
       color,
       position,
       overrideWithAction,
-      distanceToEdge,
       animated
     } = this.props;
     const { active } = this.state;
@@ -393,7 +406,7 @@ class FloatingAction extends Component {
     };
 
     if (["left", "right"].indexOf(position) > -1) {
-      propStyles[position] = distanceToEdge;
+      propStyles[position] = this.distanceToHorizontalEdge;
     }
 
     const sizeStyle = {
@@ -550,7 +563,13 @@ FloatingAction.propTypes = {
   ),
   animated: PropTypes.bool,
   color: PropTypes.string,
-  distanceToEdge: PropTypes.number,
+  distanceToEdge: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      vertical: PropTypes.number,
+      horizontal: PropTypes.number
+    })
+  ]),
   mainVerticalDistance: PropTypes.number,
   visible: PropTypes.bool,
   overlayColor: PropTypes.string,
