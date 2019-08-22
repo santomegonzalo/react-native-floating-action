@@ -41,7 +41,7 @@ class FloatingAction extends Component {
       props.distanceToEdge + props.mainVerticalDistance
     );
     this.actionsBottomAnimation = new Animated.Value(
-      props.buttonSize +
+        props.buttonSize +
         props.distanceToEdge +
         props.actionsPaddingTopBottom +
         props.mainVerticalDistance
@@ -540,6 +540,7 @@ FloatingAction.propTypes = {
       color: PropTypes.string,
       icon: PropTypes.any,
       name: PropTypes.string.isRequired,
+      buttonSize: PropTypes.number,
       text: PropTypes.string,
       textBackground: PropTypes.string,
       textColor: PropTypes.string,
