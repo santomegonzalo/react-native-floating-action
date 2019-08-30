@@ -18,7 +18,6 @@ import { isIphoneX } from "./utils/platform";
 import { getTouchableComponent, getRippleProps } from "./utils/touchable";
 
 const DEVICE_WIDTH = Dimensions.get("window").width;
-const ACTION_BUTTON_SIZE = 56;
 
 const DEFAULT_SHADOW_PROPS = {
   shadowOpacity: 0.35,
@@ -42,7 +41,7 @@ class FloatingAction extends Component {
       this.distanceToVerticalEdge + props.mainVerticalDistance
     );
     this.actionsBottomAnimation = new Animated.Value(
-      ACTION_BUTTON_SIZE +
+      props.buttonSize +
         this.distanceToVerticalEdge +
         props.actionsPaddingTopBottom +
         props.mainVerticalDistance
@@ -123,15 +122,15 @@ class FloatingAction extends Component {
   }
 
   onKeyboardShow = e => {
-    const { actionsPaddingTopBottom } = this.props;
+    const { buttonSize, actionsPaddingTopBottom } = this.props;
     const { height } = e.endCoordinates;
 
     Animated.parallel([
       Animated.spring(this.actionsBottomAnimation, {
         bounciness: 0,
         toValue:
-          ACTION_BUTTON_SIZE +
-          this.distanceToVerticalEdge +
+          buttonSize +
+          this.distanceToVerticalEdge
           actionsPaddingTopBottom +
           height -
           (isIphoneX() ? 40 : 0),
@@ -146,12 +145,12 @@ class FloatingAction extends Component {
   };
 
   onKeyboardHideHide = () => {
-    const { actionsPaddingTopBottom } = this.props;
+    const { buttonSize, actionsPaddingTopBottom } = this.props;
 
     Animated.parallel([
       Animated.spring(this.actionsBottomAnimation, {
         bounciness: 0,
-        toValue: ACTION_BUTTON_SIZE + this.distanceToVerticalEdge + actionsPaddingTopBottom,
+        toValue: buttonSize + this.distanceToVerticalEdge + actionsPaddingTopBottom,
         duration: 250
       }),
       Animated.spring(this.mainBottomAnimation, {
@@ -326,6 +325,7 @@ class FloatingAction extends Component {
     const {
       // @deprecated in favor of "color"
       buttonColor, // eslint-disable-line
+      buttonSize,
       color,
       position,
       overrideWithAction,
@@ -409,10 +409,17 @@ class FloatingAction extends Component {
       propStyles[position] = this.distanceToHorizontalEdge;
     }
 
+    const sizeStyle = {
+      width: buttonSize,
+      height: buttonSize,
+      borderRadius: buttonSize / 2
+    };
+
     return (
       <Animated.View
         style={[
           styles.buttonContainer,
+          sizeStyle,
           styles[`${position}Button`],
           propStyles,
           animatedVisibleView,
@@ -423,12 +430,12 @@ class FloatingAction extends Component {
       >
         <Touchable
           {...getRippleProps(mainButtonColor)}
-          style={styles.button}
+          style={[styles.button, sizeStyle]}
           activeOpacity={0.85}
           onPress={this.animateButton}
         >
           <Animated.View
-            style={[styles.buttonTextContainer, animatedViewStyle]}
+            style={[styles.buttonTextContainer, sizeStyle, animatedViewStyle]}
           >
             {this.getIcon()}
           </Animated.View>
@@ -546,6 +553,7 @@ FloatingAction.propTypes = {
       color: PropTypes.string,
       icon: PropTypes.any,
       name: PropTypes.string.isRequired,
+      buttonSize: PropTypes.number,
       text: PropTypes.string,
       textBackground: PropTypes.string,
       textColor: PropTypes.string,
@@ -571,6 +579,7 @@ FloatingAction.propTypes = {
   showBackground: PropTypes.bool,
   openOnMount: PropTypes.bool,
   actionsPaddingTopBottom: PropTypes.number,
+  buttonSize: PropTypes.number,
   iconHeight: PropTypes.number,
   iconWidth: PropTypes.number,
   listenKeyboard: PropTypes.bool,
@@ -604,6 +613,7 @@ FloatingAction.defaultProps = {
   distanceToEdge: 30,
   openOnMount: false,
   showBackground: true,
+  buttonSize: 56,
   iconHeight: 15,
   iconWidth: 15,
   iconColor: '#fff',
@@ -650,9 +660,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     overflow: Platform.OS === "ios" ? "visible" : "hidden",
     zIndex: 2,
-    width: ACTION_BUTTON_SIZE,
-    height: ACTION_BUTTON_SIZE,
-    borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",
     elevation: 5,
@@ -660,9 +667,6 @@ const styles = StyleSheet.create({
   },
   button: {
     zIndex: 3,
-    width: ACTION_BUTTON_SIZE,
-    height: ACTION_BUTTON_SIZE,
-    borderRadius: 28,
     alignItems: "center",
     justifyContent: "center"
   },
@@ -672,9 +676,6 @@ const styles = StyleSheet.create({
     left: DEVICE_WIDTH / 2 - 28
   },
   buttonTextContainer: {
-    borderRadius: 28,
-    width: ACTION_BUTTON_SIZE,
-    height: ACTION_BUTTON_SIZE,
     flex: 1,
     justifyContent: "center",
     alignItems: "center"

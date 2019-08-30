@@ -99,7 +99,7 @@ class FloatingActionItem extends Component {
   }
 
   renderButton() {
-    const { icon, color, shadow } = this.props;
+    const { buttonSize, icon, color, shadow } = this.props;
 
     let iconStyle;
 
@@ -109,10 +109,17 @@ class FloatingActionItem extends Component {
       iconStyle = styles.icon;
     }
 
+    const propStyles = {
+      backgroundColor: color,
+      width: buttonSize,
+      height: buttonSize,
+      borderRadius: buttonSize / 2
+    };
+
     return (
       <View
         key="button"
-        style={[styles.button, { backgroundColor: color }, shadow]}
+        style={[styles.button, propStyles, shadow]}
       >
         {React.isValidElement(icon) ? (
           icon
@@ -202,6 +209,7 @@ FloatingActionItem.propTypes = {
   color: PropTypes.string,
   icon: PropTypes.any,
   name: PropTypes.string.isRequired,
+  buttonSize: PropTypes.number,
   textContainerStyle: PropTypes.object,
   text: PropTypes.string,
   textStyle: PropTypes.object,
@@ -239,6 +247,7 @@ FloatingActionItem.propTypes = {
 FloatingActionItem.defaultProps = {
   color: "#1253bc",
   distanceToEdge: 30,
+  buttonSize: 40,
   textElevation: 5,
   textColor: "#444444",
   textBackground: "#ffffff",
@@ -264,21 +273,15 @@ const styles = StyleSheet.create({
     elevation: 0,
     flex: 1,
     flexDirection: "row",
+    alignItems: 'center',
     paddingLeft: 0,
-    paddingRight: 0,
-    paddingBottom: 8,
-    paddingTop: 8
-  },
-  centerActionContainer: {
-    paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 0
   },
   textContainer: {
     paddingHorizontal: 8,
     elevation: 5,
     borderRadius: 4,
-    height: 22,
-    marginTop: 8
+    height: 22
   },
   leftTextContainer: {
     marginLeft: 14
@@ -293,10 +296,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 20,
-    elevation: 5,
-    width: 40,
-    height: 40
+    elevation: 5
   },
   iconLogo: {
     resizeMode: "cover",
