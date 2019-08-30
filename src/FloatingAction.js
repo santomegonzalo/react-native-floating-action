@@ -130,7 +130,7 @@ class FloatingAction extends Component {
         bounciness: 0,
         toValue:
           buttonSize +
-          this.distanceToVerticalEdge
+          this.distanceToVerticalEdge +
           actionsPaddingTopBottom +
           height -
           (isIphoneX() ? 40 : 0),
