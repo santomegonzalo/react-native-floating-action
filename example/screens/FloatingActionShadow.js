@@ -41,13 +41,18 @@ class FloatingActionShadowScreen extends PureComponent {
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
           <Property
-            propertyName="position"
-            propertyValue="right"
-            defaultValue="right"
+            propertyName="shadowOpacity"
+            propertyValue="0"
+            defaultValue="0.35"
+          />
+          <Property
+            propertyName="shadowColor"
+            propertyValue="#FF4B4B"
+            defaultValue="#000000"
           />
           <FloatingAction
             shadow={{
-              shadowOpacity: 0,
+              shadowOpacity: 0.5,
               shadowColor: "#FF4B4B"
             }}
             actions={actions}
