@@ -46,6 +46,7 @@ declare module "react-native-floating-action" {
     actionsPaddingTopBottom?: number;
     iconHeight?: number;
     iconWidth?: number;
+    iconWeight?: number;
     listenKeyboard?: boolean;
     dismissKeyboardOnPress?: boolean;
     shadow?: shadowType;

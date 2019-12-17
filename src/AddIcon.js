@@ -4,12 +4,12 @@ import { View, StyleSheet } from "react-native";
 
 class AddIcon extends PureComponent {
   render() {
-    const { width, height, backgroundColor } = this.props;
+    const { width, height, weight, backgroundColor } = this.props;
 
     return (
       <View style={styles.container}>
-        <View style={[styles.vertical, { height, backgroundColor }]} />
-        <View style={[styles.horizontal, { width, backgroundColor }]} />
+        <View style={[styles.vertical, { width: weight, height, backgroundColor }]} />
+        <View style={[styles.horizontal, { width, height: weight, backgroundColor }]} />
       </View>
     );
   }
