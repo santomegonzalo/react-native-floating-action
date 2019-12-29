@@ -44,13 +44,15 @@ declare module "react-native-floating-action" {
     showBackground?: boolean;
     openOnMount?: boolean;
     actionsPaddingTopBottom?: number;
-    iconHeight?: number;
     iconWidth?: number;
+    iconHeight?: number;
+    buttonSize?: number;
     listenKeyboard?: boolean;
     dismissKeyboardOnPress?: boolean;
     shadow?: shadowType;
     onPressItem?: (name?: string) => void;
     onPressMain?: () => void;
+    onPressBackdrop?: () => void;
     onClose?: () => void;
     onOpen?: () => void;
     onStateChange?: () => void;
