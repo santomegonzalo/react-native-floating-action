@@ -35,7 +35,7 @@ declare module "react-native-floating-action" {
   export interface IFloatingActionProps {
     actions?: IActionProps[];
     color?: string;
-    distanceToEdge?: number;
+    distanceToEdge?: number | { vertical: number; horizontal: number };
     visible?: boolean;
     overlayColor?: string;
     position?: positionType;
