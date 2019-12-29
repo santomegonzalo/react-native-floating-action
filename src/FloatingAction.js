@@ -177,6 +177,7 @@ class FloatingAction extends Component {
       overrideWithAction,
       iconWidth,
       iconHeight,
+      iconWeight,
       iconColor
     } = this.props;
 
@@ -204,7 +205,7 @@ class FloatingAction extends Component {
       );
     }
 
-    return <AddIcon width={iconWidth} height={iconHeight} backgroundColor={iconColor}  />;
+    return <AddIcon width={iconWidth} height={iconHeight} weight={iconWeight} backgroundColor={iconColor}  />;
   };
 
   reset = () => {
@@ -616,6 +617,7 @@ FloatingAction.defaultProps = {
   buttonSize: 56,
   iconHeight: 15,
   iconWidth: 15,
+  iconWeight: 2,
   iconColor: '#fff',
   mainVerticalDistance: 0,
   animated: true,
