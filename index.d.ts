@@ -6,13 +6,13 @@ declare module "react-native-floating-action" {
   type positionType = "right" | "left" | "center";
 
   type shadowType = {
-    shadowOpacity: number;
-    shadowOffset: {
+    shadowOpacity?: number;
+    shadowOffset?: {
       width: number;
       height: number;
     };
-    shadowColor: string;
-    shadowRadius: number;
+    shadowColor?: string;
+    shadowRadius?: number;
   };
 
   export class FloatingAction extends Component<IFloatingActionProps> {}
