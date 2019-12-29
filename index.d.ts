@@ -56,5 +56,6 @@ declare module "react-native-floating-action" {
     onClose?: () => void;
     onOpen?: () => void;
     onStateChange?: () => void;
+    animated?: boolean;
   }
 }
