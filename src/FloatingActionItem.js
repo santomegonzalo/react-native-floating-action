@@ -99,7 +99,7 @@ class FloatingActionItem extends Component {
   }
 
   renderButton() {
-    const { buttonSize, icon, color, shadow, tintColor } = this.props;
+    const { buttonSize, icon, color, shadow, tintColor, buttonContainerStyle } = this.props;
 
     let iconStyle;
 
@@ -120,7 +120,7 @@ class FloatingActionItem extends Component {
     return (
       <View
         key="button"
-        style={[styles.button, propStyles, shadow]}
+        style={[styles.button, propStyles, shadow, buttonContainerStyle]}
       >
         {React.isValidElement(icon) ? (
           icon

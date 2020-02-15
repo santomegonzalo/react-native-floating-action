@@ -329,7 +329,8 @@ class FloatingAction extends Component {
       color,
       position,
       overrideWithAction,
-      animated
+      animated,
+      buttonContainerStyle
     } = this.props;
     const { active } = this.state;
 
@@ -423,7 +424,8 @@ class FloatingAction extends Component {
           styles[`${position}Button`],
           propStyles,
           animatedVisibleView,
-          this.getShadow()
+          this.getShadow(),
+          buttonContainerStyle
         ]}
         accessible
         accessibilityLabel="Floating Action Button"
