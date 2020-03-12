@@ -534,17 +534,20 @@ class FloatingAction extends Component {
     const { active } = this.state;
     const { showBackground } = this.props;
 
-    let paddingBottom = 0;
+    let bottom = 0;
     if(this.props.distanceToEdge && typeof this.props.distanceToEdge === "number") {
-      paddingBottom = this.props.distanceToEdge - 30;
+      bottom = this.props.distanceToEdge - 30;
     } else if(this.props.distanceToEdge) {
-      paddingBottom = this.props.distanceToEdge.vertical - 30;
+      bottom = this.props.distanceToEdge.vertical - 30;
+      if(bottom < -30) {
+        bottom = -30;
+      }
     }
 
     return (
       <Animated.View
         pointerEvents="box-none"
-        style={[styles.overlay, { backgroundColor: "transparent", paddingBottom }]}
+        style={[styles.overlay, { backgroundColor: "transparent", bottom }]}
       >
         {active && showBackground && this.renderTappableBackground()}
         {this.renderActions()}
