@@ -1,4 +1,4 @@
-import React, { Component } from "react"; // eslint-disable-line
+import React, {Component} from "react"; // eslint-disable-line
 import PropTypes from "prop-types";
 import {
   StyleSheet,
@@ -14,10 +14,11 @@ import {
 import FloatingActionItem from "./FloatingActionItem";
 import AddIcon from "./AddIcon";
 
-import { isIphoneX } from "./utils/platform";
-import { getTouchableComponent, getRippleProps } from "./utils/touchable";
+import {isIphoneX} from "./utils/platform";
+import {getTouchableComponent, getRippleProps} from "./utils/touchable";
 
 const DEVICE_WIDTH = Dimensions.get("window").width;
+const DEVICE_HEIGHT = Dimensions.get("window").height;
 
 const DEFAULT_SHADOW_PROPS = {
   shadowOpacity: 0.35,
@@ -38,10 +39,10 @@ class FloatingAction extends Component {
     };
 
     this.mainBottomAnimation = new Animated.Value(
-      this.distanceToVerticalEdge + props.mainVerticalDistance
+        this.distanceToVerticalEdge + props.mainVerticalDistance
     );
     this.actionsBottomAnimation = new Animated.Value(
-      props.buttonSize +
+        props.buttonSize +
         this.distanceToVerticalEdge +
         props.actionsPaddingTopBottom +
         props.mainVerticalDistance
@@ -56,8 +57,22 @@ class FloatingAction extends Component {
     this.fadeAnimation = new Animated.Value(props.visible ? 1 : 0);
   }
 
+  get distanceToHorizontalEdge() {
+    const {distanceToEdge} = this.props;
+    return typeof distanceToEdge === 'number'
+        ? distanceToEdge
+        : distanceToEdge.horizontal;
+  }
+
+  get distanceToVerticalEdge() {
+    const {distanceToEdge} = this.props;
+    return typeof distanceToEdge === 'number'
+        ? distanceToEdge
+        : distanceToEdge.vertical;
+  }
+
   componentDidMount() {
-    const { openOnMount, listenKeyboard } = this.props;
+    const {openOnMount, listenKeyboard} = this.props;
 
     if (openOnMount) {
       this.animateButton();
@@ -65,41 +80,41 @@ class FloatingAction extends Component {
 
     if (listenKeyboard) {
       const showEvent =
-        Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+          Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
       const hideEvent =
-        Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+          Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
       this.keyboardWillShowListener = Keyboard.addListener(
-        showEvent,
-        this.onKeyboardShow
+          showEvent,
+          this.onKeyboardShow
       );
       this.keyboardWillHideListener = Keyboard.addListener(
-        hideEvent,
-        this.onKeyboardHideHide
+          hideEvent,
+          this.onKeyboardHideHide
       );
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { visible } = this.props;
+    const {visible} = this.props;
 
     if (prevProps.visible !== visible) {
       if (visible) {
         Animated.parallel([
-          Animated.spring(this.visibleAnimation, { toValue: 0 }),
-          Animated.spring(this.fadeAnimation, { toValue: 1 })
+          Animated.spring(this.visibleAnimation, {toValue: 0}),
+          Animated.spring(this.fadeAnimation, {toValue: 1})
         ]).start();
       }
       if (!visible) {
         Animated.parallel([
-          Animated.spring(this.visibleAnimation, { toValue: 1 }),
-          Animated.spring(this.fadeAnimation, { toValue: 0 })
+          Animated.spring(this.visibleAnimation, {toValue: 1}),
+          Animated.spring(this.fadeAnimation, {toValue: 0})
         ]).start();
       }
     }
   }
 
   componentWillUnmount() {
-    const { listenKeyboard } = this.props;
+    const {listenKeyboard} = this.props;
 
     if (listenKeyboard) {
       this.keyboardWillShowListener.remove();
@@ -107,33 +122,19 @@ class FloatingAction extends Component {
     }
   }
 
-  get distanceToHorizontalEdge() {
-    const { distanceToEdge } = this.props;
-    return typeof distanceToEdge === 'number'
-      ? distanceToEdge
-      : distanceToEdge.horizontal;
-  }
-
-  get distanceToVerticalEdge() {
-    const { distanceToEdge } = this.props;
-    return typeof distanceToEdge === 'number'
-      ? distanceToEdge
-      : distanceToEdge.vertical;
-  }
-
   onKeyboardShow = e => {
-    const { buttonSize, actionsPaddingTopBottom } = this.props;
-    const { height } = e.endCoordinates;
+    const {buttonSize, actionsPaddingTopBottom} = this.props;
+    const {height} = e.endCoordinates;
 
     Animated.parallel([
       Animated.spring(this.actionsBottomAnimation, {
         bounciness: 0,
         toValue:
-          buttonSize +
-          this.distanceToVerticalEdge +
-          actionsPaddingTopBottom +
-          height -
-          (isIphoneX() ? 40 : 0),
+            buttonSize +
+            this.distanceToVerticalEdge +
+            actionsPaddingTopBottom +
+            height -
+            (isIphoneX() ? 40 : 0),
         duration: 250
       }),
       Animated.spring(this.mainBottomAnimation, {
@@ -145,7 +146,7 @@ class FloatingAction extends Component {
   };
 
   onKeyboardHideHide = () => {
-    const { buttonSize, actionsPaddingTopBottom } = this.props;
+    const {buttonSize, actionsPaddingTopBottom} = this.props;
 
     Animated.parallel([
       Animated.spring(this.actionsBottomAnimation, {
@@ -162,7 +163,7 @@ class FloatingAction extends Component {
   };
 
   getShadow = () => {
-    const { shadow } = this.props;
+    const {shadow} = this.props;
 
     return {
       ...DEFAULT_SHADOW_PROPS,
@@ -181,13 +182,13 @@ class FloatingAction extends Component {
     } = this.props;
 
     if (overrideWithAction) {
-      const { icon } = actions[0];
+      const {icon} = actions[0];
 
       if (React.isValidElement(icon)) {
         return icon;
       }
       return (
-        <Image style={{ width: iconWidth, height: iconHeight }} source={icon} />
+          <Image style={{width: iconWidth, height: iconHeight}} source={icon}/>
       );
     }
 
@@ -197,32 +198,32 @@ class FloatingAction extends Component {
       }
 
       return (
-        <Image
-          style={{ width: iconWidth, height: iconHeight }}
-          source={floatingIcon}
-        />
+          <Image
+              style={{width: iconWidth, height: iconHeight}}
+              source={floatingIcon}
+          />
       );
     }
 
-    return <AddIcon width={iconWidth} height={iconHeight} backgroundColor={iconColor}  />;
+    return <AddIcon width={iconWidth} height={iconHeight} backgroundColor={iconColor}/>;
   };
 
   reset = () => {
-    const { animated, onClose } = this.props;
+    const {animated, onClose} = this.props;
 
     if (animated) {
-      Animated.spring(this.animation, { toValue: 0 }).start();
-      Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
+      Animated.spring(this.animation, {toValue: 0}).start();
+      Animated.spring(this.actionsAnimation, {toValue: 0}).start();
     }
     this.updateState(
-      {
-        active: false
-      },
-      () => {
-        if (onClose) {
-          onClose();
+        {
+          active: false
+        },
+        () => {
+          if (onClose) {
+            onClose();
+          }
         }
-      }
     );
   };
 
@@ -236,7 +237,7 @@ class FloatingAction extends Component {
       onPressMain,
       onOpen
     } = this.props;
-    const { active } = this.state;
+    const {active} = this.state;
 
     if (dismissKeyboardOnPress) {
       Keyboard.dismiss();
@@ -255,12 +256,12 @@ class FloatingAction extends Component {
     if (!active) {
       if (!floatingIcon) {
         if (animated) {
-          Animated.spring(this.animation, { toValue: 1 }).start();
+          Animated.spring(this.animation, {toValue: 1}).start();
         }
       }
 
       if (animated) {
-        Animated.spring(this.actionsAnimation, { toValue: 1 }).start();
+        Animated.spring(this.actionsAnimation, {toValue: 1}).start();
 
         // only execute it for the background to prevent extra calls
         LayoutAnimation.configureNext({
@@ -273,14 +274,14 @@ class FloatingAction extends Component {
       }
 
       this.updateState(
-        {
-          active: true
-        },
-        () => {
-          if (onOpen) {
-            onOpen();
+          {
+            active: true
+          },
+          () => {
+            if (onOpen) {
+              onOpen();
+            }
           }
-        }
       );
     } else {
       this.reset();
@@ -288,8 +289,8 @@ class FloatingAction extends Component {
   };
 
   updateState = (nextState, callback) => {
-    const { onStateChange } = this.props;
-    const { active } = this.state;
+    const {onStateChange} = this.props;
+    const {active} = this.state;
 
     this.setState(nextState, () => {
       if (callback) {
@@ -304,7 +305,7 @@ class FloatingAction extends Component {
   };
 
   handlePressBackdrop = () => {
-    const { onPressBackdrop } = this.props;
+    const {onPressBackdrop} = this.props;
     if (onPressBackdrop) {
       onPressBackdrop();
     }
@@ -312,7 +313,7 @@ class FloatingAction extends Component {
   };
 
   handlePressItem = itemName => {
-    const { onPressItem } = this.props;
+    const {onPressItem} = this.props;
 
     if (onPressItem) {
       onPressItem(itemName);
@@ -331,11 +332,11 @@ class FloatingAction extends Component {
       overrideWithAction,
       animated
     } = this.props;
-    const { active } = this.state;
+    const {active} = this.state;
 
     if (buttonColor) {
       console.warn(
-        'FloatingAction: "buttonColor" property was deprecated. Please use "color"'
+          'FloatingAction: "buttonColor" property was deprecated. Please use "color"'
       );
     }
 
@@ -416,31 +417,31 @@ class FloatingAction extends Component {
     };
 
     return (
-      <Animated.View
-        style={[
-          styles.buttonContainer,
-          sizeStyle,
-          styles[`${position}Button`],
-          propStyles,
-          animatedVisibleView,
-          this.getShadow()
-        ]}
-        accessible
-        accessibilityLabel="Floating Action Button"
-      >
-        <Touchable
-          {...getRippleProps(mainButtonColor)}
-          style={[styles.button, sizeStyle]}
-          activeOpacity={0.85}
-          onPress={this.animateButton}
+        <Animated.View
+            style={[
+              styles.buttonContainer,
+              sizeStyle,
+              styles[`${position}Button`],
+              propStyles,
+              animatedVisibleView,
+              this.getShadow()
+            ]}
+            accessible
+            accessibilityLabel="Floating Action Button"
         >
-          <Animated.View
-            style={[styles.buttonTextContainer, sizeStyle, animatedViewStyle]}
+          <Touchable
+              {...getRippleProps(mainButtonColor)}
+              style={[styles.button, sizeStyle]}
+              activeOpacity={0.85}
+              onPress={this.animateButton}
           >
-            {this.getIcon()}
-          </Animated.View>
-        </Touchable>
-      </Animated.View>
+            <Animated.View
+                style={[styles.buttonTextContainer, sizeStyle, animatedViewStyle]}
+            >
+              {this.getIcon()}
+            </Animated.View>
+          </Touchable>
+        </Animated.View>
     );
   }
 
@@ -453,7 +454,7 @@ class FloatingAction extends Component {
       actionsPaddingTopBottom,
       animated
     } = this.props;
-    const { active } = this.state;
+    const {active} = this.state;
 
     if (!actions || actions.length === 0) {
       return undefined;
@@ -473,7 +474,7 @@ class FloatingAction extends Component {
         })
       };
     } else {
-      animatedActionsStyle = { opacity: active ? 1 : 0 };
+      animatedActionsStyle = {opacity: active ? 1 : 0};
     }
 
     const actionsStyles = [
@@ -491,85 +492,88 @@ class FloatingAction extends Component {
 
     const sortedActions = actions.sort((a, b) => a.position - b.position);
     return (
-      <Animated.View style={actionsStyles} pointerEvents="box-none">
-        {sortedActions.map(action => {
-          const textColor = action.textColor || action.actionsTextColor;
-          const textBackground =
-            action.textBackground || action.actionsTextBackground;
+        <Animated.View style={actionsStyles} pointerEvents="box-none">
+          {sortedActions.map(action => {
+            const textColor = action.textColor || action.actionsTextColor;
+            const textBackground =
+                action.textBackground || action.actionsTextBackground;
 
-          return (
-            <FloatingActionItem
-              paddingTopBottom={actionsPaddingTopBottom}
-              distanceToEdge={distanceToEdge}
-              key={action.name}
-              textColor={textColor}
-              textBackground={textBackground}
-              shadow={this.getShadow()}
-              {...action}
-              position={position}
-              active={active}
-              onPress={this.handlePressItem}
-              animated={animated}
-            />
-          );
-        })}
-      </Animated.View>
+            return (
+                <FloatingActionItem
+                    paddingTopBottom={actionsPaddingTopBottom}
+                    distanceToEdge={distanceToEdge}
+                    key={action.name}
+                    textColor={textColor}
+                    textBackground={textBackground}
+                    shadow={this.getShadow()}
+                    {...action}
+                    position={position}
+                    active={active}
+                    onPress={this.handlePressItem}
+                    animated={animated}
+                />
+            );
+          })}
+        </Animated.View>
     );
   }
 
   renderTappableBackground() {
-    const { overlayColor } = this.props;
+    const {overlayColor} = this.props;
 
     // TouchableOpacity don't require a child
     return (
-      <TouchableOpacity
-        activeOpacity={1}
-        style={[styles.overlay, { backgroundColor: overlayColor }]}
-        onPress={this.handlePressBackdrop}
-      />
+        <TouchableOpacity
+            activeOpacity={1}
+            style={[styles.overlay, {backgroundColor: overlayColor}]}
+            onPress={this.handlePressBackdrop}
+        />
     );
   }
 
   render() {
-    const { active } = this.state;
-    const { showBackground } = this.props;
+    const {active} = this.state;
+    const {showBackground} = this.props;
 
     let bottom = 0;
-    if(this.props.distanceToEdge && typeof this.props.distanceToEdge === "number") {
+    if (this.props.distanceToEdge && typeof this.props.distanceToEdge === "number") {
       bottom = this.props.distanceToEdge - 30;
-    } else if(this.props.distanceToEdge) {
+    } else if (this.props.distanceToEdge) {
       bottom = this.props.distanceToEdge.vertical - 30;
-      if(bottom < -30) {
+      if (bottom < -30) {
         bottom = -30;
       }
     }
 
     return (
-      <Animated.View
-        pointerEvents="box-none"
-        style={[styles.overlay, { backgroundColor: "transparent", bottom }]}
-      >
-        {active && showBackground && this.renderTappableBackground()}
-        {this.renderActions()}
-        {this.renderMainButton()}
-      </Animated.View>
+        <Animated.View
+            pointerEvents="box-none"
+            style={[styles.overlay, {
+              backgroundColor: "transparent",
+              bottom
+            }]}
+        >
+          {active && showBackground && this.renderTappableBackground()}
+          {this.renderActions()}
+          {this.renderMainButton()}
+        </Animated.View>
     );
   }
 }
 
 FloatingAction.propTypes = {
   actions: PropTypes.arrayOf(
-    PropTypes.shape({
-      color: PropTypes.string,
-      icon: PropTypes.any,
-      name: PropTypes.string.isRequired,
-      buttonSize: PropTypes.number,
-      text: PropTypes.string,
-      textBackground: PropTypes.string,
-      textColor: PropTypes.string,
-      component: PropTypes.func,
-      animated: PropTypes.bool
-    })
+      PropTypes.shape({
+        color: PropTypes.string,
+        icon: PropTypes.any,
+        name: PropTypes.string.isRequired,
+        buttonSize: PropTypes.number,
+        text: PropTypes.string,
+        textBackground: PropTypes.string,
+        textColor: PropTypes.string,
+        component: PropTypes.func,
+        animated: PropTypes.bool
+      })
   ),
   animated: PropTypes.bool,
   color: PropTypes.string,
@@ -665,7 +669,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     elevation: 0,
-    zIndex: 0
+    zIndex: 1
   },
   buttonContainer: {
     overflow: Platform.OS === "ios" ? "visible" : "hidden",
