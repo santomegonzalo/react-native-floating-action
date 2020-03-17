@@ -186,6 +186,8 @@ class FloatingActionItem extends Component {
         activeOpacity={0.4}
         style={styles.container}
         onPress={this.handleOnPress}
+        testID={this.props.testID}
+        accessibilityLabel={this.props.accessibilityLabel}
       >
         <Animated.View
           style={[
