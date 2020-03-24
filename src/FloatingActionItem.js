@@ -227,7 +227,6 @@ FloatingActionItem.propTypes = {
     shadowColor: PropTypes.string,
     shadowRadius: PropTypes.number
   }),
-  // not on doc
   textElevation: PropTypes.number,
   // not modified by user
   position: PropTypes.oneOf(["left", "right", "center"]),
