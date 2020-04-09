@@ -329,7 +329,8 @@ class FloatingAction extends Component {
       color,
       position,
       overrideWithAction,
-      animated
+      animated,
+      useNativeFeedback
     } = this.props;
     const { active } = this.state;
 
@@ -399,7 +400,7 @@ class FloatingAction extends Component {
       };
     }
 
-    const Touchable = getTouchableComponent();
+    const Touchable = getTouchableComponent(useNativeFeedback);
     const propStyles = {
       backgroundColor: mainButtonColor,
       bottom: this.mainBottomAnimation // I need to imporove this to run on native thread and not on JS thread
@@ -429,7 +430,7 @@ class FloatingAction extends Component {
         accessibilityLabel="Floating Action Button"
       >
         <Touchable
-          {...getRippleProps(mainButtonColor)}
+          {...getRippleProps(mainButtonColor, useNativeFeedback)}
           style={[styles.button, sizeStyle]}
           activeOpacity={0.85}
           onPress={this.animateButton}
@@ -598,7 +599,8 @@ FloatingAction.propTypes = {
   onClose: PropTypes.func,
   onOpen: PropTypes.func,
   onPressBackdrop: PropTypes.func,
-  onStateChange: PropTypes.func
+  onStateChange: PropTypes.func,
+  useNativeFeedback: PropTypes.bool
 };
 
 FloatingAction.defaultProps = {
@@ -619,7 +621,8 @@ FloatingAction.defaultProps = {
   iconColor: '#fff',
   mainVerticalDistance: 0,
   animated: true,
-  shadow: {}
+  shadow: {},
+  useNativeFeedback: true
 };
 
 const styles = StyleSheet.create({
