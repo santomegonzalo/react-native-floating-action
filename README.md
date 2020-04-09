@@ -139,6 +139,7 @@ this.floatingAction.animateButton();
 | onOpen                  | function         |                                                                                                           | Function to be call after set state to **true**                                                                      |
 | onStateChange           | function         |                                                                                                           | Function to be call after every state change. Will return state object                                               |
 | animated                | boolean          | true                                                                                                      | Enable the animation                                                                                                 |
+| useNativeFeedback                | boolean          | true                                                                                                      | Android: Whether to use a TouchableNativeFeedback                                                                                                 |
 
 **Actions**
 

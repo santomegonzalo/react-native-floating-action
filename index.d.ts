@@ -57,5 +57,6 @@ declare module "react-native-floating-action" {
     onOpen?: () => void;
     onStateChange?: () => void;
     animated?: boolean;
+    useNativeFeedback?: boolean;
   }
 }
