@@ -110,7 +110,6 @@ class FloatingActionItem extends Component {
     }
 
     const propStyles = {
-      tintColor: tintColor,
       backgroundColor: color,
       width: buttonSize,
       height: buttonSize,
