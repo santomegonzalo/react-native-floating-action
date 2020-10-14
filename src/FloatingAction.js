@@ -500,11 +500,13 @@ class FloatingAction extends Component {
           const textColor = action.textColor || action.actionsTextColor;
           const textBackground =
             action.textBackground || action.actionsTextBackground;
+          const tintColor = action.tintColor || '#fff';
 
           return (
             <FloatingActionItem
               paddingTopBottom={actionsPaddingTopBottom}
               distanceToEdge={distanceToEdge}
+              tintColor={tintColor}
               key={action.name}
               textColor={textColor}
               textBackground={textBackground}
