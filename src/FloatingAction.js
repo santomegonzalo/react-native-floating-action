@@ -430,7 +430,7 @@ class FloatingAction extends Component {
           this.getShadow()
         ]}
         accessible
-        accessibilityLabel="Floating Action Button"
+        accessibilityLabel={this.props.accessibilityLabel || "Floating Action Button"}
       >
         <Touchable
           {...getRippleProps(mainButtonColor)}
