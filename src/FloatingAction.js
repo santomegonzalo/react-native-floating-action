@@ -429,14 +429,15 @@ class FloatingAction extends Component {
           animatedVisibleView,
           this.getShadow()
         ]}
-        accessible
-        accessibilityLabel={this.props.accessibilityLabel || "Floating Action Button"}
+        accessible={false}
       >
         <Touchable
           {...getRippleProps(mainButtonColor)}
           style={[styles.button, sizeStyle]}
           activeOpacity={0.85}
           onPress={this.animateButton}
+          accessible
+          accessibilityLabel={this.props.accessibilityLabel || "Floating Action Button"}
         >
           <Animated.View
             style={[styles.buttonTextContainer, sizeStyle, animatedViewStyle]}
