@@ -545,7 +545,7 @@ class FloatingAction extends Component {
         style={[styles.overlay, { backgroundColor: "transparent" }]}
       >
         {active && showBackground && this.renderTappableBackground()}
-        {this.renderActions()}
+        {active && this.renderActions()}
         {this.renderMainButton()}
       </Animated.View>
     );
