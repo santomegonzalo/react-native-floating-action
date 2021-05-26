@@ -438,6 +438,7 @@ class FloatingAction extends Component {
           onPress={this.animateButton}
           accessible
           accessibilityLabel={this.props.accessibilityLabel || "Floating Action Button"}
+          accessibilityLiveRegion={this.props.accessibilityLiveRegion || 'none'}
         >
           <Animated.View
             style={[styles.buttonTextContainer, sizeStyle, animatedViewStyle]}
