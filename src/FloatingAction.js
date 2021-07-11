@@ -501,7 +501,7 @@ class FloatingAction extends Component {
           const textColor = action.textColor || action.actionsTextColor;
           const textBackground =
             action.textBackground || action.actionsTextBackground;
-          const tintColor =
+          const tintColorIcon =
             action.tintColor || tintColor || '#fff';
 
           return (
@@ -510,7 +510,7 @@ class FloatingAction extends Component {
               distanceToEdge={distanceToEdge}
               key={action.name}
               textColor={textColor}
-              tintColor={tintColor}
+              tintColor={tintColorIcon}
               textBackground={textBackground}
               shadow={this.getShadow()}
               {...action}
