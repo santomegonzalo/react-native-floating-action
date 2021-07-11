@@ -42,9 +42,9 @@ class FloatingAction extends Component {
     );
     this.actionsBottomAnimation = new Animated.Value(
       props.buttonSize +
-        this.distanceToVerticalEdge +
-        props.actionsPaddingTopBottom +
-        props.mainVerticalDistance
+      this.distanceToVerticalEdge +
+      props.actionsPaddingTopBottom +
+      props.mainVerticalDistance
     );
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
@@ -181,7 +181,7 @@ class FloatingAction extends Component {
       overrideWithAction,
       iconWidth,
       iconHeight,
-      iconColor
+      iconColor,
     } = this.props;
 
     if (overrideWithAction) {
@@ -208,7 +208,7 @@ class FloatingAction extends Component {
       );
     }
 
-    return <AddIcon width={iconWidth} height={iconHeight} backgroundColor={iconColor}  />;
+    return <AddIcon width={iconWidth} height={iconHeight} backgroundColor={iconColor} />;
   };
 
   reset = () => {
@@ -455,7 +455,8 @@ class FloatingAction extends Component {
       overrideWithAction,
       distanceToEdge,
       actionsPaddingTopBottom,
-      animated
+      animated,
+      tintColor,
     } = this.props;
     const { active } = this.state;
 
@@ -500,6 +501,8 @@ class FloatingAction extends Component {
           const textColor = action.textColor || action.actionsTextColor;
           const textBackground =
             action.textBackground || action.actionsTextBackground;
+          const tintColor =
+            action.tintColor || tintColor || '#fff';
 
           return (
             <FloatingActionItem
@@ -507,6 +510,7 @@ class FloatingAction extends Component {
               distanceToEdge={distanceToEdge}
               key={action.name}
               textColor={textColor}
+              tintColor={tintColor}
               textBackground={textBackground}
               shadow={this.getShadow()}
               {...action}
@@ -552,6 +556,7 @@ class FloatingAction extends Component {
 }
 
 FloatingAction.propTypes = {
+  tintColor: PropTypes.string,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       color: PropTypes.string,
@@ -562,7 +567,8 @@ FloatingAction.propTypes = {
       textBackground: PropTypes.string,
       textColor: PropTypes.string,
       component: PropTypes.func,
-      animated: PropTypes.bool
+      animated: PropTypes.bool,
+      tintColor: PropTypes.string
     })
   ),
   animated: PropTypes.bool,
