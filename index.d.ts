@@ -15,7 +15,7 @@ declare module "react-native-floating-action" {
     shadowRadius?: number;
   };
 
-  export class FloatingAction extends Component<IFloatingActionProps> {}
+  export class FloatingAction extends Component<IFloatingActionProps> { }
 
   export interface IActionProps {
     color?: string;
@@ -30,9 +30,11 @@ declare module "react-native-floating-action" {
     render?: () => void;
     animated?: boolean;
     shadow?: shadowType;
+    tintColor?: string
   }
 
   export interface IFloatingActionProps {
+    tintColor: string;
     actions?: IActionProps[];
     color?: string;
     distanceToEdge?: number | { vertical: number; horizontal: number };
