@@ -125,7 +125,6 @@ class FloatingActionItem extends Component {
       >
         {React.isValidElement(icon) ? (
           icon
-
         ) : tintColor ? (
           <Image style={[iconStyle, { tintColor: tintColor }]} source={icon} />
         ) : (
