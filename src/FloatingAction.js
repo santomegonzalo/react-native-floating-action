@@ -34,7 +34,8 @@ class FloatingAction extends Component {
     super(props);
 
     this.state = {
-      active: false
+      active: false,
+      shouldRender: props.visible ? true : false
     };
 
     this.mainBottomAnimation = new Animated.Value(
@@ -84,6 +85,7 @@ class FloatingAction extends Component {
 
     if (prevProps.visible !== visible) {
       if (visible) {
+        this.setState({shouldRender: true});
         Animated.parallel([
           Animated.spring(this.visibleAnimation, { toValue: 0, useNativeDriver: false }),
           Animated.spring(this.fadeAnimation, { toValue: 1, useNativeDriver: false })
@@ -93,7 +95,7 @@ class FloatingAction extends Component {
         Animated.parallel([
           Animated.spring(this.visibleAnimation, { toValue: 1, useNativeDriver: false }),
           Animated.spring(this.fadeAnimation, { toValue: 0, useNativeDriver: false })
-        ]).start();
+        ]).start(() => this.setState({shouldRender: false}));
       }
     }
   }
@@ -539,8 +541,12 @@ class FloatingAction extends Component {
   }
 
   render() {
-    const { active } = this.state;
-    const { showBackground } = this.props;
+    const { active, shouldRender } = this.state;
+    const { showBackground, visible } = this.props;
+
+    if (!shouldRender && !visible) {
+      return null;
+    }
 
     return (
       <Animated.View
