@@ -270,6 +270,12 @@ Enable the animation to be called after every state change. Will return state ob
 
 Color of the action button.
 
+#### `iconColor: String`
+
+**Default:** `'#ffffff'`
+
+Change default icon color
+
 #### `icon: Any`
 
 Icon to be rendered inside the action, will accept an URL or `React.Image`. If we want to send an URL we need to send it in this way: icon: `{ uri: 'https://imageurl.com' }` if we want to send a `React.Image` we will use it in this way: `icon: require('path/image')`.
