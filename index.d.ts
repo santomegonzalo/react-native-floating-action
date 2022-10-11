@@ -43,7 +43,7 @@ declare module "react-native-floating-action" {
   export interface IFloatingActionProps {
     style?: ViewStyle;
     iconStyle?: ViewStyle;
-    itemStyle?: itemStyle;
+    itemStyle?: ViewStyle;
     tintColor?: string;
     actions?: IActionProps[];
     color?: string;
