@@ -100,7 +100,7 @@ class FloatingActionItem extends Component {
   }
 
   renderButton() {
-    const { buttonSize, icon, color, shadow, tintColor } = this.props;
+    const { buttonSize, icon, color, shadow, tintColor, imageContainerStyle, imageStyle } = this.props;
 
     let iconStyle;
 
@@ -121,12 +121,12 @@ class FloatingActionItem extends Component {
     return (
       <View
         key="button"
-        style={[styles.button, propStyles, shadow]}
+        style={[styles.button, propStyles, shadow, imageContainerStyle]}
       >
         {React.isValidElement(icon) ? (
           icon
         ) : (
-          <Image style={[iconStyle, {tintColor: tintColor}]} source={icon} />
+          <Image style={[iconStyle, {tintColor: tintColor}, imageStyle]} source={icon} />
         )}
       </View>
     );
@@ -139,7 +139,8 @@ class FloatingActionItem extends Component {
       render,
       margin,
       name,
-      animated
+      animated,
+      style
     } = this.props;
 
     const Touchable = getTouchableComponent(false);
@@ -197,7 +198,8 @@ class FloatingActionItem extends Component {
             {
               paddingTop: paddingTopBottom,
               paddingBottom: paddingTopBottom
-            }
+            },
+            style
           ]}
         >
           {components}
@@ -216,6 +218,9 @@ FloatingActionItem.propTypes = {
   textContainerStyle: PropTypes.object,
   text: PropTypes.string,
   textStyle: PropTypes.object,
+  style: PropTypes.object,
+  imageStyle: PropTypes.object,
+  imageContainerStyle: PropTypes.object,
   textProps: PropTypes.object,
   textBackground: PropTypes.string,
   textColor: PropTypes.string,
