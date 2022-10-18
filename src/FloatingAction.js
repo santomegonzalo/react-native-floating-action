@@ -193,7 +193,7 @@ class FloatingAction extends Component {
         return icon;
       }
       return (
-        <Image style={{ width: iconWidth, height: iconHeight }} source={icon} />
+        <Image style={{ width: iconWidth, height: iconHeight, tintColor: iconColor }} source={icon} />
       );
     }
 
@@ -204,7 +204,7 @@ class FloatingAction extends Component {
 
       return (
         <Image
-          style={{ width: iconWidth, height: iconHeight }}
+          style={{ width: iconWidth, height: iconHeight, tintColor: iconColor }}
           source={floatingIcon}
         />
       );
