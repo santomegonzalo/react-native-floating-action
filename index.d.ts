@@ -1,5 +1,7 @@
 // Type definitions for react-native-floating-action
 
+import { ImageStyle, TextStyle, ViewStyle } from "react-native";
+
 declare module "react-native-floating-action" {
   import { Component } from "react";
 
@@ -22,6 +24,11 @@ declare module "react-native-floating-action" {
     icon?: JSX.Element;
     name: string;
     text?: string;
+    style?: ViewStyle;
+    textStyle?: TextStyle;
+    textContainerStyle?: ViewStyle;
+    imageStyle?: ImageStyle;
+    imageContainerStyle?: ViewStyle;
     textBackground?: string;
     textColor?: string;
     textElevation?: number;
@@ -34,6 +41,9 @@ declare module "react-native-floating-action" {
   }
 
   export interface IFloatingActionProps {
+    style?: ViewStyle;
+    iconStyle?: ViewStyle;
+    itemStyle?: ViewStyle;
     tintColor?: string;
     actions?: IActionProps[];
     color?: string;

@@ -184,6 +184,7 @@ class FloatingAction extends Component {
       iconWidth,
       iconHeight,
       iconColor,
+      iconStyle
     } = this.props;
 
     if (overrideWithAction) {
@@ -193,7 +194,7 @@ class FloatingAction extends Component {
         return icon;
       }
       return (
-        <Image style={{ width: iconWidth, height: iconHeight }} source={icon} />
+        <Image style={[{ width: iconWidth, height: iconHeight }, iconStyle]} source={icon} />
       );
     }
 
@@ -204,13 +205,13 @@ class FloatingAction extends Component {
 
       return (
         <Image
-          style={{ width: iconWidth, height: iconHeight }}
+          style={[{ width: iconWidth, height: iconHeight }, iconStyle]}
           source={floatingIcon}
         />
       );
     }
 
-    return <AddIcon width={iconWidth} height={iconHeight} backgroundColor={iconColor} />;
+    return <AddIcon width={iconStyle?.width || iconWidth} height={iconStyle?.height || iconHeight} backgroundColor={iconStyle?.backgroundColor || iconColor} />;
   };
 
   reset = () => {
@@ -335,7 +336,8 @@ class FloatingAction extends Component {
       color,
       position,
       overrideWithAction,
-      animated
+      animated,
+      style,
     } = this.props;
     const { active } = this.state;
 
@@ -416,9 +418,9 @@ class FloatingAction extends Component {
     }
 
     const sizeStyle = {
-      width: buttonSize,
-      height: buttonSize,
-      borderRadius: buttonSize / 2
+      width: style?.width || buttonSize,
+      height: style?.height || buttonSize,
+      borderRadius: (style?.width || buttonSize) / 2
     };
 
     return (
@@ -429,16 +431,19 @@ class FloatingAction extends Component {
           styles[`${position}Button`],
           propStyles,
           animatedVisibleView,
-          this.getShadow()
+          this.getShadow(),
+          style
         ]}
-        accessible
-        accessibilityLabel="Floating Action Button"
+        accessible={false}
       >
         <Touchable
           {...getRippleProps(mainButtonColor)}
           style={[styles.button, sizeStyle]}
           activeOpacity={0.85}
           onPress={this.animateButton}
+          accessible
+          accessibilityLabel={this.props.accessibilityLabel || "Floating Action Button"}
+          accessibilityLiveRegion={this.props.accessibilityLiveRegion || 'none'}
         >
           <Animated.View
             style={[styles.buttonTextContainer, sizeStyle, animatedViewStyle]}
@@ -459,6 +464,7 @@ class FloatingAction extends Component {
       actionsPaddingTopBottom,
       animated,
       tintColor,
+      itemStyle
     } = this.props;
     const { active } = this.state;
 
@@ -520,6 +526,11 @@ class FloatingAction extends Component {
               active={active}
               onPress={this.handlePressItem}
               animated={animated}
+              style={{...itemStyle, ...action?.style}}
+              imageStyle={action?.imageStyle}
+              imageContainerStyle={action?.imageContainerStyle}
+              textStyle={action?.textStyle}
+              textContainerStyle={action.textContainerStyle}
             />
           );
         })}
@@ -528,13 +539,13 @@ class FloatingAction extends Component {
   }
 
   renderTappableBackground() {
-    const { overlayColor } = this.props;
+    const { overlayColor, backdropStyle } = this.props;
 
     // TouchableOpacity don't require a child
     return (
       <TouchableOpacity
         activeOpacity={1}
-        style={[styles.overlay, { backgroundColor: overlayColor }]}
+        style={[styles.overlay, { backgroundColor: overlayColor }, backdropStyle]}
         onPress={this.handlePressBackdrop}
       />
     );
@@ -554,7 +565,7 @@ class FloatingAction extends Component {
         style={[styles.overlay, { backgroundColor: "transparent" }]}
       >
         {active && showBackground && this.renderTappableBackground()}
-        {this.renderActions()}
+        {active && this.renderActions()}
         {this.renderMainButton()}
       </Animated.View>
     );
@@ -562,7 +573,10 @@ class FloatingAction extends Component {
 }
 
 FloatingAction.propTypes = {
+  style: PropTypes.object,
   tintColor: PropTypes.string,
+  iconStyle: PropTypes.object,
+  itemStyle: PropTypes.object,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       color: PropTypes.string,
