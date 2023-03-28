@@ -36,9 +36,9 @@ class FloatingActionItem extends Component {
   }
 
   handleOnPress = () => {
-    const { name, onPress } = this.props;
+    const { name, onPress, resetOnPress } = this.props;
 
-    onPress(name);
+    onPress(name, resetOnPress);
   };
 
   renderText() {
