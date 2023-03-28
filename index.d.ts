@@ -30,7 +30,8 @@ declare module "react-native-floating-action" {
     render?: () => void;
     animated?: boolean;
     shadow?: shadowType;
-    tintColor?: string
+    tintColor?: string;
+    resetOnPress?: boolean;
   }
 
   export interface IFloatingActionProps {
