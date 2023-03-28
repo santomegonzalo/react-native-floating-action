@@ -315,14 +315,16 @@ class FloatingAction extends Component {
     this.reset();
   };
 
-  handlePressItem = itemName => {
-    const { onPressItem } = this.props;
+  handlePressItem = (itemName, resetOnPress) => {
+    const { onPressItem} = this.props;
 
     if (onPressItem) {
       onPressItem(itemName);
     }
 
-    this.reset();
+    if(isUndefined(resetOnPress) || resetOnPress === true){
+      this.reset();
+    }
   };
 
   renderMainButton() {
