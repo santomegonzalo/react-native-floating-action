@@ -67,26 +67,26 @@ const actions = [
     text: "Accessibility",
     icon: require("./images/ic_accessibility_white.png"),
     name: "bt_accessibility",
-    position: 2
+    position: 2,
   },
   {
     text: "Language",
     icon: require("./images/ic_language_white.png"),
     name: "bt_language",
-    position: 1
+    position: 1,
   },
   {
     text: "Location",
     icon: require("./images/ic_room_white.png"),
     name: "bt_room",
-    position: 3
+    position: 3,
   },
   {
     text: "Video",
     icon: require("./images/ic_videocam_white.png"),
     name: "bt_videocam",
-    position: 4
-  }
+    position: 4,
+  },
 ];
 ```
 
@@ -97,7 +97,7 @@ const actions = [
   <Text style={styles.example}>Floating Action example</Text>
   <FloatingAction
     actions={actions}
-    onPressItem={name => {
+    onPressItem={(name) => {
       console.log(`selected button: ${name}`);
     }}
   />
@@ -147,6 +147,12 @@ Color of the main button. Pass this `String` as an hexadecimal color respecting 
 **Default:** `30`
 
 Distance from button to edge. Can be a `Number` or an `Object` respecting the `{ vertical: Number, horizontal: Number }` format.
+
+#### `bottomOffset: Number`
+
+**Default:** `0`
+
+Distance of button container from bottom
 
 #### `visible: Boolean`
 
@@ -314,7 +320,7 @@ Text color for every action.
 
 #### ~~`elevation: Number`~~
 
-**Deprecated! use `textElevation` instead!*
+\*_Deprecated! use `textElevation` instead!_
 
 #### `textElevation: Number`
 
