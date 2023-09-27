@@ -31,6 +31,7 @@ declare module "react-native-floating-action" {
     animated?: boolean;
     shadow?: shadowType;
     tintColor?: string
+    bottomOffset?: number
   }
 
   export interface IFloatingActionProps {
@@ -59,5 +60,6 @@ declare module "react-native-floating-action" {
     onOpen?: () => void;
     onStateChange?: () => void;
     animated?: boolean;
+    bottomOffset?: number
   }
 }

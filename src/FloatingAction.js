@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   LayoutAnimation,
   Platform,
-  Keyboard
+  Keyboard,
 } from "react-native";
 
 import FloatingActionItem from "./FloatingActionItem";
@@ -23,10 +23,10 @@ const DEFAULT_SHADOW_PROPS = {
   shadowOpacity: 0.35,
   shadowOffset: {
     width: 0,
-    height: 5
+    height: 5,
   },
   shadowColor: "#000000",
-  shadowRadius: 3
+  shadowRadius: 3,
 };
 
 class FloatingAction extends Component {
@@ -35,7 +35,7 @@ class FloatingAction extends Component {
 
     this.state = {
       active: false,
-      shouldRender: props.visible ? true : false
+      shouldRender: props.visible ? true : false,
     };
 
     this.mainBottomAnimation = new Animated.Value(
@@ -85,17 +85,29 @@ class FloatingAction extends Component {
 
     if (prevProps.visible !== visible) {
       if (visible) {
-        this.setState({shouldRender: true});
+        this.setState({ shouldRender: true });
         Animated.parallel([
-          Animated.spring(this.visibleAnimation, { toValue: 0, useNativeDriver: false }),
-          Animated.spring(this.fadeAnimation, { toValue: 1, useNativeDriver: false })
+          Animated.spring(this.visibleAnimation, {
+            toValue: 0,
+            useNativeDriver: false,
+          }),
+          Animated.spring(this.fadeAnimation, {
+            toValue: 1,
+            useNativeDriver: false,
+          }),
         ]).start();
       }
       if (!visible) {
         Animated.parallel([
-          Animated.spring(this.visibleAnimation, { toValue: 1, useNativeDriver: false }),
-          Animated.spring(this.fadeAnimation, { toValue: 0, useNativeDriver: false })
-        ]).start(() => this.setState({shouldRender: false}));
+          Animated.spring(this.visibleAnimation, {
+            toValue: 1,
+            useNativeDriver: false,
+          }),
+          Animated.spring(this.fadeAnimation, {
+            toValue: 0,
+            useNativeDriver: false,
+          }),
+        ]).start(() => this.setState({ shouldRender: false }));
       }
     }
   }
@@ -111,19 +123,19 @@ class FloatingAction extends Component {
 
   get distanceToHorizontalEdge() {
     const { distanceToEdge } = this.props;
-    return typeof distanceToEdge === 'number'
+    return typeof distanceToEdge === "number"
       ? distanceToEdge
       : distanceToEdge.horizontal;
   }
 
   get distanceToVerticalEdge() {
     const { distanceToEdge } = this.props;
-    return typeof distanceToEdge === 'number'
+    return typeof distanceToEdge === "number"
       ? distanceToEdge
       : distanceToEdge.vertical;
   }
 
-  onKeyboardShow = e => {
+  onKeyboardShow = (e) => {
     const { buttonSize, actionsPaddingTopBottom } = this.props;
     const { height } = e.endCoordinates;
 
@@ -137,14 +149,14 @@ class FloatingAction extends Component {
           height -
           (isIphoneX() ? 40 : 0),
         duration: 250,
-        useNativeDriver: false
+        useNativeDriver: false,
       }),
       Animated.spring(this.mainBottomAnimation, {
         bounciness: 0,
         toValue: this.distanceToVerticalEdge + height - (isIphoneX() ? 40 : 0),
         duration: 250,
-        useNativeDriver: false
-      })
+        useNativeDriver: false,
+      }),
     ]).start();
   };
 
@@ -154,16 +166,17 @@ class FloatingAction extends Component {
     Animated.parallel([
       Animated.spring(this.actionsBottomAnimation, {
         bounciness: 0,
-        toValue: buttonSize + this.distanceToVerticalEdge + actionsPaddingTopBottom,
+        toValue:
+          buttonSize + this.distanceToVerticalEdge + actionsPaddingTopBottom,
         duration: 250,
-        useNativeDriver: false
+        useNativeDriver: false,
       }),
       Animated.spring(this.mainBottomAnimation, {
         bounciness: 0,
         toValue: this.distanceToVerticalEdge,
         duration: 250,
-        useNativeDriver: false
-      })
+        useNativeDriver: false,
+      }),
     ]).start();
   };
 
@@ -172,7 +185,7 @@ class FloatingAction extends Component {
 
     return {
       ...DEFAULT_SHADOW_PROPS,
-      ...shadow
+      ...shadow,
     };
   };
 
@@ -210,19 +223,31 @@ class FloatingAction extends Component {
       );
     }
 
-    return <AddIcon width={iconWidth} height={iconHeight} backgroundColor={iconColor} />;
+    return (
+      <AddIcon
+        width={iconWidth}
+        height={iconHeight}
+        backgroundColor={iconColor}
+      />
+    );
   };
 
   reset = () => {
     const { animated, onClose } = this.props;
 
     if (animated) {
-      Animated.spring(this.animation, { toValue: 0, useNativeDriver: false }).start();
-      Animated.spring(this.actionsAnimation, { toValue: 0, useNativeDriver: false }).start();
+      Animated.spring(this.animation, {
+        toValue: 0,
+        useNativeDriver: false,
+      }).start();
+      Animated.spring(this.actionsAnimation, {
+        toValue: 0,
+        useNativeDriver: false,
+      }).start();
     }
     this.updateState(
       {
-        active: false
+        active: false,
       },
       () => {
         if (onClose) {
@@ -240,7 +265,7 @@ class FloatingAction extends Component {
       animated,
       dismissKeyboardOnPress,
       onPressMain,
-      onOpen
+      onOpen,
     } = this.props;
     const { active } = this.state;
 
@@ -261,26 +286,32 @@ class FloatingAction extends Component {
     if (!active) {
       if (!floatingIcon) {
         if (animated) {
-          Animated.spring(this.animation, { toValue: 1, useNativeDriver: false }).start();
+          Animated.spring(this.animation, {
+            toValue: 1,
+            useNativeDriver: false,
+          }).start();
         }
       }
 
       if (animated) {
-        Animated.spring(this.actionsAnimation, { toValue: 1, useNativeDriver: false }).start();
+        Animated.spring(this.actionsAnimation, {
+          toValue: 1,
+          useNativeDriver: false,
+        }).start();
 
         // only execute it for the background to prevent extra calls
         LayoutAnimation.configureNext({
           duration: 180,
           create: {
             type: LayoutAnimation.Types.easeInEaseOut,
-            property: LayoutAnimation.Properties.opacity
-          }
+            property: LayoutAnimation.Properties.opacity,
+          },
         });
       }
 
       this.updateState(
         {
-          active: true
+          active: true,
         },
         () => {
           if (onOpen) {
@@ -303,7 +334,7 @@ class FloatingAction extends Component {
       }
       if (onStateChange) {
         onStateChange({
-          isActive: active
+          isActive: active,
         });
       }
     });
@@ -317,7 +348,7 @@ class FloatingAction extends Component {
     this.reset();
   };
 
-  handlePressItem = itemName => {
+  handlePressItem = (itemName) => {
     const { onPressItem } = this.props;
 
     if (onPressItem) {
@@ -335,7 +366,8 @@ class FloatingAction extends Component {
       color,
       position,
       overrideWithAction,
-      animated
+      animated,
+      bottomOffset,
     } = this.props;
     const { active } = this.state;
 
@@ -357,16 +389,16 @@ class FloatingAction extends Component {
           {
             rotate: this.visibleAnimation.interpolate({
               inputRange: [0, 1],
-              outputRange: ["0deg", "90deg"]
-            })
+              outputRange: ["0deg", "90deg"],
+            }),
           },
           {
             scale: this.visibleAnimation.interpolate({
               inputRange: [0, 1],
-              outputRange: [1, 0]
-            })
-          }
-        ]
+              outputRange: [1, 0],
+            }),
+          },
+        ],
       };
 
       animatedViewStyle = {
@@ -374,10 +406,10 @@ class FloatingAction extends Component {
           {
             rotate: this.animation.interpolate({
               inputRange: [0, 1],
-              outputRange: ["0deg", "45deg"]
-            })
-          }
-        ]
+              outputRange: ["0deg", "45deg"],
+            }),
+          },
+        ],
       };
 
       if (overrideWithAction) {
@@ -389,9 +421,9 @@ class FloatingAction extends Component {
       animatedViewStyle = {
         transform: [
           {
-            rotate: "45deg"
-          }
-        ]
+            rotate: "45deg",
+          },
+        ],
       };
     } else {
       animatedVisibleView = {};
@@ -399,16 +431,16 @@ class FloatingAction extends Component {
       animatedViewStyle = {
         transform: [
           {
-            rotate: "0deg"
-          }
-        ]
+            rotate: "0deg",
+          },
+        ],
       };
     }
 
     const Touchable = getTouchableComponent();
     const propStyles = {
       backgroundColor: mainButtonColor,
-      bottom: this.mainBottomAnimation // I need to imporove this to run on native thread and not on JS thread
+      bottom: this.mainBottomAnimation, // I need to imporove this to run on native thread and not on JS thread
     };
 
     if (["left", "right"].indexOf(position) > -1) {
@@ -418,7 +450,7 @@ class FloatingAction extends Component {
     const sizeStyle = {
       width: buttonSize,
       height: buttonSize,
-      borderRadius: buttonSize / 2
+      borderRadius: buttonSize / 2,
     };
 
     return (
@@ -429,7 +461,8 @@ class FloatingAction extends Component {
           styles[`${position}Button`],
           propStyles,
           animatedVisibleView,
-          this.getShadow()
+          this.getShadow(),
+          { marginBottom: bottomOffset || 0 }
         ]}
         accessible
         accessibilityLabel="Floating Action Button"
@@ -459,6 +492,7 @@ class FloatingAction extends Component {
       actionsPaddingTopBottom,
       animated,
       tintColor,
+      bottomOffset,
     } = this.props;
     const { active } = this.state;
 
@@ -476,8 +510,8 @@ class FloatingAction extends Component {
       animatedActionsStyle = {
         opacity: this.actionsAnimation.interpolate({
           inputRange: [0, 1],
-          outputRange: [0, 1]
-        })
+          outputRange: [0, 1],
+        }),
       };
     } else {
       animatedActionsStyle = { opacity: active ? 1 : 0 };
@@ -488,8 +522,8 @@ class FloatingAction extends Component {
       styles[`${position}Actions`],
       animatedActionsStyle,
       {
-        bottom: this.actionsBottomAnimation
-      }
+        bottom: this.actionsBottomAnimation,
+      },
     ];
 
     if (active) {
@@ -498,13 +532,15 @@ class FloatingAction extends Component {
 
     const sortedActions = actions.sort((a, b) => a.position - b.position);
     return (
-      <Animated.View style={actionsStyles} pointerEvents="box-none">
-        {sortedActions.map(action => {
+      <Animated.View
+        style={[actionsStyles, { marginBottom: bottomOffset || 0 }]}
+        pointerEvents="box-none"
+      >
+        {sortedActions.map((action) => {
           const textColor = action.textColor || action.actionsTextColor;
           const textBackground =
             action.textBackground || action.actionsTextBackground;
-          const tintColorIcon =
-            action.tintColor || tintColor || '#fff';
+          const tintColorIcon = action.tintColor || tintColor || "#fff";
 
           return (
             <FloatingActionItem
@@ -574,7 +610,7 @@ FloatingAction.propTypes = {
       textColor: PropTypes.string,
       component: PropTypes.func,
       animated: PropTypes.bool,
-      tintColor: PropTypes.string
+      tintColor: PropTypes.string,
     })
   ),
   animated: PropTypes.bool,
@@ -583,8 +619,8 @@ FloatingAction.propTypes = {
     PropTypes.number,
     PropTypes.shape({
       vertical: PropTypes.number,
-      horizontal: PropTypes.number
-    })
+      horizontal: PropTypes.number,
+    }),
   ]),
   mainVerticalDistance: PropTypes.number,
   visible: PropTypes.bool,
@@ -604,17 +640,17 @@ FloatingAction.propTypes = {
     shadowOpacity: PropTypes.number,
     shadowOffset: PropTypes.shape({
       width: PropTypes.number,
-      height: PropTypes.number
+      height: PropTypes.number,
     }),
     shadowColor: PropTypes.string,
-    shadowRadius: PropTypes.number
+    shadowRadius: PropTypes.number,
   }),
   onPressItem: PropTypes.func,
   onPressMain: PropTypes.func,
   onClose: PropTypes.func,
   onOpen: PropTypes.func,
   onPressBackdrop: PropTypes.func,
-  onStateChange: PropTypes.func
+  onStateChange: PropTypes.func,
 };
 
 FloatingAction.defaultProps = {
@@ -632,37 +668,37 @@ FloatingAction.defaultProps = {
   buttonSize: 56,
   iconHeight: 15,
   iconWidth: 15,
-  iconColor: '#fff',
+  iconColor: "#fff",
   mainVerticalDistance: 0,
   animated: true,
-  shadow: {}
+  shadow: {},
 };
 
 const styles = StyleSheet.create({
   actions: {
     position: "absolute",
     bottom: 85,
-    zIndex: 10
+    zIndex: 10,
   },
   rightActions: {
     alignItems: "flex-end",
-    right: -1000 // this magic number will make always disspear the text from screen
+    right: -1000, // this magic number will make always disspear the text from screen
   },
   leftActions: {
     alignItems: "flex-start",
-    left: -1000 // this magic number will make always disspear the text from screen
+    left: -1000, // this magic number will make always disspear the text from screen
   },
   centerActions: {
-    left: -1000
+    left: -1000,
   },
   rightActionsVisible: {
-    right: 0
+    right: 0,
   },
   leftActionsVisible: {
-    left: 0
+    left: 0,
   },
   centerActionsVisible: {
-    left: DEVICE_WIDTH / 2 - 30
+    left: DEVICE_WIDTH / 2 - 30,
   },
   overlay: {
     position: "absolute",
@@ -671,7 +707,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     elevation: 0,
-    zIndex: 0
+    zIndex: 0,
   },
   buttonContainer: {
     overflow: Platform.OS === "ios" ? "visible" : "hidden",
@@ -679,23 +715,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     elevation: 5,
-    position: "absolute"
+    position: "absolute",
   },
   button: {
     zIndex: 3,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   rightButton: {},
   leftButton: {},
   centerButton: {
-    left: DEVICE_WIDTH / 2 - 28
+    left: DEVICE_WIDTH / 2 - 28,
   },
   buttonTextContainer: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 export default FloatingAction;
